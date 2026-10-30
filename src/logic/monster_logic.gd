@@ -174,3 +174,9 @@ static func harmony_bonus(party_types: Array) -> float:
 	for t in party_types:
 		uniq[t] = true
 	return float(c["harmony_bonus"]) if uniq.size() >= int(c["harmony_min_types"]) else 0.0
+
+
+static func skill_slot(skills: Array, idx: int) -> int:
+	## Os dois botões do HUD mostram as habilidades mais fortes (as últimas aprendidas).
+	var j := maxi(0, skills.size() - 2) + idx
+	return j if j < skills.size() else -1

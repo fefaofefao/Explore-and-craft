@@ -368,7 +368,7 @@ func refresh_skills() -> void:
 	var a := world.ally_actor()
 	for i in skill_btns.size():
 		var b: Button = skill_btns[i]
-		var j := World.skill_slot(a.m["skills"], i) if a != null else -1
+		var j := MonsterLogic.skill_slot(a.m["skills"], i) if a != null else -1
 		if a == null or j < 0:
 			b.visible = false
 			continue

@@ -144,7 +144,12 @@ func commit(existing: ArrayMesh = null) -> ArrayMesh:
 	arr.resize(Mesh.ARRAY_MAX)
 	arr[Mesh.ARRAY_VERTEX] = verts
 	arr[Mesh.ARRAY_NORMAL] = normals
-	arr[Mesh.ARRAY_COLOR] = colors
+	# cores são escritas em sRGB; o renderer de compatibilidade espera linear nos vértices
+	var lin := PackedColorArray()
+	lin.resize(colors.size())
+	for i in colors.size():
+		lin[i] = colors[i].srgb_to_linear()
+	arr[Mesh.ARRAY_COLOR] = lin
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr)
 	return mesh
 

@@ -9,6 +9,7 @@ var hud: Hud
 var loading: CanvasLayer
 var _title_cam: Camera3D
 var _t := 0.0
+var _title_c := Vector3(0, 2, 62)
 
 
 func _ready() -> void:
@@ -75,6 +76,7 @@ func show_title() -> void:
 		m.rotation.y = a + PI
 		m.move_speed = 0.3
 		title_root.add_child(m)
+	_title_c = Vector3(0, gen.height(0, 62) + 0.5, 62)
 	_title_cam = Camera3D.new()
 	_title_cam.fov = 55
 	title_root.add_child(_title_cam)
@@ -225,8 +227,8 @@ func _ask_consent() -> void:
 func _process(delta: float) -> void:
 	if _title_cam != null and is_instance_valid(_title_cam):
 		_t += delta * 0.05
-		var c := Vector3(0, 2.0, 62)
-		_title_cam.look_at_from_position(c + Vector3(sin(_t * 2.0) * 8.0 + 4.0, 6.0, 20.0), c + Vector3(-5, 0, -4))
+		var c := _title_c
+		_title_cam.look_at_from_position(c + Vector3(sin(_t * 2.0) * 3.0 - 2.0, 1.8, 12.0), c + Vector3(-3.5, 0.2, 0))
 
 
 # ------------------------------------------------------------------ mundo

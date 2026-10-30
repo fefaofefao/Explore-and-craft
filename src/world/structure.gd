@@ -22,7 +22,7 @@ func setup(p_entry: Dictionary) -> Structure:
 	bd = GameData.db().buildings[entry["id"]]
 	var mi := MeshInstance3D.new()
 	mi.mesh = build_mesh(entry["id"])
-	mi.material_override = MeshLib.mat("vc")
+	mi.material_override = MeshLib.mat("vc_ds" if bd["shape"] == "roof" else "vc")
 	add_child(mi)
 	rotation.y = -float(entry["rot"]) * PI / 2.0
 	_add_collision()

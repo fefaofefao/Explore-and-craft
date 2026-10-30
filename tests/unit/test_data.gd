@@ -125,7 +125,7 @@ func test_strings_used_in_code_exist() -> void:
 	## Varre o código-fonte procurando Loc.t("chave") e confere que a chave existe.
 	var db := GameData.db()
 	var re := RegEx.new()
-	re.compile("Loc\\.t\\(\"([a-z0-9_]+)\"")
+	re.compile("Loc\\.t\\(\"([a-z0-9_]+)\"[,)]")
 	var missing: Array = []
 	var stack: Array = ["res://src"]
 	while stack.size() > 0:
@@ -144,6 +144,23 @@ func test_strings_used_in_code_exist() -> void:
 				if not db.strings.has(key) and not key in missing:
 					missing.append(key)
 	eq(missing.size(), 0, "chaves de texto inexistentes: %s" % str(missing))
+	# chaves montadas dinamicamente (prefixo + valor do dado)
+	for id in db.items:
+		check(db.strings.has("cat_" + db.items[id]["cat"]), "cat_" + db.items[id]["cat"])
+	for rid in db.recipes:
+		check(db.strings.has("station_" + db.recipes[rid]["station"]), "station_" + db.recipes[rid]["station"])
+	for id in db.buildings:
+		var b: Dictionary = db.buildings[id]
+		check(db.strings.has("bk_" + b["kind"]), "bk_" + b["kind"])
+		if b.has("work"):
+			check(db.strings.has("w_" + b["work"]), "w_" + b["work"])
+	for id in db.species:
+		for w in db.species[id]["work"]:
+			check(db.strings.has("w_" + w), "w_" + w)
+	for id in db.maps:
+		if db.maps[id]["hazard"] != null:
+			check(db.strings.has("hz_" + db.maps[id]["hazard"]["kind"]), "hz_" + db.maps[id]["hazard"]["kind"])
+			check(db.dialogs.has("d_hazard_" + db.maps[id]["hazard"]["kind"]), "diálogo de perigo")
 
 
 func test_analytics_and_ads_config() -> void:

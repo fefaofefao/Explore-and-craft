@@ -138,8 +138,10 @@ func _shots() -> void:
 	_aim(w, bc, 0.9, 0.42, 13.0)
 	await _frames(60)
 	await _shot("04_base")
-	# combate e habilidade
-	_aim(w, w.player.global_position, 2.2, 0.35, 7.5)
+	# combate e habilidade (longe da casa)
+	_aim(w, bc + Vector3(-18, 0, 14), 2.2, 0.35, 7.5)
+	if w.ally != null:
+		w.ally.global_position = w.player.global_position + Vector3(1.5, 0.5, -1.5)
 	var m := MonsterLogic.create("espinhoz", 6, Game.rng)
 	var foe := MonsterActor.new().setup(m, "wild", w, w.gen)
 	w._actors.add_child(foe)

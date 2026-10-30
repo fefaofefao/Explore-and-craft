@@ -12,12 +12,14 @@ static func mat(kind: String = "vc") -> Material:
 		return _mats[kind]
 	var m := StandardMaterial3D.new()
 	m.vertex_color_use_as_albedo = true
-	m.vertex_color_is_srgb = true
-	m.diffuse_mode = BaseMaterial3D.DIFFUSE_TOON
+	m.vertex_color_is_srgb = false
+	m.diffuse_mode = BaseMaterial3D.DIFFUSE_LAMBERT
 	m.specular_mode = BaseMaterial3D.SPECULAR_DISABLED
 	m.roughness = 1.0
-	m.cull_mode = BaseMaterial3D.CULL_DISABLED  # folhas e telhados são planos abertos
+	m.cull_mode = BaseMaterial3D.CULL_BACK
 	match kind:
+		"vc_ds":
+			m.cull_mode = BaseMaterial3D.CULL_DISABLED  # folhas e telhados são planos abertos
 		"glow":
 			m.emission_enabled = true
 			m.emission = Color(0.5, 0.95, 1.0)

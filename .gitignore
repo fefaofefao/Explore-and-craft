@@ -1,8 +1,6 @@
 .godot/
 build/
 *.tmp
-*.import
-!icon.svg.import
 export_credentials.cfg
 *.keystore
 !debug.keystore

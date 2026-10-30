@@ -63,7 +63,10 @@ func build(p_map: String, p_hud: Node) -> void:
 	sky.update_time(st.day_time)
 	add_child(TerrainBuilder.build_terrain(gen))
 	add_child(TerrainBuilder.build_water(gen))
-	add_child(TerrainBuilder.build_grass(gen, q))
+	var grass := TerrainBuilder.build_grass(gen, q)
+	add_child(grass)
+	sky.grass_mat = grass.material_override
+	sky.update_time(st.day_time)
 	_props = Node3D.new()
 	_props.name = "Props"
 	add_child(_props)
@@ -208,6 +211,7 @@ func _build_pois() -> void:
 				var br := MeshInstance3D.new()
 				br.mesh = MeshLib.get_mesh("ponte")
 				br.material_override = MeshLib.mat("vc")
+				br.material_override = MeshLib.mat("vc")
 				_props.add_child(br)
 				br.global_position = Vector3(0, 1.0, -96)
 				_add_bridge_collision(Vector3(0, 1.0, -96))
@@ -219,7 +223,7 @@ func _build_pois() -> void:
 		if p.get("ferry", false):
 			var boat := MeshInstance3D.new()
 			boat.mesh = MeshLib.get_mesh("barco")
-			boat.material_override = MeshLib.mat("vc")
+			boat.material_override = MeshLib.mat("vc_ds")
 			_props.add_child(boat)
 			var dir := Vector3(pos.x, 0, pos.z).normalized()
 			boat.global_position = pos + dir * 4.0 + Vector3(0, -0.3 - pos.y, 0)
@@ -314,7 +318,7 @@ func _build_city() -> void:
 	for h in lay["houses"]:
 		var mi := MeshInstance3D.new()
 		mi.mesh = MeshLib.get_mesh("casa", int(h["style"]), Color.WHITE if map_id == "m4" else Color("#9a96aa"))
-		mi.material_override = MeshLib.mat("vc")
+		mi.material_override = MeshLib.mat("vc_ds")
 		mi.position = h["pos"]
 		mi.rotation.y = h["rot"]
 		mi.scale = Vector3(h["w"], h["h"] / 3.5, h["d"])
@@ -986,18 +990,12 @@ func player_attack() -> void:
 	Audio.play("hit_soft", 0.15)
 
 
-static func skill_slot(skills: Array, idx: int) -> int:
-	## Os dois botões mostram as habilidades mais fortes (as últimas aprendidas).
-	var j := maxi(0, skills.size() - 2) + idx
-	return j if j < skills.size() else -1
-
-
 func ally_skill(idx: int) -> void:
 	var a := ally_actor()
 	if a == null:
 		return
 	var skills: Array = a.m["skills"]
-	var j := skill_slot(skills, idx)
+	var j := MonsterLogic.skill_slot(skills, idx)
 	if j < 0:
 		return
 	var s: String = skills[j]
@@ -1722,6 +1720,26 @@ func _process(delta: float) -> void:
 		_spring_heal()
 	st.pos = player.global_position
 	st.has_pos = true
+	_quest_intro()
+
+
+func _quest_intro() -> void:
+	## Fala de abertura da missão atual (uma vez). Falas curtas da Lume viram dica em balão.
+	var st: GameState = Game.state
+	if st.quest_seen_dialog or st.is_sandbox() or hud.modal_open():
+		return
+	var q := QuestLogic.current(st)
+	if q.is_empty():
+		return
+	st.quest_seen_dialog = true
+	var did: Variant = q.get("dialog")
+	if did == null or q["id"] == "q01":
+		return
+	var lines: Array = GameData.db().dialogs.get(did, [])
+	if lines.size() == 1 and lines[0]["who"] == "lume":
+		hud.lume_hint(Loc.tx(lines[0]["text"]), 9.0)
+	else:
+		hud.show_dialog(did, Callable())
 
 
 func _maintain_spawns() -> void:

@@ -8,6 +8,8 @@ var sun: DirectionalLight3D
 var moon: DirectionalLight3D
 var biome: Dictionary
 var quality: int = 1
+var grass_mat: ShaderMaterial
+var grass_light := 1.0
 
 var _sky_top: Color
 var _sky_hor: Color
@@ -45,20 +47,20 @@ func setup(p_biome: Dictionary, p_quality: int) -> void:
 	env.ambient_light_color = _amb
 	env.ambient_light_energy = 0.4
 	env.tonemap_mode = Environment.TONE_MAPPER_ACES
-	env.tonemap_exposure = 0.92
+	env.tonemap_exposure = 0.85
 	env.tonemap_white = 6.0
 	env.fog_enabled = true
 	env.fog_light_color = _fog
 	env.fog_density = float(biome["fog_density"]) * 0.45
 	env.fog_sky_affect = 0.2
 	env.fog_aerial_perspective = 0.0
-	env.glow_enabled = quality >= 1
-	env.glow_intensity = 0.6
+	env.glow_enabled = quality >= 2
+	env.glow_intensity = 0.35
 	env.glow_bloom = 0.0
-	env.glow_hdr_threshold = 1.1
+	env.glow_hdr_threshold = 1.4
 	env.adjustment_enabled = true
-	env.adjustment_saturation = 1.28
-	env.adjustment_contrast = 1.12
+	env.adjustment_saturation = 1.08
+	env.adjustment_contrast = 1.06
 	we.environment = env
 	add_child(we)
 	sun = DirectionalLight3D.new()
@@ -83,7 +85,7 @@ func update_time(day_time: float) -> void:
 	var sf := SurvivalLogic.sun_factor(day_time)
 	var ang := (day_time - 0.25) * TAU  # 0 no nascer, PI no pôr
 	sun.rotation = Vector3(-clampf(sin(ang), 0.05, 1.0) * 1.2 - 0.15, -0.6 + cos(ang) * 0.9, 0.0)
-	sun.light_energy = lerpf(0.0, 1.35, sf)
+	sun.light_energy = lerpf(0.0, 1.05, sf)
 	sun.visible = sf > 0.02
 	moon.rotation = Vector3(-0.9, 0.4 + day_time, 0.0)
 	moon.light_energy = lerpf(0.32, 0.0, sf)
@@ -97,5 +99,8 @@ func update_time(day_time: float) -> void:
 	sky_mat.ground_horizon_color = hor
 	env.fog_light_color = _fog.darkened(0.75 * (1.0 - sf)).lerp(DUSK_HOR, dusk * 0.4)
 	env.ambient_light_color = _amb.darkened(0.55 * (1.0 - sf)).lerp(Color("#5a6aa8"), (1.0 - sf) * 0.35)
-	env.ambient_light_energy = lerpf(0.38, 0.42, sf)
+	env.ambient_light_energy = lerpf(0.45, 0.55, sf)
 	sun.light_color = _sun_col.lerp(Color("#ffb070"), dusk)
+	grass_light = lerpf(0.25, 1.0, sf)
+	if grass_mat != null:
+		grass_mat.set_shader_parameter("light_mult", grass_light)
