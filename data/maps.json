@@ -272,7 +272,7 @@
    "hazard": {
     "kind": "calor",
     "gear": "cantil",
-    "dps": 0.6
+    "dps": 1.5
    },
    "spawn": [
     -80,
@@ -406,7 +406,7 @@
    "hazard": {
     "kind": "frio",
     "gear": "casaco_pele",
-    "dps": 0.7
+    "dps": 1.8
    },
    "spawn": [
     84,
@@ -706,7 +706,7 @@
    "hazard": {
     "kind": "veneno",
     "gear": "mascara_filtro",
-    "dps": 0.9
+    "dps": 2.2
    },
    "spawn": [
     0,
@@ -858,7 +858,7 @@
    "hazard": {
     "kind": "lava",
     "gear": "traje_ignifugo",
-    "dps": 1.0
+    "dps": 2.5
    },
    "spawn": [
     -84,
@@ -984,7 +984,7 @@
    "hazard": {
     "kind": "tempestade",
     "gear": "para_raios",
-    "dps": 1.0
+    "dps": 2.5
    },
    "spawn": [
     84,

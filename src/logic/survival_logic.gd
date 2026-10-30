@@ -11,13 +11,14 @@ static func tick(state: GameState, dt: float, hazard: Variant) -> Dictionary:
 		state.hp = min(state.max_hp(), state.hp + 5.0 * dt)
 		return ev
 	state.hunger = max(0.0, state.hunger - float(p["hunger_drain_per_min"]) * dt / 60.0)
+	var exposed: bool = hazard != null and hazard is Dictionary and not state.inv.has_protection(hazard["kind"])
 	if state.hunger <= 0.0:
 		ev["starving"] = true
 		if state.hp > float(p["starve_min_hp"]):
 			state.hp = max(float(p["starve_min_hp"]), state.hp - float(p["starve_dps"]) * dt)
-	elif state.hunger >= float(p["fed_threshold"]):
+	elif state.hunger >= float(p["fed_threshold"]) and not exposed:
 		state.hp = min(state.max_hp(), state.hp + float(p["regen_per_sec_fed"]) * dt)
-	if hazard != null and hazard is Dictionary and not state.inv.has_protection(hazard["kind"]):
+	if exposed:
 		var d: float = float(hazard["dps"]) * dt
 		state.hp = max(0.0, state.hp - d)
 		ev["hazard_dmg"] = d
