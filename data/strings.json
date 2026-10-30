@@ -1,0 +1,1146 @@
+{
+ "game_title": {
+  "pt": "Ecoterra",
+  "en": "Ecoterra"
+ },
+ "game_subtitle": {
+  "pt": "Despertar",
+  "en": "Awakening"
+ },
+ "continue": {
+  "pt": "Continuar",
+  "en": "Continue"
+ },
+ "new_story": {
+  "pt": "Nova História",
+  "en": "New Story"
+ },
+ "sandbox": {
+  "pt": "Modo Sandbox",
+  "en": "Sandbox Mode"
+ },
+ "settings": {
+  "pt": "Configurações",
+  "en": "Settings"
+ },
+ "back": {
+  "pt": "Voltar",
+  "en": "Back"
+ },
+ "close": {
+  "pt": "Fechar",
+  "en": "Close"
+ },
+ "confirm": {
+  "pt": "Confirmar",
+  "en": "Confirm"
+ },
+ "cancel": {
+  "pt": "Cancelar",
+  "en": "Cancel"
+ },
+ "yes": {
+  "pt": "Sim",
+  "en": "Yes"
+ },
+ "no": {
+  "pt": "Não",
+  "en": "No"
+ },
+ "ok": {
+  "pt": "OK",
+  "en": "OK"
+ },
+ "tap_to_continue": {
+  "pt": "Toque para continuar",
+  "en": "Tap to continue"
+ },
+ "new_game_confirm": {
+  "pt": "Começar uma nova história apaga o progresso atual da história. Continuar?",
+  "en": "Starting a new story erases current story progress. Continue?"
+ },
+ "sandbox_desc": {
+  "pt": "Recursos infinitos, tudo liberado, sem fome. Construa à vontade!",
+  "en": "Infinite resources, everything unlocked, no hunger. Build freely!"
+ },
+ "story_desc": {
+  "pt": "Sobreviva, recrute Ecos e liberte as cidades dos Regentes.",
+  "en": "Survive, recruit Echoes and free the cities from the Regents."
+ },
+ "loading": {
+  "pt": "Carregando...",
+  "en": "Loading..."
+ },
+ "language": {
+  "pt": "Idioma",
+  "en": "Language"
+ },
+ "music": {
+  "pt": "Música",
+  "en": "Music"
+ },
+ "sfx": {
+  "pt": "Efeitos",
+  "en": "Effects"
+ },
+ "quality": {
+  "pt": "Gráficos",
+  "en": "Graphics"
+ },
+ "quality_low": {
+  "pt": "Desempenho",
+  "en": "Performance"
+ },
+ "quality_mid": {
+  "pt": "Equilibrado",
+  "en": "Balanced"
+ },
+ "quality_high": {
+  "pt": "Máximo",
+  "en": "Maximum"
+ },
+ "camera_sens": {
+  "pt": "Sensibilidade da câmera",
+  "en": "Camera sensitivity"
+ },
+ "vibration": {
+  "pt": "Vibração",
+  "en": "Vibration"
+ },
+ "privacy": {
+  "pt": "Privacidade e anúncios",
+  "en": "Privacy & ads"
+ },
+ "restore_purchases": {
+  "pt": "Restaurar compras",
+  "en": "Restore purchases"
+ },
+ "credits": {
+  "pt": "Créditos",
+  "en": "Credits"
+ },
+ "version": {
+  "pt": "Versão {0}",
+  "en": "Version {0}"
+ },
+ "peaceful": {
+  "pt": "Pacífico (sandbox)",
+  "en": "Peaceful (sandbox)"
+ },
+ "save_and_exit": {
+  "pt": "Salvar e sair",
+  "en": "Save & exit"
+ },
+ "saved": {
+  "pt": "Jogo salvo",
+  "en": "Game saved"
+ },
+ "hp": {
+  "pt": "Vida",
+  "en": "Health"
+ },
+ "hunger": {
+  "pt": "Fome",
+  "en": "Hunger"
+ },
+ "level_short": {
+  "pt": "Nv {0}",
+  "en": "Lv {0}"
+ },
+ "day_n": {
+  "pt": "Dia {0}",
+  "en": "Day {0}"
+ },
+ "night": {
+  "pt": "Noite",
+  "en": "Night"
+ },
+ "act": {
+  "pt": "Ato",
+  "en": "Act"
+ },
+ "attack": {
+  "pt": "Atacar",
+  "en": "Attack"
+ },
+ "gather": {
+  "pt": "Coletar",
+  "en": "Gather"
+ },
+ "interact": {
+  "pt": "Usar",
+  "en": "Use"
+ },
+ "jump": {
+  "pt": "Pular",
+  "en": "Jump"
+ },
+ "sprint": {
+  "pt": "Correr",
+  "en": "Sprint"
+ },
+ "throw_sphere": {
+  "pt": "Esfera",
+  "en": "Sphere"
+ },
+ "build": {
+  "pt": "Construir",
+  "en": "Build"
+ },
+ "menu": {
+  "pt": "Menu",
+  "en": "Menu"
+ },
+ "no_echo": {
+  "pt": "Sem Eco",
+  "en": "No Echo"
+ },
+ "recall": {
+  "pt": "Recolher",
+  "en": "Recall"
+ },
+ "summon": {
+  "pt": "Chamar",
+  "en": "Summon"
+ },
+ "auto_skills": {
+  "pt": "Auto",
+  "en": "Auto"
+ },
+ "objective": {
+  "pt": "Objetivo",
+  "en": "Objective"
+ },
+ "distance_m": {
+  "pt": "{0} m",
+  "en": "{0} m"
+ },
+ "other_map": {
+  "pt": "em {0}",
+  "en": "in {0}"
+ },
+ "tab_inventory": {
+  "pt": "Mochila",
+  "en": "Backpack"
+ },
+ "tab_craft": {
+  "pt": "Criar",
+  "en": "Craft"
+ },
+ "tab_echoes": {
+  "pt": "Ecos",
+  "en": "Echoes"
+ },
+ "tab_quests": {
+  "pt": "Missões",
+  "en": "Quests"
+ },
+ "tab_dex": {
+  "pt": "Bestiário",
+  "en": "Bestiary"
+ },
+ "tab_memories": {
+  "pt": "Memórias",
+  "en": "Memories"
+ },
+ "tab_map": {
+  "pt": "Mapa",
+  "en": "Map"
+ },
+ "tab_shop": {
+  "pt": "Loja",
+  "en": "Shop"
+ },
+ "tab_pass": {
+  "pt": "Trilha",
+  "en": "Trail"
+ },
+ "tab_settings": {
+  "pt": "Ajustes",
+  "en": "Settings"
+ },
+ "use": {
+  "pt": "Usar",
+  "en": "Use"
+ },
+ "eat": {
+  "pt": "Comer",
+  "en": "Eat"
+ },
+ "equip": {
+  "pt": "Equipar",
+  "en": "Equip"
+ },
+ "unequip": {
+  "pt": "Desequipar",
+  "en": "Unequip"
+ },
+ "equipped": {
+  "pt": "Equipado",
+  "en": "Equipped"
+ },
+ "drop": {
+  "pt": "Descartar",
+  "en": "Drop"
+ },
+ "sell": {
+  "pt": "Vender",
+  "en": "Sell"
+ },
+ "sell_for": {
+  "pt": "Vender por {0}",
+  "en": "Sell for {0}"
+ },
+ "inventory_full": {
+  "pt": "Mochila cheia!",
+  "en": "Backpack full!"
+ },
+ "got_item": {
+  "pt": "+{0} {1}",
+  "en": "+{0} {1}"
+ },
+ "empty": {
+  "pt": "Vazio",
+  "en": "Empty"
+ },
+ "coins": {
+  "pt": "Moedas",
+  "en": "Coins"
+ },
+ "gems": {
+  "pt": "Gemas",
+  "en": "Gems"
+ },
+ "tool_hand": {
+  "pt": "Mão",
+  "en": "Hand"
+ },
+ "weapon": {
+  "pt": "Arma",
+  "en": "Weapon"
+ },
+ "tool": {
+  "pt": "Ferramenta",
+  "en": "Tool"
+ },
+ "gear": {
+  "pt": "Proteção",
+  "en": "Gear"
+ },
+ "cat_recurso": {
+  "pt": "Recursos",
+  "en": "Resources"
+ },
+ "cat_comida": {
+  "pt": "Comida",
+  "en": "Food"
+ },
+ "cat_ferramenta": {
+  "pt": "Ferramentas",
+  "en": "Tools"
+ },
+ "cat_arma": {
+  "pt": "Armas",
+  "en": "Weapons"
+ },
+ "cat_equipamento": {
+  "pt": "Equipamentos",
+  "en": "Gear"
+ },
+ "cat_esfera": {
+  "pt": "Esferas",
+  "en": "Spheres"
+ },
+ "cat_cuidado": {
+  "pt": "Cuidados",
+  "en": "Care"
+ },
+ "cat_chave": {
+  "pt": "Relíquias",
+  "en": "Relics"
+ },
+ "cat_material": {
+  "pt": "Materiais",
+  "en": "Materials"
+ },
+ "craft": {
+  "pt": "Criar",
+  "en": "Craft"
+ },
+ "craft_x": {
+  "pt": "Criar x{0}",
+  "en": "Craft x{0}"
+ },
+ "crafted": {
+  "pt": "Criado: {0}",
+  "en": "Crafted: {0}"
+ },
+ "needs_station": {
+  "pt": "Precisa de: {0} por perto",
+  "en": "Needs: {0} nearby"
+ },
+ "needs_level": {
+  "pt": "Requer nível {0}",
+  "en": "Requires level {0}"
+ },
+ "missing_items": {
+  "pt": "Faltam materiais",
+  "en": "Missing materials"
+ },
+ "station_mao": {
+  "pt": "Mão",
+  "en": "Hand"
+ },
+ "station_bancada": {
+  "pt": "Bancada",
+  "en": "Workbench"
+ },
+ "station_fornalha": {
+  "pt": "Fornalha",
+  "en": "Furnace"
+ },
+ "station_fogueira": {
+  "pt": "Fogueira",
+  "en": "Campfire"
+ },
+ "station_arcana": {
+  "pt": "Bancada Arcana",
+  "en": "Arcane Bench"
+ },
+ "station_forja": {
+  "pt": "Forja",
+  "en": "Forge"
+ },
+ "build_mode": {
+  "pt": "Modo Construção",
+  "en": "Build Mode"
+ },
+ "place": {
+  "pt": "Colocar",
+  "en": "Place"
+ },
+ "rotate": {
+  "pt": "Girar",
+  "en": "Rotate"
+ },
+ "demolish": {
+  "pt": "Demolir",
+  "en": "Demolish"
+ },
+ "cant_place": {
+  "pt": "Não dá para construir aqui",
+  "en": "Can't build here"
+ },
+ "built": {
+  "pt": "Construído: {0}",
+  "en": "Built: {0}"
+ },
+ "bk_piece": {
+  "pt": "Estrutura",
+  "en": "Structure"
+ },
+ "bk_station": {
+  "pt": "Estações",
+  "en": "Stations"
+ },
+ "bk_machine": {
+  "pt": "Máquinas",
+  "en": "Machines"
+ },
+ "bk_special": {
+  "pt": "Móveis",
+  "en": "Furniture"
+ },
+ "bk_deco": {
+  "pt": "Decoração",
+  "en": "Decor"
+ },
+ "station_work": {
+  "pt": "Estação de Trabalho",
+  "en": "Work Station"
+ },
+ "assign": {
+  "pt": "Alocar Eco",
+  "en": "Assign Echo"
+ },
+ "unassign": {
+  "pt": "Retirar",
+  "en": "Remove"
+ },
+ "collect": {
+  "pt": "Recolher",
+  "en": "Collect"
+ },
+ "collect_all": {
+  "pt": "Recolher tudo",
+  "en": "Collect all"
+ },
+ "worker": {
+  "pt": "Trabalhador",
+  "en": "Worker"
+ },
+ "storage": {
+  "pt": "Armazém {0}/{1}",
+  "en": "Storage {0}/{1}"
+ },
+ "rate_h": {
+  "pt": "{0}/h",
+  "en": "{0}/h"
+ },
+ "work_needs": {
+  "pt": "Precisa de trabalho: {0}",
+  "en": "Needs work skill: {0}"
+ },
+ "no_worker_fit": {
+  "pt": "Nenhum Eco seu tem essa habilidade de trabalho.",
+  "en": "None of your Echoes has that work skill."
+ },
+ "w_corte": {
+  "pt": "Corte",
+  "en": "Lumber"
+ },
+ "w_mineracao": {
+  "pt": "Mineração",
+  "en": "Mining"
+ },
+ "w_coleta": {
+  "pt": "Coleta",
+  "en": "Gathering"
+ },
+ "w_chama": {
+  "pt": "Chama",
+  "en": "Kindling"
+ },
+ "w_irrigacao": {
+  "pt": "Irrigação",
+  "en": "Watering"
+ },
+ "w_cura": {
+  "pt": "Cura",
+  "en": "Healing"
+ },
+ "w_any": {
+  "pt": "Qualquer",
+  "en": "Any"
+ },
+ "healing_spring": {
+  "pt": "A Fonte cura seus Ecos por perto.",
+  "en": "The Spring heals your nearby Echoes."
+ },
+ "sleep": {
+  "pt": "Dormir",
+  "en": "Sleep"
+ },
+ "sleep_done": {
+  "pt": "Você dormiu até o amanhecer.",
+  "en": "You slept until dawn."
+ },
+ "spawn_set": {
+  "pt": "Ponto de retorno definido.",
+  "en": "Respawn point set."
+ },
+ "cant_sleep_day": {
+  "pt": "Só dá para dormir à noite. Ponto de retorno salvo.",
+  "en": "You can only sleep at night. Respawn point saved."
+ },
+ "chest": {
+  "pt": "Baú",
+  "en": "Chest"
+ },
+ "to_chest": {
+  "pt": "Guardar",
+  "en": "Store"
+ },
+ "from_chest": {
+  "pt": "Pegar",
+  "en": "Take"
+ },
+ "party": {
+  "pt": "Equipe",
+  "en": "Party"
+ },
+ "box": {
+  "pt": "Reserva",
+  "en": "Reserve"
+ },
+ "set_active": {
+  "pt": "Ativo",
+  "en": "Active"
+ },
+ "to_party": {
+  "pt": "Para equipe",
+  "en": "To party"
+ },
+ "to_box": {
+  "pt": "Para reserva",
+  "en": "To reserve"
+ },
+ "pet": {
+  "pt": "Carinho",
+  "en": "Pet"
+ },
+ "feed": {
+  "pt": "Alimentar",
+  "en": "Feed"
+ },
+ "release": {
+  "pt": "Soltar",
+  "en": "Release"
+ },
+ "release_confirm": {
+  "pt": "Soltar {0} na natureza? Isso não pode ser desfeito.",
+  "en": "Release {0} into the wild? This can't be undone."
+ },
+ "rename": {
+  "pt": "Renomear",
+  "en": "Rename"
+ },
+ "stats": {
+  "pt": "Atributos",
+  "en": "Stats"
+ },
+ "skills": {
+  "pt": "Habilidades",
+  "en": "Skills"
+ },
+ "work": {
+  "pt": "Trabalho",
+  "en": "Work"
+ },
+ "bond": {
+  "pt": "Vínculo {0}",
+  "en": "Bond {0}"
+ },
+ "talent": {
+  "pt": "Talento {0}%",
+  "en": "Talent {0}%"
+ },
+ "st_hp": {
+  "pt": "PV",
+  "en": "HP"
+ },
+ "st_atk": {
+  "pt": "Ataque",
+  "en": "Attack"
+ },
+ "st_def": {
+  "pt": "Defesa",
+  "en": "Defense"
+ },
+ "st_spd": {
+  "pt": "Velocidade",
+  "en": "Speed"
+ },
+ "fainted": {
+  "pt": "Desmaiado",
+  "en": "Fainted"
+ },
+ "working_at": {
+  "pt": "Trabalhando: {0}",
+  "en": "Working: {0}"
+ },
+ "on_expedition": {
+  "pt": "Em expedição",
+  "en": "On expedition"
+ },
+ "party_full": {
+  "pt": "Equipe cheia (máx. {0}).",
+  "en": "Party full (max {0})."
+ },
+ "box_full": {
+  "pt": "Reserva cheia!",
+  "en": "Reserve full!"
+ },
+ "pet_done": {
+  "pt": "{0} adorou! Vínculo +",
+  "en": "{0} loved it! Bond +"
+ },
+ "pet_cooldown": {
+  "pt": "{0} já recebeu carinho hoje.",
+  "en": "{0} was already petted today."
+ },
+ "evolved": {
+  "pt": "{0} evoluiu para {1}!",
+  "en": "{0} evolved into {1}!"
+ },
+ "learned": {
+  "pt": "{0} aprendeu {1}!",
+  "en": "{0} learned {1}!"
+ },
+ "lvl_up_echo": {
+  "pt": "{0} subiu para o nível {1}!",
+  "en": "{0} reached level {1}!"
+ },
+ "harmony": {
+  "pt": "Harmonia: +{0}% de dano",
+  "en": "Harmony: +{0}% damage"
+ },
+ "variant_aurora": {
+  "pt": "Variante Aurora",
+  "en": "Aurora Variant"
+ },
+ "boss_tag": {
+  "pt": "ALFA",
+  "en": "ALPHA"
+ },
+ "collared": {
+  "pt": "Acorrentado",
+  "en": "Collared"
+ },
+ "capture_success": {
+  "pt": "{0} aceitou o vínculo!",
+  "en": "{0} accepted the bond!"
+ },
+ "capture_fail": {
+  "pt": "{0} escapou da esfera!",
+  "en": "{0} broke free!"
+ },
+ "capture_chance": {
+  "pt": "Chance: {0}%",
+  "en": "Chance: {0}%"
+ },
+ "no_spheres": {
+  "pt": "Sem esferas! Crie mais no menu Criar.",
+  "en": "No spheres! Craft more in the Craft menu."
+ },
+ "no_target": {
+  "pt": "Nenhum Eco por perto.",
+  "en": "No Echo nearby."
+ },
+ "cant_capture_trainer": {
+  "pt": "Não dá para recrutar Ecos de um treinador.",
+  "en": "You can't recruit a trainer's Echo."
+ },
+ "echo_fainted": {
+  "pt": "{0} desmaiou!",
+  "en": "{0} fainted!"
+ },
+ "all_fainted": {
+  "pt": "Todos os seus Ecos desmaiaram!",
+  "en": "All your Echoes fainted!"
+ },
+ "you_fainted": {
+  "pt": "Você desmaiou...",
+  "en": "You fainted..."
+ },
+ "revive_here": {
+  "pt": "Reviver aqui",
+  "en": "Revive here"
+ },
+ "revive_at_bed": {
+  "pt": "Voltar para a cama",
+  "en": "Return to bed"
+ },
+ "revive_watch": {
+  "pt": "Assistir vídeo e reviver aqui",
+  "en": "Watch a video and revive here"
+ },
+ "defeated": {
+  "pt": "{0} derrotado! +{1} XP",
+  "en": "{0} defeated! +{1} XP"
+ },
+ "super_effective": {
+  "pt": "Super efetivo!",
+  "en": "Super effective!"
+ },
+ "not_effective": {
+  "pt": "Pouco efetivo...",
+  "en": "Not very effective..."
+ },
+ "critical": {
+  "pt": "Crítico!",
+  "en": "Critical!"
+ },
+ "trainer_challenge": {
+  "pt": "Desafiar {0}",
+  "en": "Challenge {0}"
+ },
+ "trainer_locked": {
+  "pt": "Derrote os capitães e liberte as jaulas primeiro.",
+  "en": "Defeat the captains and free the cages first."
+ },
+ "trainer_won": {
+  "pt": "Vitória contra {0}!",
+  "en": "Victory over {0}!"
+ },
+ "trainer_lost": {
+  "pt": "Seus Ecos precisam descansar. Tente de novo!",
+  "en": "Your Echoes need rest. Try again!"
+ },
+ "trainer_next": {
+  "pt": "{0} enviou {1}!",
+  "en": "{0} sent out {1}!"
+ },
+ "already_beaten": {
+  "pt": "{0} já foi derrotado.",
+  "en": "{0} has already been defeated."
+ },
+ "boss_appears": {
+  "pt": "{0} desperta!",
+  "en": "{0} awakens!"
+ },
+ "player_level_up": {
+  "pt": "Você subiu para o nível {0}!",
+  "en": "You reached level {0}!"
+ },
+ "new_recipes": {
+  "pt": "Novas receitas liberadas!",
+  "en": "New recipes unlocked!"
+ },
+ "need_tool": {
+  "pt": "Precisa de: {0}",
+  "en": "Requires: {0}"
+ },
+ "need_tier": {
+  "pt": "Ferramenta fraca demais.",
+  "en": "Tool too weak."
+ },
+ "thorns_burned": {
+  "pt": "Os espinhos queimaram!",
+  "en": "The thorns burned away!"
+ },
+ "cage_opened": {
+  "pt": "Jaula aberta! O Eco está livre.",
+  "en": "Cage opened! The Echo is free."
+ },
+ "travel_to": {
+  "pt": "Viajar para {0}",
+  "en": "Travel to {0}"
+ },
+ "travel_locked": {
+  "pt": "Caminho bloqueado.",
+  "en": "Path blocked."
+ },
+ "bridge_altar": {
+  "pt": "Altar da Ponte",
+  "en": "Bridge Altar"
+ },
+ "place_core": {
+  "pt": "Colocar o Núcleo da Ponte",
+  "en": "Place the Bridge Core"
+ },
+ "need_core": {
+  "pt": "O altar espera por um Núcleo da Ponte.",
+  "en": "The altar awaits a Bridge Core."
+ },
+ "gate_altar": {
+  "pt": "Portão Sombrio",
+  "en": "Shadow Gate"
+ },
+ "place_key": {
+  "pt": "Usar a Chave Sombria",
+  "en": "Use the Shadow Key"
+ },
+ "need_key": {
+  "pt": "O portão espera pela Chave Sombria.",
+  "en": "The gate awaits the Shadow Key."
+ },
+ "fragment_found": {
+  "pt": "Fragmento de memória encontrado!",
+  "en": "Memory fragment found!"
+ },
+ "fragments_n": {
+  "pt": "Memórias {0}/{1}",
+  "en": "Memories {0}/{1}"
+ },
+ "hazard_warn": {
+  "pt": "Perigo: {0}! Proteção: {1}",
+  "en": "Hazard: {0}! Protection: {1}"
+ },
+ "hz_calor": {
+  "pt": "calor",
+  "en": "heat"
+ },
+ "hz_frio": {
+  "pt": "frio",
+  "en": "cold"
+ },
+ "hz_veneno": {
+  "pt": "gases tóxicos",
+  "en": "toxic gas"
+ },
+ "hz_lava": {
+  "pt": "calor vulcânico",
+  "en": "volcanic heat"
+ },
+ "hz_tempestade": {
+  "pt": "raios",
+  "en": "lightning"
+ },
+ "cradle": {
+  "pt": "Berço",
+  "en": "Cradle"
+ },
+ "merchant": {
+  "pt": "Mercador",
+  "en": "Merchant"
+ },
+ "quest_board": {
+  "pt": "Quadro de Missões",
+  "en": "Quest Board"
+ },
+ "expeditions": {
+  "pt": "Expedições",
+  "en": "Expeditions"
+ },
+ "talk": {
+  "pt": "Conversar",
+  "en": "Talk"
+ },
+ "ferry": {
+  "pt": "Balsa",
+  "en": "Ferry"
+ },
+ "coming_soon": {
+  "pt": "Em breve",
+  "en": "Coming soon"
+ },
+ "act_locked": {
+  "pt": "Ato {0}: {1} — chega na próxima atualização!",
+  "en": "Act {0}: {1} — arriving in the next update!"
+ },
+ "city_liberated": {
+  "pt": "{0} foi libertada!",
+  "en": "{0} has been liberated!"
+ },
+ "story": {
+  "pt": "História",
+  "en": "Story"
+ },
+ "daily": {
+  "pt": "Diárias",
+  "en": "Daily"
+ },
+ "quest_done": {
+  "pt": "Missão concluída: {0}",
+  "en": "Quest complete: {0}"
+ },
+ "new_quest": {
+  "pt": "Nova missão: {0}",
+  "en": "New quest: {0}"
+ },
+ "claim": {
+  "pt": "Resgatar",
+  "en": "Claim"
+ },
+ "claimed": {
+  "pt": "Resgatado",
+  "en": "Claimed"
+ },
+ "progress": {
+  "pt": "{0}/{1}",
+  "en": "{0}/{1}"
+ },
+ "reward": {
+  "pt": "Recompensa",
+  "en": "Reward"
+ },
+ "all_daily_bonus": {
+  "pt": "Bônus por completar todas: {0}",
+  "en": "Bonus for completing all: {0}"
+ },
+ "resets_in": {
+  "pt": "Renova em {0}",
+  "en": "Resets in {0}"
+ },
+ "story_complete": {
+  "pt": "Você concluiu todo o conteúdo disponível. Novos atos em breve!",
+  "en": "You've completed all available content. New acts coming soon!"
+ },
+ "choose_starter": {
+  "pt": "Escolha seu parceiro",
+  "en": "Choose your partner"
+ },
+ "free_it": {
+  "pt": "Libertar",
+  "en": "Free it"
+ },
+ "daily_login": {
+  "pt": "Presente Diário",
+  "en": "Daily Gift"
+ },
+ "day_x": {
+  "pt": "Dia {0}",
+  "en": "Day {0}"
+ },
+ "claim_x2": {
+  "pt": "Resgatar x2 (vídeo)",
+  "en": "Claim x2 (video)"
+ },
+ "come_back_tomorrow": {
+  "pt": "Volte amanhã para o próximo presente!",
+  "en": "Come back tomorrow for the next gift!"
+ },
+ "offline_title": {
+  "pt": "Enquanto você estava fora",
+  "en": "While you were away"
+ },
+ "offline_desc": {
+  "pt": "Seus Ecos trabalharam por {0}:",
+  "en": "Your Echoes worked for {0}:"
+ },
+ "double_video": {
+  "pt": "Dobrar (vídeo)",
+  "en": "Double (video)"
+ },
+ "collect_plain": {
+  "pt": "Recolher",
+  "en": "Collect"
+ },
+ "pass_title": {
+  "pt": "Trilha do Desperto",
+  "en": "Awakened Trail"
+ },
+ "pass_tier": {
+  "pt": "Nível {0}",
+  "en": "Tier {0}"
+ },
+ "pass_free": {
+  "pt": "Grátis",
+  "en": "Free"
+ },
+ "pass_premium": {
+  "pt": "Premium",
+  "en": "Premium"
+ },
+ "pass_unlock": {
+  "pt": "Liberar Premium",
+  "en": "Unlock Premium"
+ },
+ "pass_days_left": {
+  "pt": "{0} dias restantes",
+  "en": "{0} days left"
+ },
+ "dex_seen": {
+  "pt": "Vistos {0}",
+  "en": "Seen {0}"
+ },
+ "dex_caught": {
+  "pt": "Recrutados {0}/{1}",
+  "en": "Recruited {0}/{1}"
+ },
+ "dex_unknown": {
+  "pt": "???",
+  "en": "???"
+ },
+ "dex_milestone": {
+  "pt": "Marco: recrute {0} espécies",
+  "en": "Milestone: recruit {0} species"
+ },
+ "exp_send": {
+  "pt": "Enviar",
+  "en": "Send"
+ },
+ "exp_choose": {
+  "pt": "Escolha um Eco da reserva",
+  "en": "Choose an Echo from the reserve"
+ },
+ "exp_running": {
+  "pt": "Retorna em {0}",
+  "en": "Returns in {0}"
+ },
+ "exp_ready": {
+  "pt": "Expedição concluída!",
+  "en": "Expedition complete!"
+ },
+ "exp_rush": {
+  "pt": "Concluir já (vídeo)",
+  "en": "Finish now (video)"
+ },
+ "exp_slot_locked": {
+  "pt": "Vaga bloqueada",
+  "en": "Locked slot"
+ },
+ "exp_dur": {
+  "pt": "{0} h",
+  "en": "{0} h"
+ },
+ "shop": {
+  "pt": "Loja",
+  "en": "Shop"
+ },
+ "buy": {
+  "pt": "Comprar",
+  "en": "Buy"
+ },
+ "not_enough": {
+  "pt": "Moedas/gemas insuficientes.",
+  "en": "Not enough coins/gems."
+ },
+ "purchased": {
+  "pt": "Compra concluída!",
+  "en": "Purchase complete!"
+ },
+ "free_video": {
+  "pt": "Grátis (vídeo)",
+  "en": "Free (video)"
+ },
+ "video_unavailable": {
+  "pt": "Nenhum vídeo disponível agora. Tente mais tarde.",
+  "en": "No video available right now. Try again later."
+ },
+ "video_cooldown": {
+  "pt": "Disponível em {0}",
+  "en": "Available in {0}"
+ },
+ "starter_offer": {
+  "pt": "Oferta do Desperto",
+  "en": "Awakened Offer"
+ },
+ "offer_ends": {
+  "pt": "Termina em {0}",
+  "en": "Ends in {0}"
+ },
+ "remove_ads": {
+  "pt": "Sem Anúncios",
+  "en": "No Ads"
+ },
+ "boost_active": {
+  "pt": "XP x2: {0}",
+  "en": "XP x2: {0}"
+ },
+ "free_gems": {
+  "pt": "Gemas grátis",
+  "en": "Free gems"
+ },
+ "free_spheres": {
+  "pt": "Esferas grátis",
+  "en": "Free spheres"
+ },
+ "ad_simulated": {
+  "pt": "[Anúncio de teste]",
+  "en": "[Test ad]"
+ },
+ "iap_unavailable": {
+  "pt": "Loja do Google Play indisponível neste aparelho.",
+  "en": "Google Play store unavailable on this device."
+ },
+ "privacy_text": {
+  "pt": "Usamos anúncios do AdMob e o Firebase Analytics para manter o jogo gratuito. Você pode revisar o consentimento a qualquer momento.",
+  "en": "We use AdMob ads and Firebase Analytics to keep the game free. You can review consent at any time."
+ },
+ "tip_move": {
+  "pt": "Arraste o lado esquerdo para andar e o direito para girar a câmera.",
+  "en": "Drag the left side to move and the right side to turn the camera."
+ },
+ "tip_gather": {
+  "pt": "Chegue perto de árvores e pedras e toque em Coletar.",
+  "en": "Walk up to trees and rocks and tap Gather."
+ },
+ "tip_capture": {
+  "pt": "Enfraqueça um Eco e toque em Esfera para recrutá-lo.",
+  "en": "Weaken an Echo and tap Sphere to recruit it."
+ },
+ "tip_build": {
+  "pt": "Toque em Construir, escolha uma peça e posicione-a.",
+  "en": "Tap Build, pick a piece and place it."
+ },
+ "tip_skills": {
+  "pt": "Os botões coloridos usam as habilidades do seu Eco.",
+  "en": "The colored buttons use your Echo's skills."
+ },
+ "lume_hint": {
+  "pt": "Lume",
+  "en": "Lume"
+ }
+}

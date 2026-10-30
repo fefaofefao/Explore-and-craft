@@ -1,0 +1,374 @@
+{
+ "r_corda": {
+  "out": "corda",
+  "n": 1,
+  "in": {
+   "fibra": 3
+  },
+  "station": "mao",
+  "lvl": 1
+ },
+ "r_tocha": {
+  "out": "tocha",
+  "n": 1,
+  "in": {
+   "madeira": 2,
+   "fibra": 2
+  },
+  "station": "mao",
+  "lvl": 1
+ },
+ "r_machado_pedra": {
+  "out": "machado_pedra",
+  "n": 1,
+  "in": {
+   "madeira": 3,
+   "pedra": 3,
+   "fibra": 2
+  },
+  "station": "mao",
+  "lvl": 1
+ },
+ "r_picareta_pedra": {
+  "out": "picareta_pedra",
+  "n": 1,
+  "in": {
+   "madeira": 3,
+   "pedra": 4,
+   "fibra": 2
+  },
+  "station": "mao",
+  "lvl": 1
+ },
+ "r_esfera": {
+  "out": "esfera",
+  "n": 2,
+  "in": {
+   "pedra": 2,
+   "fibra": 1,
+   "baga": 1
+  },
+  "station": "mao",
+  "lvl": 1
+ },
+ "r_lanca_pedra": {
+  "out": "lanca_pedra",
+  "n": 1,
+  "in": {
+   "madeira": 4,
+   "pedra": 2,
+   "corda": 1
+  },
+  "station": "mao",
+  "lvl": 2
+ },
+ "r_tabua": {
+  "out": "tabua",
+  "n": 2,
+  "in": {
+   "madeira": 3
+  },
+  "station": "bancada",
+  "lvl": 2
+ },
+ "r_tonico": {
+  "out": "tonico",
+  "n": 2,
+  "in": {
+   "baga": 3,
+   "fibra": 1
+  },
+  "station": "bancada",
+  "lvl": 2
+ },
+ "r_cantil": {
+  "out": "cantil",
+  "n": 1,
+  "in": {
+   "pele": 3,
+   "corda": 2,
+   "seiva": 1
+  },
+  "station": "bancada",
+  "lvl": 3
+ },
+ "r_casaco": {
+  "out": "casaco_pele",
+  "n": 1,
+  "in": {
+   "pele": 6,
+   "corda": 3,
+   "fibra": 5
+  },
+  "station": "bancada",
+  "lvl": 5
+ },
+ "r_esfera_grande": {
+  "out": "esfera_grande",
+  "n": 2,
+  "in": {
+   "lingote_ferro": 1,
+   "cristal": 1,
+   "pedra": 2
+  },
+  "station": "bancada",
+  "lvl": 7
+ },
+ "r_pe_de_cabra": {
+  "out": "pe_de_cabra",
+  "n": 1,
+  "in": {
+   "lingote_ferro": 3
+  },
+  "station": "bancada",
+  "lvl": 9
+ },
+ "r_planador": {
+  "out": "planador",
+  "n": 1,
+  "in": {
+   "tabua": 4,
+   "corda": 6,
+   "pele": 4
+  },
+  "station": "bancada",
+  "lvl": 6
+ },
+ "r_reviver": {
+  "out": "reviver",
+  "n": 1,
+  "in": {
+   "seiva": 2,
+   "baga": 4,
+   "po_eco": 2
+  },
+  "station": "bancada",
+  "lvl": 6
+ },
+ "r_tonico_forte": {
+  "out": "tonico_forte",
+  "n": 2,
+  "in": {
+   "tonico": 2,
+   "po_eco": 2,
+   "cogumelo": 1
+  },
+  "station": "bancada",
+  "lvl": 10
+ },
+ "r_mascara": {
+  "out": "mascara_filtro",
+  "n": 1,
+  "in": {
+   "vidro": 2,
+   "pele": 4,
+   "lodo": 3,
+   "corda": 2
+  },
+  "station": "bancada",
+  "lvl": 20
+ },
+ "r_para_raios": {
+  "out": "para_raios",
+  "n": 1,
+  "in": {
+   "lingote_ferro": 4,
+   "circuito": 1,
+   "pena": 4
+  },
+  "station": "bancada",
+  "lvl": 24
+ },
+ "r_lingote": {
+  "out": "lingote_ferro",
+  "n": 1,
+  "in": {
+   "minerio_ferro": 2,
+   "carvao": 1
+  },
+  "station": "fornalha",
+  "lvl": 4
+ },
+ "r_vidro": {
+  "out": "vidro",
+  "n": 1,
+  "in": {
+   "areia": 3,
+   "carvao": 1
+  },
+  "station": "fornalha",
+  "lvl": 4
+ },
+ "r_tijolo": {
+  "out": "tijolo",
+  "n": 2,
+  "in": {
+   "pedra": 2,
+   "areia": 1,
+   "carvao": 1
+  },
+  "station": "fornalha",
+  "lvl": 5
+ },
+ "r_circuito": {
+  "out": "circuito",
+  "n": 1,
+  "in": {
+   "lingote_ferro": 2,
+   "cristal": 2,
+   "vidro": 1
+  },
+  "station": "fornalha",
+  "lvl": 12
+ },
+ "r_liga_obsidiana": {
+  "out": "liga_obsidiana",
+  "n": 1,
+  "in": {
+   "obsidiana": 2,
+   "lingote_ferro": 2,
+   "carvao": 2
+  },
+  "station": "fornalha",
+  "lvl": 22
+ },
+ "r_machado_ferro": {
+  "out": "machado_ferro",
+  "n": 1,
+  "in": {
+   "lingote_ferro": 3,
+   "tabua": 2
+  },
+  "station": "forja",
+  "lvl": 6
+ },
+ "r_picareta_ferro": {
+  "out": "picareta_ferro",
+  "n": 1,
+  "in": {
+   "lingote_ferro": 3,
+   "tabua": 2
+  },
+  "station": "forja",
+  "lvl": 6
+ },
+ "r_espada_ferro": {
+  "out": "espada_ferro",
+  "n": 1,
+  "in": {
+   "lingote_ferro": 4,
+   "tabua": 1,
+   "pele": 1
+  },
+  "station": "forja",
+  "lvl": 8
+ },
+ "r_traje": {
+  "out": "traje_ignifugo",
+  "n": 1,
+  "in": {
+   "liga_obsidiana": 2,
+   "pele": 6,
+   "corda": 3
+  },
+  "station": "forja",
+  "lvl": 22
+ },
+ "r_picareta_obsidiana": {
+  "out": "picareta_obsidiana",
+  "n": 1,
+  "in": {
+   "liga_obsidiana": 3,
+   "tabua": 2
+  },
+  "station": "forja",
+  "lvl": 22
+ },
+ "r_lamina_obsidiana": {
+  "out": "lamina_obsidiana",
+  "n": 1,
+  "in": {
+   "liga_obsidiana": 4,
+   "circuito": 1
+  },
+  "station": "forja",
+  "lvl": 25
+ },
+ "r_carne_assada": {
+  "out": "carne_assada",
+  "n": 1,
+  "in": {
+   "carne_crua": 1
+  },
+  "station": "fogueira",
+  "lvl": 1
+ },
+ "r_suco": {
+  "out": "suco_baga",
+  "n": 1,
+  "in": {
+   "baga": 4
+  },
+  "station": "fogueira",
+  "lvl": 2
+ },
+ "r_ensopado": {
+  "out": "ensopado",
+  "n": 1,
+  "in": {
+   "carne_crua": 2,
+   "cogumelo": 2,
+   "baga": 2
+  },
+  "station": "fogueira",
+  "lvl": 4
+ },
+ "r_lente_solar": {
+  "out": "lente_solar",
+  "n": 1,
+  "in": {
+   "vidro": 3,
+   "cristal": 2,
+   "lingote_ferro": 1
+  },
+  "station": "arcana",
+  "lvl": 5
+ },
+ "r_nucleo_ponte": {
+  "out": "nucleo_ponte",
+  "n": 1,
+  "in": {
+   "seiva_ancestral": 1,
+   "olho_ambar": 1,
+   "lagrima_glacial": 1,
+   "cristal": 5,
+   "lingote_ferro": 5
+  },
+  "station": "arcana",
+  "lvl": 8
+ },
+ "r_esfera_aurora": {
+  "out": "esfera_aurora",
+  "n": 1,
+  "in": {
+   "esfera_grande": 2,
+   "cristal": 3,
+   "po_eco": 5
+  },
+  "station": "arcana",
+  "lvl": 12
+ },
+ "r_chave_sombria": {
+  "out": "chave_sombria",
+  "n": 1,
+  "in": {
+   "raiz_negra": 1,
+   "brasa_eterna": 1,
+   "pena_trovao": 1,
+   "circuito": 3,
+   "liga_obsidiana": 2
+  },
+  "station": "arcana",
+  "lvl": 26
+ }
+}

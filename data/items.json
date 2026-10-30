@@ -1,0 +1,1000 @@
+{
+ "madeira": {
+  "name": {
+   "pt": "Madeira",
+   "en": "Wood"
+  },
+  "cat": "recurso",
+  "color": "#a0703c",
+  "icon": "log",
+  "desc": {
+   "pt": "Material básico de construção.",
+   "en": "Basic building material."
+  },
+  "stack": 99,
+  "value": 1
+ },
+ "pedra": {
+  "name": {
+   "pt": "Pedra",
+   "en": "Stone"
+  },
+  "cat": "recurso",
+  "color": "#9a9a9a",
+  "icon": "rock",
+  "desc": {
+   "pt": "Sólida e confiável.",
+   "en": "Solid and reliable."
+  },
+  "stack": 99,
+  "value": 1
+ },
+ "fibra": {
+  "name": {
+   "pt": "Fibra",
+   "en": "Fiber"
+  },
+  "cat": "recurso",
+  "color": "#b9d77a",
+  "icon": "fiber",
+  "desc": {
+   "pt": "Trançada vira corda, tecido e muito mais.",
+   "en": "Braided into rope, cloth and more."
+  },
+  "stack": 99,
+  "value": 1
+ },
+ "baga": {
+  "name": {
+   "pt": "Baga Doce",
+   "en": "Sweetberry"
+  },
+  "cat": "comida",
+  "color": "#e0405a",
+  "icon": "berry",
+  "desc": {
+   "pt": "Mata um pouco a fome.",
+   "en": "Eases hunger a little."
+  },
+  "stack": 99,
+  "value": 2,
+  "food": {
+   "hunger": 12,
+   "hp": 3
+  }
+ },
+ "minerio_ferro": {
+  "name": {
+   "pt": "Minério de Ferro",
+   "en": "Iron Ore"
+  },
+  "cat": "recurso",
+  "color": "#b07a5a",
+  "icon": "ore",
+  "desc": {
+   "pt": "Derreta na fornalha.",
+   "en": "Smelt it in a furnace."
+  },
+  "stack": 99,
+  "value": 3
+ },
+ "carvao": {
+  "name": {
+   "pt": "Carvão",
+   "en": "Coal"
+  },
+  "cat": "recurso",
+  "color": "#333338",
+  "icon": "coal",
+  "desc": {
+   "pt": "Queima por muito tempo.",
+   "en": "Burns for a long time."
+  },
+  "stack": 99,
+  "value": 2
+ },
+ "cristal": {
+  "name": {
+   "pt": "Cristal Eco",
+   "en": "Echo Crystal"
+  },
+  "cat": "recurso",
+  "color": "#7ff0ff",
+  "icon": "crystal",
+  "desc": {
+   "pt": "Vibra com a memória do mundo.",
+   "en": "Hums with the world's memory."
+  },
+  "stack": 99,
+  "value": 8
+ },
+ "areia": {
+  "name": {
+   "pt": "Areia",
+   "en": "Sand"
+  },
+  "cat": "recurso",
+  "color": "#e8d29a",
+  "icon": "sand",
+  "desc": {
+   "pt": "Vira vidro no fogo.",
+   "en": "Becomes glass in fire."
+  },
+  "stack": 99,
+  "value": 1
+ },
+ "gelo": {
+  "name": {
+   "pt": "Bloco de Gelo",
+   "en": "Ice Block"
+  },
+  "cat": "recurso",
+  "color": "#c8f0ff",
+  "icon": "ice",
+  "desc": {
+   "pt": "Frio que não derrete fácil.",
+   "en": "Cold that won't melt easily."
+  },
+  "stack": 99,
+  "value": 2
+ },
+ "pele": {
+  "name": {
+   "pt": "Pele",
+   "en": "Hide"
+  },
+  "cat": "recurso",
+  "color": "#c49a6a",
+  "icon": "hide",
+  "desc": {
+   "pt": "Deixada por Ecos derrotados.",
+   "en": "Left behind by defeated Echoes."
+  },
+  "stack": 99,
+  "value": 3
+ },
+ "carne_crua": {
+  "name": {
+   "pt": "Carne Crua",
+   "en": "Raw Meat"
+  },
+  "cat": "comida",
+  "color": "#e07a7a",
+  "icon": "meat",
+  "desc": {
+   "pt": "Melhor assar antes.",
+   "en": "Better roast it first."
+  },
+  "stack": 99,
+  "value": 2,
+  "food": {
+   "hunger": 8,
+   "hp": -2
+  }
+ },
+ "seiva": {
+  "name": {
+   "pt": "Seiva",
+   "en": "Sap"
+  },
+  "cat": "recurso",
+  "color": "#e8a83a",
+  "icon": "drop",
+  "desc": {
+   "pt": "Grudenta e preciosa.",
+   "en": "Sticky and precious."
+  },
+  "stack": 99,
+  "value": 4
+ },
+ "cogumelo": {
+  "name": {
+   "pt": "Cogumelo",
+   "en": "Mushroom"
+  },
+  "cat": "comida",
+  "color": "#c24d6b",
+  "icon": "mushroom",
+  "desc": {
+   "pt": "Nutritivo, se for o certo.",
+   "en": "Nutritious, if it's the right one."
+  },
+  "stack": 99,
+  "value": 2,
+  "food": {
+   "hunger": 10,
+   "hp": 5
+  }
+ },
+ "polpa_cacto": {
+  "name": {
+   "pt": "Polpa de Cacto",
+   "en": "Cactus Pulp"
+  },
+  "cat": "comida",
+  "color": "#7ad66a",
+  "icon": "drop",
+  "desc": {
+   "pt": "Hidrata no deserto.",
+   "en": "Hydrates in the desert."
+  },
+  "stack": 99,
+  "value": 2,
+  "food": {
+   "hunger": 6,
+   "hp": 8
+  }
+ },
+ "po_eco": {
+  "name": {
+   "pt": "Pó de Eco",
+   "en": "Echo Dust"
+  },
+  "cat": "recurso",
+  "color": "#d8b8ff",
+  "icon": "dust",
+  "desc": {
+   "pt": "Resíduo brilhante de batalhas.",
+   "en": "Glowing residue from battles."
+  },
+  "stack": 99,
+  "value": 3
+ },
+ "lodo": {
+  "name": {
+   "pt": "Lodo Fértil",
+   "en": "Rich Mud"
+  },
+  "cat": "recurso",
+  "color": "#5a6a3a",
+  "icon": "drop",
+  "desc": {
+   "pt": "Fertiliza qualquer horta.",
+   "en": "Fertilizes any garden."
+  },
+  "stack": 99,
+  "value": 3
+ },
+ "obsidiana": {
+  "name": {
+   "pt": "Obsidiana",
+   "en": "Obsidian"
+  },
+  "cat": "recurso",
+  "color": "#2a1a3a",
+  "icon": "crystal",
+  "desc": {
+   "pt": "Vidro vulcânico afiadíssimo.",
+   "en": "Razor-sharp volcanic glass."
+  },
+  "stack": 99,
+  "value": 6
+ },
+ "pena": {
+  "name": {
+   "pt": "Pena Tempestuosa",
+   "en": "Storm Feather"
+  },
+  "cat": "recurso",
+  "color": "#8fa0ff",
+  "icon": "feather",
+  "desc": {
+   "pt": "Estala com eletricidade.",
+   "en": "Crackles with electricity."
+  },
+  "stack": 99,
+  "value": 5
+ },
+ "lingote_ferro": {
+  "name": {
+   "pt": "Lingote de Ferro",
+   "en": "Iron Ingot"
+  },
+  "cat": "material",
+  "color": "#c8ccd4",
+  "icon": "ingot",
+  "desc": {
+   "pt": "Base de ferramentas avançadas.",
+   "en": "Base of advanced tools."
+  },
+  "stack": 99,
+  "value": 8
+ },
+ "vidro": {
+  "name": {
+   "pt": "Vidro",
+   "en": "Glass"
+  },
+  "cat": "material",
+  "color": "#bfefff",
+  "icon": "glass",
+  "desc": {
+   "pt": "Transparente e frágil.",
+   "en": "Clear and fragile."
+  },
+  "stack": 99,
+  "value": 5
+ },
+ "corda": {
+  "name": {
+   "pt": "Corda",
+   "en": "Rope"
+  },
+  "cat": "material",
+  "color": "#d8c08a",
+  "icon": "rope",
+  "desc": {
+   "pt": "Amarra quase tudo.",
+   "en": "Ties almost anything."
+  },
+  "stack": 99,
+  "value": 3
+ },
+ "tabua": {
+  "name": {
+   "pt": "Tábua",
+   "en": "Plank"
+  },
+  "cat": "material",
+  "color": "#c89058",
+  "icon": "plank",
+  "desc": {
+   "pt": "Madeira trabalhada.",
+   "en": "Worked lumber."
+  },
+  "stack": 99,
+  "value": 3
+ },
+ "tijolo": {
+  "name": {
+   "pt": "Tijolo",
+   "en": "Brick"
+  },
+  "cat": "material",
+  "color": "#b85a3a",
+  "icon": "brick",
+  "desc": {
+   "pt": "Para construções duráveis.",
+   "en": "For lasting buildings."
+  },
+  "stack": 99,
+  "value": 4
+ },
+ "circuito": {
+  "name": {
+   "pt": "Circuito Eco",
+   "en": "Echo Circuit"
+  },
+  "cat": "material",
+  "color": "#5fd0ff",
+  "icon": "chip",
+  "desc": {
+   "pt": "Tecnologia lumariana restaurada.",
+   "en": "Restored Lumarian technology."
+  },
+  "stack": 99,
+  "value": 15
+ },
+ "liga_obsidiana": {
+  "name": {
+   "pt": "Liga de Obsidiana",
+   "en": "Obsidian Alloy"
+  },
+  "cat": "material",
+  "color": "#6a3a8a",
+  "icon": "ingot",
+  "desc": {
+   "pt": "Metal forjado com vidro vulcânico.",
+   "en": "Metal forged with volcanic glass."
+  },
+  "stack": 99,
+  "value": 20
+ },
+ "carne_assada": {
+  "name": {
+   "pt": "Carne Assada",
+   "en": "Roast Meat"
+  },
+  "cat": "comida",
+  "color": "#b8603a",
+  "icon": "meat",
+  "desc": {
+   "pt": "Restaura bastante fome.",
+   "en": "Restores plenty of hunger."
+  },
+  "stack": 99,
+  "value": 5,
+  "food": {
+   "hunger": 35,
+   "hp": 15
+  }
+ },
+ "ensopado": {
+  "name": {
+   "pt": "Ensopado da Aurora",
+   "en": "Aurora Stew"
+  },
+  "cat": "comida",
+  "color": "#e8a050",
+  "icon": "bowl",
+  "desc": {
+   "pt": "Esquenta a alma.",
+   "en": "Warms the soul."
+  },
+  "stack": 99,
+  "value": 12,
+  "food": {
+   "hunger": 70,
+   "hp": 40
+  }
+ },
+ "suco_baga": {
+  "name": {
+   "pt": "Suco de Baga",
+   "en": "Berry Juice"
+  },
+  "cat": "comida",
+  "color": "#ff5a7a",
+  "icon": "bottle",
+  "desc": {
+   "pt": "Refrescante.",
+   "en": "Refreshing."
+  },
+  "stack": 99,
+  "value": 6,
+  "food": {
+   "hunger": 20,
+   "hp": 20
+  }
+ },
+ "machado_pedra": {
+  "name": {
+   "pt": "Machado de Pedra",
+   "en": "Stone Axe"
+  },
+  "cat": "ferramenta",
+  "color": "#9a9a9a",
+  "icon": "axe",
+  "desc": {
+   "pt": "Corta árvores mais rápido.",
+   "en": "Chops trees faster."
+  },
+  "stack": 1,
+  "value": 6,
+  "tool": {
+   "kind": "axe",
+   "tier": 1,
+   "power": 2.5
+  }
+ },
+ "picareta_pedra": {
+  "name": {
+   "pt": "Picareta de Pedra",
+   "en": "Stone Pickaxe"
+  },
+  "cat": "ferramenta",
+  "color": "#9a9a9a",
+  "icon": "pick",
+  "desc": {
+   "pt": "Quebra pedras e minério.",
+   "en": "Breaks rocks and ore."
+  },
+  "stack": 1,
+  "value": 6,
+  "tool": {
+   "kind": "pick",
+   "tier": 1,
+   "power": 2.5
+  }
+ },
+ "machado_ferro": {
+  "name": {
+   "pt": "Machado de Ferro",
+   "en": "Iron Axe"
+  },
+  "cat": "ferramenta",
+  "color": "#c8ccd4",
+  "icon": "axe",
+  "desc": {
+   "pt": "Derruba árvores num instante.",
+   "en": "Fells trees in an instant."
+  },
+  "stack": 1,
+  "value": 25,
+  "tool": {
+   "kind": "axe",
+   "tier": 2,
+   "power": 5.0
+  }
+ },
+ "picareta_ferro": {
+  "name": {
+   "pt": "Picareta de Ferro",
+   "en": "Iron Pickaxe"
+  },
+  "cat": "ferramenta",
+  "color": "#c8ccd4",
+  "icon": "pick",
+  "desc": {
+   "pt": "Quebra até gelo eterno.",
+   "en": "Breaks even eternal ice."
+  },
+  "stack": 1,
+  "value": 25,
+  "tool": {
+   "kind": "pick",
+   "tier": 2,
+   "power": 5.0
+  }
+ },
+ "picareta_obsidiana": {
+  "name": {
+   "pt": "Picareta de Obsidiana",
+   "en": "Obsidian Pickaxe"
+  },
+  "cat": "ferramenta",
+  "color": "#6a3a8a",
+  "icon": "pick",
+  "desc": {
+   "pt": "Corta rocha vulcânica.",
+   "en": "Cuts volcanic rock."
+  },
+  "stack": 1,
+  "value": 60,
+  "tool": {
+   "kind": "pick",
+   "tier": 3,
+   "power": 8.0
+  }
+ },
+ "lanca_pedra": {
+  "name": {
+   "pt": "Lança de Pedra",
+   "en": "Stone Spear"
+  },
+  "cat": "arma",
+  "color": "#9a9a9a",
+  "icon": "spear",
+  "desc": {
+   "pt": "Ajuda seus Ecos na luta.",
+   "en": "Helps your Echoes fight."
+  },
+  "stack": 1,
+  "value": 8,
+  "weapon": {
+   "dmg": 8
+  }
+ },
+ "espada_ferro": {
+  "name": {
+   "pt": "Espada de Ferro",
+   "en": "Iron Sword"
+  },
+  "cat": "arma",
+  "color": "#c8ccd4",
+  "icon": "sword",
+  "desc": {
+   "pt": "Corte firme.",
+   "en": "A firm cut."
+  },
+  "stack": 1,
+  "value": 30,
+  "weapon": {
+   "dmg": 16
+  }
+ },
+ "lamina_obsidiana": {
+  "name": {
+   "pt": "Lâmina de Obsidiana",
+   "en": "Obsidian Blade"
+  },
+  "cat": "arma",
+  "color": "#6a3a8a",
+  "icon": "sword",
+  "desc": {
+   "pt": "Lâmina que canta.",
+   "en": "A blade that sings."
+  },
+  "stack": 1,
+  "value": 70,
+  "weapon": {
+   "dmg": 28
+  }
+ },
+ "tocha": {
+  "name": {
+   "pt": "Tocha",
+   "en": "Torch"
+  },
+  "cat": "ferramenta",
+  "color": "#ffb84a",
+  "icon": "torch",
+  "desc": {
+   "pt": "Ilumina e queima espinhos.",
+   "en": "Lights the way and burns thorns."
+  },
+  "stack": 1,
+  "value": 3,
+  "tool": {
+   "kind": "torch",
+   "tier": 1,
+   "power": 1.0
+  }
+ },
+ "pe_de_cabra": {
+  "name": {
+   "pt": "Pé de Cabra",
+   "en": "Crowbar"
+  },
+  "cat": "ferramenta",
+  "color": "#c8ccd4",
+  "icon": "crowbar",
+  "desc": {
+   "pt": "Abre jaulas e portões.",
+   "en": "Opens cages and gates."
+  },
+  "stack": 1,
+  "value": 20,
+  "tool": {
+   "kind": "crowbar",
+   "tier": 1,
+   "power": 1.0
+  }
+ },
+ "planador": {
+  "name": {
+   "pt": "Planador de Fibra",
+   "en": "Fiber Glider"
+  },
+  "cat": "ferramenta",
+  "color": "#ffd8a0",
+  "icon": "glider",
+  "desc": {
+   "pt": "Plane de lugares altos (segure Pular no ar).",
+   "en": "Glide from heights (hold Jump in the air)."
+  },
+  "stack": 1,
+  "value": 40,
+  "tool": {
+   "kind": "glider",
+   "tier": 1,
+   "power": 1.0
+  }
+ },
+ "cantil": {
+  "name": {
+   "pt": "Cantil de Couro",
+   "en": "Leather Canteen"
+  },
+  "cat": "equipamento",
+  "color": "#c49a6a",
+  "icon": "canteen",
+  "desc": {
+   "pt": "Protege do calor das Dunas.",
+   "en": "Protects from the Dunes' heat."
+  },
+  "stack": 1,
+  "value": 15,
+  "gear": {
+   "protect": "calor"
+  }
+ },
+ "casaco_pele": {
+  "name": {
+   "pt": "Casaco de Pele",
+   "en": "Fur Coat"
+  },
+  "cat": "equipamento",
+  "color": "#e8d8c0",
+  "icon": "coat",
+  "desc": {
+   "pt": "Protege do frio dos Picos.",
+   "en": "Protects from the Peaks' cold."
+  },
+  "stack": 1,
+  "value": 20,
+  "gear": {
+   "protect": "frio"
+  }
+ },
+ "mascara_filtro": {
+  "name": {
+   "pt": "Máscara de Filtro",
+   "en": "Filter Mask"
+  },
+  "cat": "equipamento",
+  "color": "#7a9a6a",
+  "icon": "mask",
+  "desc": {
+   "pt": "Protege dos gases do Pântano.",
+   "en": "Protects from Marsh gases."
+  },
+  "stack": 1,
+  "value": 35,
+  "gear": {
+   "protect": "veneno"
+  }
+ },
+ "traje_ignifugo": {
+  "name": {
+   "pt": "Traje Ignífugo",
+   "en": "Fireproof Suit"
+  },
+  "cat": "equipamento",
+  "color": "#d86a3a",
+  "icon": "coat",
+  "desc": {
+   "pt": "Resiste ao calor do Cânion.",
+   "en": "Withstands the Canyon's heat."
+  },
+  "stack": 1,
+  "value": 45,
+  "gear": {
+   "protect": "lava"
+  }
+ },
+ "para_raios": {
+  "name": {
+   "pt": "Para-raios Portátil",
+   "en": "Pocket Lightning Rod"
+  },
+  "cat": "equipamento",
+  "color": "#8fa0ff",
+  "icon": "rod",
+  "desc": {
+   "pt": "Desvia raios das Ilhas.",
+   "en": "Deflects the Isles' lightning."
+  },
+  "stack": 1,
+  "value": 45,
+  "gear": {
+   "protect": "tempestade"
+  }
+ },
+ "esfera": {
+  "name": {
+   "pt": "Esfera de Vínculo",
+   "en": "Bond Sphere"
+  },
+  "cat": "esfera",
+  "color": "#ff5a5a",
+  "icon": "orb",
+  "desc": {
+   "pt": "Recruta Ecos enfraquecidos.",
+   "en": "Recruits weakened Echoes."
+  },
+  "stack": 99,
+  "value": 5,
+  "orb": {
+   "mult": 1.0
+  }
+ },
+ "esfera_grande": {
+  "name": {
+   "pt": "Esfera Grande",
+   "en": "Great Sphere"
+  },
+  "cat": "esfera",
+  "color": "#3a8aff",
+  "icon": "orb",
+  "desc": {
+   "pt": "Chance de vínculo 1,6x.",
+   "en": "Bond chance x1.6."
+  },
+  "stack": 99,
+  "value": 15,
+  "orb": {
+   "mult": 1.6
+  }
+ },
+ "esfera_aurora": {
+  "name": {
+   "pt": "Esfera Aurora",
+   "en": "Aurora Sphere"
+  },
+  "cat": "esfera",
+  "color": "#ffd84a",
+  "icon": "orb",
+  "desc": {
+   "pt": "Chance de vínculo 2,5x.",
+   "en": "Bond chance x2.5."
+  },
+  "stack": 99,
+  "value": 40,
+  "orb": {
+   "mult": 2.5
+  }
+ },
+ "tonico": {
+  "name": {
+   "pt": "Tônico Eco",
+   "en": "Echo Tonic"
+  },
+  "cat": "cuidado",
+  "color": "#7aff9a",
+  "icon": "bottle",
+  "desc": {
+   "pt": "Cura 50 PV do Eco ativo.",
+   "en": "Heals 50 HP of your active Echo."
+  },
+  "stack": 99,
+  "value": 6,
+  "heal_monster": {
+   "hp": 50,
+   "revive": false
+  }
+ },
+ "tonico_forte": {
+  "name": {
+   "pt": "Tônico Forte",
+   "en": "Strong Tonic"
+  },
+  "cat": "cuidado",
+  "color": "#3aff7a",
+  "icon": "bottle",
+  "desc": {
+   "pt": "Cura 150 PV do Eco ativo.",
+   "en": "Heals 150 HP of your active Echo."
+  },
+  "stack": 99,
+  "value": 15,
+  "heal_monster": {
+   "hp": 150,
+   "revive": false
+  }
+ },
+ "reviver": {
+  "name": {
+   "pt": "Semente Reviver",
+   "en": "Revive Seed"
+  },
+  "cat": "cuidado",
+  "color": "#ffef7a",
+  "icon": "seed",
+  "desc": {
+   "pt": "Reanima um Eco desmaiado.",
+   "en": "Revives a fainted Echo."
+  },
+  "stack": 99,
+  "value": 20,
+  "heal_monster": {
+   "hp": 0.5,
+   "revive": true
+  }
+ },
+ "seiva_ancestral": {
+  "name": {
+   "pt": "Seiva Ancestral",
+   "en": "Ancient Sap"
+  },
+  "cat": "chave",
+  "color": "#ffb83a",
+  "icon": "relic",
+  "desc": {
+   "pt": "Pulsa como um coração verde.",
+   "en": "Beats like a green heart."
+  },
+  "stack": 1,
+  "value": 0
+ },
+ "olho_ambar": {
+  "name": {
+   "pt": "Olho de Âmbar",
+   "en": "Amber Eye"
+  },
+  "cat": "chave",
+  "color": "#ffd04a",
+  "icon": "relic",
+  "desc": {
+   "pt": "Guarda a luz de um sol antigo.",
+   "en": "Holds the light of an ancient sun."
+  },
+  "stack": 1,
+  "value": 0
+ },
+ "lagrima_glacial": {
+  "name": {
+   "pt": "Lágrima Glacial",
+   "en": "Glacial Tear"
+  },
+  "cat": "chave",
+  "color": "#aef0ff",
+  "icon": "relic",
+  "desc": {
+   "pt": "Uma memória congelada.",
+   "en": "A frozen memory."
+  },
+  "stack": 1,
+  "value": 0
+ },
+ "nucleo_ponte": {
+  "name": {
+   "pt": "Núcleo da Ponte",
+   "en": "Bridge Core"
+  },
+  "cat": "chave",
+  "color": "#ff9aff",
+  "icon": "core",
+  "desc": {
+   "pt": "Desperta a Ponte Lumariana.",
+   "en": "Awakens the Lumarian Bridge."
+  },
+  "stack": 1,
+  "value": 0
+ },
+ "lente_solar": {
+  "name": {
+   "pt": "Lente Solar",
+   "en": "Sun Lens"
+  },
+  "cat": "chave",
+  "color": "#ffe08a",
+  "icon": "lens",
+  "desc": {
+   "pt": "Abre o Templo Solar.",
+   "en": "Opens the Sun Temple."
+  },
+  "stack": 1,
+  "value": 0
+ },
+ "raiz_negra": {
+  "name": {
+   "pt": "Raiz Negra",
+   "en": "Black Root"
+  },
+  "cat": "chave",
+  "color": "#3a2a4a",
+  "icon": "relic",
+  "desc": {
+   "pt": "Absorve toda a luz ao redor.",
+   "en": "Drinks all light around it."
+  },
+  "stack": 1,
+  "value": 0
+ },
+ "brasa_eterna": {
+  "name": {
+   "pt": "Brasa Eterna",
+   "en": "Eternal Ember"
+  },
+  "cat": "chave",
+  "color": "#ff6a1a",
+  "icon": "relic",
+  "desc": {
+   "pt": "Nunca se apaga.",
+   "en": "Never goes out."
+  },
+  "stack": 1,
+  "value": 0
+ },
+ "pena_trovao": {
+  "name": {
+   "pt": "Pena-Trovão",
+   "en": "Thunder Plume"
+  },
+  "cat": "chave",
+  "color": "#5a6aff",
+  "icon": "relic",
+  "desc": {
+   "pt": "Carrega uma tempestade inteira.",
+   "en": "Carries a whole storm."
+  },
+  "stack": 1,
+  "value": 0
+ },
+ "chave_sombria": {
+  "name": {
+   "pt": "Chave Sombria",
+   "en": "Shadow Key"
+  },
+  "cat": "chave",
+  "color": "#8a5cd6",
+  "icon": "core",
+  "desc": {
+   "pt": "Abre os portões de Alta Cinza.",
+   "en": "Opens the gates of Ashspire."
+  },
+  "stack": 1,
+  "value": 0
+ }
+}

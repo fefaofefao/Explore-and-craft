@@ -1,0 +1,889 @@
+{
+ "speakers": {
+  "lume": {
+   "name": {
+    "pt": "Lume",
+    "en": "Lume"
+   },
+   "color": "#9ff0ff"
+  },
+  "voce": {
+   "name": {
+    "pt": "Você",
+    "en": "You"
+   },
+   "color": "#ffffff"
+  },
+  "vorn": {
+   "name": {
+    "pt": "Barão Vorn",
+    "en": "Baron Vorn"
+   },
+   "color": "#ff8a5a"
+  },
+  "rasha": {
+   "name": {
+    "pt": "Capitã Rasha",
+    "en": "Captain Rasha"
+   },
+   "color": "#7ac0ff"
+  },
+  "brutus": {
+   "name": {
+    "pt": "Capitão Brutus",
+    "en": "Captain Brutus"
+   },
+   "color": "#ff7a5a"
+  },
+  "lin": {
+   "name": {
+    "pt": "Engenheira Lin",
+    "en": "Engineer Lin"
+   },
+   "color": "#9aff7a"
+  },
+  "iara": {
+   "name": {
+    "pt": "Barqueira Iara",
+    "en": "Ferrywoman Iara"
+   },
+   "color": "#ffd88a"
+  },
+  "sable": {
+   "name": {
+    "pt": "Imperatriz Sable",
+    "en": "Empress Sable"
+   },
+   "color": "#c890ff"
+  },
+  "vex": {
+   "name": {
+    "pt": "Inquisidor Vex",
+    "en": "Inquisitor Vex"
+   },
+   "color": "#b07aff"
+  },
+  "moira": {
+   "name": {
+    "pt": "Madre Moira",
+    "en": "Mother Moira"
+   },
+   "color": "#d0d0ff"
+  },
+  "kade": {
+   "name": {
+    "pt": "General Kade",
+    "en": "General Kade"
+   },
+   "color": "#a0a0b0"
+  },
+  "eco": {
+   "name": {
+    "pt": "???",
+    "en": "???"
+   },
+   "color": "#ffef9a"
+  }
+ },
+ "dialogs": {
+  "d_intro": [
+   {
+    "who": "eco",
+    "text": {
+     "pt": "...Sexta. Sexta, acorde. O Coração ainda bate. Fraco, mas bate.",
+     "en": "...Sixth. Sixth, wake up. The Heart still beats. Weakly, but it beats."
+    }
+   },
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Ah! Você abriu os olhos! Eu sou Lume. Fui... programada para esperar por você. Por trezentos anos, aparentemente.",
+     "en": "Oh! You opened your eyes! I'm Lume. I was... programmed to wait for you. For three hundred years, apparently."
+    }
+   },
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Você estava no Berço — uma cápsula de sono lumariana. Não lembra de nada, né? Era o plano. Seu plano.",
+     "en": "You were in the Cradle — a Lumarian sleep capsule. You don't remember anything, do you? That was the plan. Your plan."
+    }
+   },
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Olhe ali: três Ecos presos em Coleiras de Silêncio. Os Regentes ainda caçam por aqui.",
+     "en": "Look there: three Echoes bound by Silence Collars. The Regents still hunt around here."
+    }
+   },
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Só temos energia para romper uma coleira agora. Escolha com o coração. Os outros vão fugir para a mata — você poderá reencontrá-los.",
+     "en": "We only have power to break one collar right now. Choose with your heart. The others will flee into the woods — you can find them again."
+    }
+   }
+  ],
+  "d_starter_done": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Conseguiu! Sinta isso... é um Vínculo. Ecos nascem da memória do mundo e lembram de quem os liberta.",
+     "en": "You did it! Feel that... it's a Bond. Echoes are born from the world's memory, and they remember who frees them."
+    }
+   },
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Este mundo se chama Ecoterra. E está doente. Precisamos de abrigo, ferramentas... e respostas.",
+     "en": "This world is called Ecoterra. And it's sick. We need shelter, tools... and answers."
+    }
+   }
+  ],
+  "d_q02": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Primeiro o básico: toque nas árvores, pedras e capins para coletar. Seu Eco ajuda se ficar por perto.",
+     "en": "Basics first: tap trees, rocks and grass to gather. Your Echo helps if it stays close."
+    }
+   }
+  ],
+  "d_q03": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Abra o menu Criar. Ferramentas de pedra dobram sua velocidade de coleta.",
+     "en": "Open the Craft menu. Stone tools double your gathering speed."
+    }
+   }
+  ],
+  "d_q04": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Uma Bancada desbloqueia receitas melhores. Toque em Construir e escolha um lugar plano.",
+     "en": "A Workbench unlocks better recipes. Tap Build and pick a flat spot."
+    }
+   }
+  ],
+  "d_q05": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Esferas de Vínculo não aprisionam: elas oferecem um lar. Um Eco só aceita se confiar em você... ou estiver cansado demais para fugir.",
+     "en": "Bond Spheres don't imprison: they offer a home. An Echo only accepts if it trusts you... or is too tired to run."
+    }
+   }
+  ],
+  "d_q06": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Enfraqueça um Eco selvagem com seu parceiro e lance a Esfera. Quanto menos vida, maior a chance!",
+     "en": "Weaken a wild Echo with your partner and throw the Sphere. The lower its health, the better the odds!"
+    }
+   }
+  ],
+  "d_q06_done": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Uma equipe! Você pode trocar o Eco ativo pelo menu Ecos. Tipos diferentes formam Harmonia: mais dano para todos.",
+     "en": "A team! Swap your active Echo in the Echoes menu. Different types form Harmony: more damage for everyone."
+    }
+   }
+  ],
+  "d_q07": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Sua barriga está roncando. A fome cai devagar — coma para recuperar vida. Carne assada é muito melhor que crua.",
+     "en": "Your stomach is growling. Hunger drops slowly — eat to recover health. Roast meat beats raw meat."
+    }
+   }
+  ],
+  "d_q08": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "A noite em Ecoterra é perigosa: Ecos de Sombra saem para caçar. Uma Cama é seu ponto de retorno, e dormir pula a noite.",
+     "en": "Night in Ecoterra is dangerous: Shade Echoes come out to hunt. A Bed is your respawn point, and sleeping skips the night."
+    }
+   }
+  ],
+  "d_q09": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Os Lumarianos viviam ao lado dos Ecos, não acima deles. Aloque um Eco numa estação e ele produz recursos — até quando você estiver longe!",
+     "en": "The Lumarians lived beside the Echoes, not above them. Assign an Echo to a station and it produces resources — even while you're away!"
+    }
+   }
+  ],
+  "d_q09_done": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Veja como ele trabalha feliz. Sem coleiras, sem chicotes. Nunca entendi por que os Regentes escolheram outro caminho...",
+     "en": "Look how happily it works. No collars, no whips. I never understood why the Regents chose another way..."
+    }
+   },
+   {
+    "who": "lume",
+    "text": {
+     "pt": "...ou será que entendi, um dia? Às vezes tenho memórias que não parecem minhas.",
+     "en": "...or did I understand, once? Sometimes I have memories that don't feel like mine."
+    }
+   }
+  ],
+  "d_q10": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Sinto algo pulsando a oeste — a Seiva Ancestral. Mas uma muralha de espinhos protege a clareira. Fogo deve resolver.",
+     "en": "I sense something pulsing to the west — the Ancient Sap. But a wall of thorns guards the clearing. Fire should do it."
+    }
+   }
+  ],
+  "d_q11": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "O Ancião Musgoso. Ele não é mau, só está... assustado. Derrote-o com cuidado. Talvez ele até aceite uma Esfera.",
+     "en": "The Mossy Elder. It isn't evil, just... frightened. Defeat it gently. It might even accept a Sphere."
+    }
+   }
+  ],
+  "d_q11_done": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "A Seiva Ancestral! Uma das três chaves da Ponte Lumariana. As outras estão nas Dunas e nos Picos.",
+     "en": "The Ancient Sap! One of three keys to the Lumarian Bridge. The others lie in the Dunes and the Peaks."
+    }
+   },
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Quando você tocou a Seiva, eu... vi um laboratório. Seis pessoas. E uma delas era você.",
+     "en": "When you touched the Sap, I... saw a laboratory. Six people. And one of them was you."
+    }
+   }
+  ],
+  "d_q12": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Para o que vem pela frente precisamos de metal. Minério de ferro + carvão na Fornalha.",
+     "en": "For what lies ahead we need metal. Iron ore + coal in the Furnace."
+    }
+   }
+  ],
+  "d_q13": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "As Dunas de Âmbar queimam durante o dia. Sem um Cantil, o calor vai drenar sua vida.",
+     "en": "The Amber Dunes burn by day. Without a Canteen the heat will drain your health."
+    }
+   }
+  ],
+  "d_q13_done": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Que calor! Ali, ao leste, há um templo antigo. A porta reage à luz do sol... concentrada.",
+     "en": "So hot! There, to the east, is an ancient temple. Its door reacts to sunlight... focused sunlight."
+    }
+   }
+  ],
+  "d_q14": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "A Bancada Arcana combina tecnologia lumariana e cristais Eco. Com ela, criamos a Lente Solar.",
+     "en": "The Arcane Bench combines Lumarian technology and Echo crystals. With it, we can craft the Sun Lens."
+    }
+   }
+  ],
+  "d_q15": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Ambarraque guarda o Olho de Âmbar. Ataques de Gelo e Maré funcionam bem contra Terra.",
+     "en": "Ambarraque guards the Amber Eye. Frost and Tide attacks work well against Earth."
+    }
+   }
+  ],
+  "d_q15_done": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "O Olho... ele me mostrou uma cidade de ferro e fumaça. Porto Ferrugem. Ecos acorrentados a máquinas.",
+     "en": "The Eye... it showed me a city of iron and smoke. Rustport. Echoes chained to machines."
+    }
+   }
+  ],
+  "d_q16": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Os Picos de Geada congelam até pensamentos. Um Casaco de Pele vai manter seu corpo aquecido.",
+     "en": "The Frost Peaks freeze even thoughts. A Fur Coat will keep you warm."
+    }
+   }
+  ],
+  "d_q17": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "O muro da caverna é gelo eterno. Pedra não basta: precisamos de ferro. Construa uma Forja.",
+     "en": "The cave wall is eternal ice. Stone won't do: we need iron. Build a Forge."
+    }
+   }
+  ],
+  "d_q18": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Serpegelo chora cristais. Cada lágrima é uma memória congelada... talvez uma delas seja sua.",
+     "en": "Serpegelo weeps crystals. Each tear is a frozen memory... maybe one of them is yours."
+    }
+   }
+  ],
+  "d_q18_done": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "As três relíquias! Seiva, Olho e Lágrima. Vida, luz e memória. Os Lumarianos construíram a ponte para que só alguém digno a abrisse.",
+     "en": "All three relics! Sap, Eye and Tear. Life, light and memory. The Lumarians built the bridge so only someone worthy could open it."
+    }
+   }
+  ],
+  "d_q19": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Na Bancada Arcana, una as três relíquias num Núcleo.",
+     "en": "At the Arcane Bench, unite the three relics into a Core."
+    }
+   }
+  ],
+  "d_q20": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "O altar da ponte fica ao norte do Bosque, na costa. Coloque o Núcleo lá.",
+     "en": "The bridge altar lies north of the Grove, on the coast. Place the Core there."
+    }
+   }
+  ],
+  "d_q20_done": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Olhe! A Ponte Lumariana desperta! Do outro lado... Porto Ferrugem. O primeiro dos domínios dos Regentes.",
+     "en": "Look! The Lumarian Bridge awakens! On the other side... Rustport. The first of the Regents' domains."
+    }
+   }
+  ],
+  "d_vorn_meet": [
+   {
+    "who": "vorn",
+    "text": {
+     "pt": "Ora, ora. Um rosto que eu esperava nunca mais ver. A Sexta Regente, de volta dos mortos.",
+     "en": "Well, well. A face I hoped never to see again. The Sixth Regent, back from the dead."
+    }
+   },
+   {
+    "who": "vorn",
+    "text": {
+     "pt": "Não se lembra? Que conveniente. Foi VOCÊ quem projetou as Coleiras de Silêncio. Cada Eco acorrentado nesta cidade carrega a sua assinatura.",
+     "en": "You don't remember? How convenient. YOU designed the Silence Collars. Every chained Echo in this city carries your signature."
+    }
+   },
+   {
+    "who": "lume",
+    "text": {
+     "pt": "...Sexta, não dê ouvidos. Ele quer te quebrar.",
+     "en": "...Sixth, don't listen. He wants to break you."
+    }
+   },
+   {
+    "who": "vorn",
+    "text": {
+     "pt": "Liberte meus trabalhadores, se tiver coragem. Meus capitães vão esmagar seus bichinhos. E depois... conversaremos na arena.",
+     "en": "Free my workers, if you dare. My captains will crush your pets. And then... we'll talk in the arena."
+    }
+   }
+  ],
+  "d_q22": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Há Ecos enjaulados pela cidade. Um Pé de Cabra abre as jaulas. Ecos libertos podem se juntar a você!",
+     "en": "There are caged Echoes all over the city. A Crowbar opens the cages. Freed Echoes may join you!"
+    }
+   }
+  ],
+  "d_q22_done": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Todos livres! Os moradores estão saindo das casas... estão olhando para você com esperança.",
+     "en": "All free! The townsfolk are leaving their homes... they're looking at you with hope."
+    }
+   }
+  ],
+  "d_q23": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Os três capitães comandam os distritos. Derrote-os e Vorn ficará sem escudo.",
+     "en": "The three captains command the districts. Defeat them and Vorn loses his shield."
+    }
+   }
+  ],
+  "d_q24": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "É agora. O Ferro-Colosso está acorrentado ao coração da fundição. Se vencermos, podemos libertá-lo também.",
+     "en": "This is it. The Iron Colossus is chained to the foundry's heart. If we win, we can free it too."
+    }
+   }
+  ],
+  "d_rasha_intro": [
+   {
+    "who": "rasha",
+    "text": {
+     "pt": "As docas são minhas! Nenhum navio sai sem a permissão do Barão.",
+     "en": "The docks are mine! No ship leaves without the Baron's permission."
+    }
+   }
+  ],
+  "d_rasha_defeat": [
+   {
+    "who": "rasha",
+    "text": {
+     "pt": "...Talvez o mar deva ser livre, afinal. Vá. A balsa é sua quando tudo acabar.",
+     "en": "...Maybe the sea should be free after all. Go. The ferry is yours when this is over."
+    }
+   }
+  ],
+  "d_brutus_intro": [
+   {
+    "who": "brutus",
+    "text": {
+     "pt": "Na fundição a gente trabalha até o metal ceder. Ou os Ecos.",
+     "en": "In the foundry we work until the metal gives. Or the Echoes do."
+    }
+   }
+  ],
+  "d_brutus_defeat": [
+   {
+    "who": "brutus",
+    "text": {
+     "pt": "Eu... só segui ordens. Isso não é desculpa, é?",
+     "en": "I... just followed orders. That's no excuse, is it?"
+    }
+   }
+  ],
+  "d_lin_intro": [
+   {
+    "who": "lin",
+    "text": {
+     "pt": "Eu mantenho as coleiras funcionando. Fui sua aluna, sabia? Você me ensinou tudo.",
+     "en": "I keep the collars running. I was your student, did you know? You taught me everything."
+    }
+   }
+  ],
+  "d_lin_defeat": [
+   {
+    "who": "lin",
+    "text": {
+     "pt": "Você mudou. Ou voltou a ser quem era antes de nos ensinar a acorrentar. Tome — o código mestre das coleiras desta cidade.",
+     "en": "You've changed. Or gone back to who you were before you taught us to chain. Take this — the master code for this city's collars."
+    }
+   }
+  ],
+  "d_vorn_intro": [
+   {
+    "who": "vorn",
+    "text": {
+     "pt": "Você não entende, Sexta! Sem as coleiras, a Fúria Cinza volta. Os Ecos enlouquecem. Nós SALVAMOS este mundo!",
+     "en": "You don't understand, Sixth! Without the collars, the Grey Fury returns. The Echoes go mad. We SAVED this world!"
+    }
+   }
+  ],
+  "d_vorn_defeat": [
+   {
+    "who": "vorn",
+    "text": {
+     "pt": "Impossível... Os Ecos lutaram por você sem coleira nenhuma...",
+     "en": "Impossible... The Echoes fought for you without any collar..."
+    }
+   },
+   {
+    "who": "vorn",
+    "text": {
+     "pt": "Pergunte à Imperatriz Sable em Alta Cinza de onde vem a Fúria. Pergunte o que a Regência tira do Coração toda noite.",
+     "en": "Ask Empress Sable in Ashspire where the Fury comes from. Ask what the Regency takes from the Heart every night."
+    }
+   }
+  ],
+  "d_act1_end": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "A coleira do Ferro-Colosso se partiu! Ele... quer vir com você.",
+     "en": "The Iron Colossus's collar has broken! It... wants to come with you."
+    }
+   },
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Porto Ferrugem está livre. Os moradores abriram o mercado e o quadro de missões. Aqui será nossa casa.",
+     "en": "Rustport is free. The townsfolk opened the market and the quest board. This will be our home."
+    }
+   },
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Sexta... eu recuperei outra memória. Nela, você dizia: 'Se eu esquecer, Lume, me lembre de que a culpa é minha — e o conserto também.'",
+     "en": "Sixth... I recovered another memory. In it, you said: 'If I forget, Lume, remind me the fault is mine — and so is the fix.'"
+    }
+   },
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Fim do Ato 1. A balsa nas Docas leva às Terras Cinzentas.",
+     "en": "End of Act 1. The ferry at the Docks leads to the Grey Lands."
+    }
+   }
+  ],
+  "d_q25": [
+   {
+    "who": "iara",
+    "text": {
+     "pt": "Você é quem libertou a cidade? A balsa é sua. Mas o Pântano Lúgubre não perdoa quem respira seus gases.",
+     "en": "You're the one who freed the city? The ferry is yours. But the Gloom Marsh doesn't forgive those who breathe its gases."
+    }
+   }
+  ],
+  "d_q25_done": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Este pântano... era uma floresta. A Regência drenou o Coração daqui primeiro. Veja as árvores mortas.",
+     "en": "This marsh... was a forest. The Regency drained the Heart here first. Look at the dead trees."
+    }
+   }
+  ],
+  "d_q26": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Vidro, pele e lodo: uma Máscara de Filtro nos mantém respirando.",
+     "en": "Glass, hide and mud: a Filter Mask keeps us breathing."
+    }
+   }
+  ],
+  "d_q27": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Lodorei engoliu a Raiz Negra para escondê-la de Sable. Ele está protegendo, não atacando.",
+     "en": "Lodorei swallowed the Black Root to hide it from Sable. It's protecting, not attacking."
+    }
+   }
+  ],
+  "d_q27_done": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "A Raiz Negra absorve luz... e Fúria. Sexta, acho que a Fúria Cinza não vem dos Ecos. Ela vem do Coração ferido.",
+     "en": "The Black Root absorbs light... and Fury. Sixth, I think the Grey Fury doesn't come from the Echoes. It comes from the wounded Heart."
+    }
+   }
+  ],
+  "d_q28": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "O Cânion Brasa derrete ferro comum. Obsidiana + ferro forma uma liga resistente.",
+     "en": "Ember Canyon melts common iron. Obsidian + iron forms a resilient alloy."
+    }
+   }
+  ],
+  "d_q29": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Magmarca tem a Brasa Eterna no peito. Ataques de Maré e Terra vão ajudar.",
+     "en": "Magmarca holds the Eternal Ember in its chest. Tide and Earth attacks will help."
+    }
+   }
+  ],
+  "d_q29_done": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Outra memória: você e Tessár, o Grão-Regente, discutindo. 'As coleiras eram temporárias!', você gritava.",
+     "en": "Another memory: you and Tessár, the High Regent, arguing. 'The collars were meant to be temporary!' you shouted."
+    }
+   }
+  ],
+  "d_q30": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "As Ilhas Tempestade são atingidas por raios o tempo todo. Precisamos de um Para-raios.",
+     "en": "The Storm Isles are struck by lightning constantly. We need a Lightning Rod."
+    }
+   }
+  ],
+  "d_q31": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Trovaguia nunca foi tocado por ninguém. Mostre que você não quer possuí-lo.",
+     "en": "No one has ever touched Trovaguia. Show it you don't want to own it."
+    }
+   }
+  ],
+  "d_q31_done": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "As três relíquias das Terras Cinzentas! Agora a Chave Sombria pode ser forjada.",
+     "en": "All three relics of the Grey Lands! Now the Shadow Key can be forged."
+    }
+   }
+  ],
+  "d_q32": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "O portão norte do Pântano leva a Alta Cinza. Sable vigia tudo através dos olhos de Umbra.",
+     "en": "The Marsh's north gate leads to Ashspire. Sable watches everything through Umbra's eyes."
+    }
+   }
+  ],
+  "d_q33": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Alta Cinza é silenciosa demais. Os Ecos aqui foram proibidos até de fazer barulho.",
+     "en": "Ashspire is far too quiet. The Echoes here were forbidden even to make a sound."
+    }
+   }
+  ],
+  "d_sable_meet": [
+   {
+    "who": "sable",
+    "text": {
+     "pt": "A Sexta. Vorn sempre foi fraco. Eu não sou.",
+     "en": "The Sixth. Vorn was always weak. I am not."
+    }
+   },
+   {
+    "who": "sable",
+    "text": {
+     "pt": "Você quer a verdade? A Regência alimenta as cidades com a energia do Coração-Aurora. A Fúria é o grito dele. As coleiras abafam o grito.",
+     "en": "You want the truth? The Regency powers the cities with the Aurora Heart's energy. The Fury is its scream. The collars muffle the scream."
+    }
+   },
+   {
+    "who": "sable",
+    "text": {
+     "pt": "E quem descobriu como abafá-lo... foi você.",
+     "en": "And the one who discovered how to muffle it... was you."
+    }
+   }
+  ],
+  "d_q34": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Vex, Moira e Kade guardam o palácio. Cuidado: Sable aprende com cada luta que observa.",
+     "en": "Vex, Moira and Kade guard the palace. Careful: Sable learns from every fight she watches."
+    }
+   }
+  ],
+  "d_q35": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Seja qual for a verdade sobre o seu passado... os Ecos escolheram você. Isso diz quem você é agora.",
+     "en": "Whatever the truth about your past... the Echoes chose you. That says who you are now."
+    }
+   }
+  ],
+  "d_vex_intro": [
+   {
+    "who": "vex",
+    "text": {
+     "pt": "Silêncio é ordem. Ordem é paz.",
+     "en": "Silence is order. Order is peace."
+    }
+   }
+  ],
+  "d_vex_defeat": [
+   {
+    "who": "vex",
+    "text": {
+     "pt": "...Que barulho bonito eles fazem quando estão livres.",
+     "en": "...What a lovely noise they make when they're free."
+    }
+   }
+  ],
+  "d_moira_intro": [
+   {
+    "who": "moira",
+    "text": {
+     "pt": "Eu curo os Ecos para que voltem às minas. É misericórdia.",
+     "en": "I heal the Echoes so they can return to the mines. It's mercy."
+    }
+   }
+  ],
+  "d_moira_defeat": [
+   {
+    "who": "moira",
+    "text": {
+     "pt": "Misericórdia seria nunca tê-los mandado.",
+     "en": "Mercy would have been never sending them."
+    }
+   }
+  ],
+  "d_kade_intro": [
+   {
+    "who": "kade",
+    "text": {
+     "pt": "Sable me deu um exército. Você me deu uma derrota que ainda não aconteceu.",
+     "en": "Sable gave me an army. You're about to give me a defeat that hasn't happened yet."
+    }
+   }
+  ],
+  "d_kade_defeat": [
+   {
+    "who": "kade",
+    "text": {
+     "pt": "Um soldado sabe quando a guerra mudou de lado.",
+     "en": "A soldier knows when the war has changed sides."
+    }
+   }
+  ],
+  "d_sable_intro": [
+   {
+    "who": "sable",
+    "text": {
+     "pt": "Mostre-me, Sexta, que um mundo sem coleiras não queima.",
+     "en": "Show me, Sixth, that a world without collars doesn't burn."
+    }
+   }
+  ],
+  "d_sable_defeat": [
+   {
+    "who": "sable",
+    "text": {
+     "pt": "...Umbra está ronronando. Há anos ela não fazia isso.",
+     "en": "...Umbra is purring. She hasn't done that in years."
+    }
+   },
+   {
+    "who": "sable",
+    "text": {
+     "pt": "Tessár espera por você na Cidadela Aurora. Ele guarda o Coração. E guarda a sua última memória.",
+     "en": "Tessár awaits you in the Aurora Citadel. He guards the Heart. And he guards your last memory."
+    }
+   }
+  ],
+  "d_act2_end": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Alta Cinza está livre. E eu... finalmente lembrei quem eu sou.",
+     "en": "Ashspire is free. And I... finally remember who I am."
+    }
+   },
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Eu sou a parte de você que você apagou. Sua culpa, sua coragem. Você me guardou para não perder o caminho de volta.",
+     "en": "I'm the part of you that you erased. Your guilt, your courage. You kept me so you wouldn't lose the way back."
+    }
+   },
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Fim do Ato 2. Talassa, Fornalha Rubra e a Cidadela Aurora chegam nas próximas atualizações.",
+     "en": "End of Act 2. Thalassa, Crimson Furnace and the Aurora Citadel arrive in upcoming updates."
+    }
+   }
+  ],
+  "d_hazard_calor": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Este calor está drenando sua vida! Um Cantil de Couro vai proteger você.",
+     "en": "This heat is draining your health! A Leather Canteen will protect you."
+    }
+   }
+  ],
+  "d_hazard_frio": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Você está congelando! Precisamos de um Casaco de Pele.",
+     "en": "You're freezing! We need a Fur Coat."
+    }
+   }
+  ],
+  "d_hazard_veneno": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Os gases do pântano são tóxicos! Uma Máscara de Filtro resolve.",
+     "en": "The marsh gases are toxic! A Filter Mask solves it."
+    }
+   }
+  ],
+  "d_hazard_lava": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "O calor do cânion é insuportável! Precisamos de um Traje Ignífugo.",
+     "en": "The canyon's heat is unbearable! We need a Fireproof Suit."
+    }
+   }
+  ],
+  "d_hazard_tempestade": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Raios! Sem um Para-raios Portátil não dá para ficar aqui.",
+     "en": "Lightning! Without a Lightning Rod we can't stay here."
+    }
+   }
+  ],
+  "d_night": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "A noite chegou. Ecos de Sombra estão mais fortes. Uma cama ajuda a pular a noite.",
+     "en": "Night has fallen. Shade Echoes grow stronger. A bed helps you skip the night."
+    }
+   }
+  ],
+  "d_sandbox": [
+   {
+    "who": "lume",
+    "text": {
+     "pt": "Modo Sandbox: todos os recursos, receitas e mapas liberados. Construa o que imaginar!",
+     "en": "Sandbox Mode: every resource, recipe and map unlocked. Build anything you imagine!"
+    }
+   }
+  ]
+ }
+}

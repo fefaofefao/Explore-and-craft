@@ -1,0 +1,749 @@
+{
+ "economy": {
+  "start": {
+   "coins": 50,
+   "gems": 20
+  },
+  "shop": [
+   {
+    "id": "s_esfera5",
+    "item": "esfera",
+    "n": 5,
+    "price": {
+     "coins": 40
+    }
+   },
+   {
+    "id": "s_esfera_g3",
+    "item": "esfera_grande",
+    "n": 3,
+    "price": {
+     "coins": 140
+    },
+    "lvl": 6
+   },
+   {
+    "id": "s_tonico5",
+    "item": "tonico",
+    "n": 5,
+    "price": {
+     "coins": 50
+    }
+   },
+   {
+    "id": "s_reviver",
+    "item": "reviver",
+    "n": 1,
+    "price": {
+     "coins": 90
+    }
+   },
+   {
+    "id": "s_carne5",
+    "item": "carne_assada",
+    "n": 5,
+    "price": {
+     "coins": 40
+    }
+   },
+   {
+    "id": "s_aurora",
+    "item": "esfera_aurora",
+    "n": 1,
+    "price": {
+     "gems": 30
+    }
+   },
+   {
+    "id": "s_aurora5",
+    "item": "esfera_aurora",
+    "n": 5,
+    "price": {
+     "gems": 130
+    }
+   },
+   {
+    "id": "s_tonico_f10",
+    "item": "tonico_forte",
+    "n": 10,
+    "price": {
+     "gems": 25
+    }
+   },
+   {
+    "id": "s_box10",
+    "special": "box_slots",
+    "n": 10,
+    "price": {
+     "gems": 40
+    }
+   },
+   {
+    "id": "s_exp_slot",
+    "special": "expedition_slot",
+    "n": 1,
+    "price": {
+     "gems": 120
+    }
+   },
+   {
+    "id": "s_boost_xp",
+    "special": "xp_boost",
+    "n": 1800,
+    "price": {
+     "gems": 15
+    }
+   },
+   {
+    "id": "s_harvest",
+    "special": "instant_harvest",
+    "n": 7200,
+    "price": {
+     "gems": 10
+    }
+   }
+  ],
+  "market_buy_mult": 3,
+  "sell_mult": 1
+ },
+ "iap": {
+  "products": [
+   {
+    "id": "remove_ads",
+    "type": "nonconsumable",
+    "price_usd": 3.99,
+    "name": {
+     "pt": "Sem Anúncios",
+     "en": "No Ads"
+    },
+    "desc": {
+     "pt": "Remove intersticiais e banners para sempre. Recompensas de vídeo continuam opcionais (e passam a ser instantâneas).",
+     "en": "Removes interstitials and banners forever. Video rewards stay optional (and become instant)."
+    },
+    "grants": {
+     "no_ads": true,
+     "gems": 50
+    }
+   },
+   {
+    "id": "starter_pack",
+    "type": "nonconsumable",
+    "price_usd": 1.99,
+    "name": {
+     "pt": "Pacote do Desperto",
+     "en": "Awakened Pack"
+    },
+    "desc": {
+     "pt": "300 gemas, 10 Esferas Grandes, 3 Sementes Reviver e Lumeflor Variante Aurora. Só nas primeiras 72 h!",
+     "en": "300 gems, 10 Great Spheres, 3 Revive Seeds and an Aurora Variant Lumeflor. First 72 h only!"
+    },
+    "grants": {
+     "gems": 300,
+     "items": {
+      "esfera_grande": 10,
+      "reviver": 3
+     },
+     "monster": [
+      "lumeflor",
+      8,
+      true
+     ]
+    },
+    "window_hours": 72
+   },
+   {
+    "id": "gems_80",
+    "type": "consumable",
+    "price_usd": 0.99,
+    "name": {
+     "pt": "Punhado de Gemas",
+     "en": "Handful of Gems"
+    },
+    "desc": {
+     "pt": "80 gemas",
+     "en": "80 gems"
+    },
+    "grants": {
+     "gems": 80
+    }
+   },
+   {
+    "id": "gems_500",
+    "type": "consumable",
+    "price_usd": 4.99,
+    "name": {
+     "pt": "Bolsa de Gemas",
+     "en": "Pouch of Gems"
+    },
+    "desc": {
+     "pt": "500 gemas (+25%)",
+     "en": "500 gems (+25%)"
+    },
+    "grants": {
+     "gems": 500
+    }
+   },
+   {
+    "id": "gems_1200",
+    "type": "consumable",
+    "price_usd": 9.99,
+    "name": {
+     "pt": "Baú de Gemas",
+     "en": "Chest of Gems"
+    },
+    "desc": {
+     "pt": "1200 gemas (+50%)",
+     "en": "1200 gems (+50%)"
+    },
+    "grants": {
+     "gems": 1200
+    }
+   },
+   {
+    "id": "gems_2600",
+    "type": "consumable",
+    "price_usd": 19.99,
+    "name": {
+     "pt": "Tesouro de Gemas",
+     "en": "Gem Hoard"
+    },
+    "desc": {
+     "pt": "2600 gemas (+62%)",
+     "en": "2600 gems (+62%)"
+    },
+    "grants": {
+     "gems": 2600
+    }
+   },
+   {
+    "id": "season_pass",
+    "type": "nonconsumable",
+    "price_usd": 4.99,
+    "name": {
+     "pt": "Trilha Premium",
+     "en": "Premium Trail"
+    },
+    "desc": {
+     "pt": "Libera a trilha premium da temporada: gemas, Esferas Aurora, skins e Ecos raros.",
+     "en": "Unlocks the season's premium trail: gems, Aurora Spheres, skins and rare Echoes."
+    },
+    "grants": {
+     "premium_pass": true
+    }
+   }
+  ]
+ },
+ "daily_login": [
+  {
+   "coins": 100
+  },
+  {
+   "items": {
+    "esfera": 5
+   }
+  },
+  {
+   "gems": 10
+  },
+  {
+   "items": {
+    "tonico": 5
+   }
+  },
+  {
+   "coins": 300
+  },
+  {
+   "items": {
+    "esfera_grande": 3
+   }
+  },
+  {
+   "gems": 30,
+   "items": {
+    "esfera_aurora": 1
+   }
+  }
+ ],
+ "daily_quests": [
+  {
+   "id": "dq_wood",
+   "type": "gather",
+   "target": "madeira",
+   "count": 40,
+   "title": {
+    "pt": "Lenhador",
+    "en": "Lumberjack"
+   },
+   "desc": {
+    "pt": "Colete 40 madeira",
+    "en": "Gather 40 wood"
+   }
+  },
+  {
+   "id": "dq_stone",
+   "type": "gather",
+   "target": "pedra",
+   "count": 40,
+   "title": {
+    "pt": "Pedreiro",
+    "en": "Mason"
+   },
+   "desc": {
+    "pt": "Colete 40 pedra",
+    "en": "Gather 40 stone"
+   }
+  },
+  {
+   "id": "dq_fiber",
+   "type": "gather",
+   "target": "fibra",
+   "count": 30,
+   "title": {
+    "pt": "Tecelão",
+    "en": "Weaver"
+   },
+   "desc": {
+    "pt": "Colete 30 fibra",
+    "en": "Gather 30 fiber"
+   }
+  },
+  {
+   "id": "dq_capture",
+   "type": "capture",
+   "target": null,
+   "count": 2,
+   "title": {
+    "pt": "Novos Vínculos",
+    "en": "New Bonds"
+   },
+   "desc": {
+    "pt": "Recrute 2 Ecos",
+    "en": "Recruit 2 Echoes"
+   }
+  },
+  {
+   "id": "dq_defeat",
+   "type": "defeat",
+   "target": null,
+   "count": 8,
+   "title": {
+    "pt": "Defensor",
+    "en": "Defender"
+   },
+   "desc": {
+    "pt": "Derrote 8 Ecos selvagens",
+    "en": "Defeat 8 wild Echoes"
+   }
+  },
+  {
+   "id": "dq_craft",
+   "type": "craft",
+   "target": null,
+   "count": 10,
+   "title": {
+    "pt": "Artesão",
+    "en": "Artisan"
+   },
+   "desc": {
+    "pt": "Crie 10 itens",
+    "en": "Craft 10 items"
+   }
+  },
+  {
+   "id": "dq_build",
+   "type": "build",
+   "target": null,
+   "count": 5,
+   "title": {
+    "pt": "Arquiteto",
+    "en": "Architect"
+   },
+   "desc": {
+    "pt": "Construa 5 peças",
+    "en": "Build 5 pieces"
+   }
+  },
+  {
+   "id": "dq_collect",
+   "type": "harvest",
+   "target": null,
+   "count": 30,
+   "title": {
+    "pt": "Colheita",
+    "en": "Harvest"
+   },
+   "desc": {
+    "pt": "Recolha 30 itens das estações",
+    "en": "Collect 30 items from stations"
+   }
+  },
+  {
+   "id": "dq_pet",
+   "type": "pet",
+   "target": null,
+   "count": 3,
+   "title": {
+    "pt": "Carinho",
+    "en": "Affection"
+   },
+   "desc": {
+    "pt": "Faça carinho em 3 Ecos",
+    "en": "Pet 3 Echoes"
+   }
+  },
+  {
+   "id": "dq_cook",
+   "type": "craft_cat",
+   "target": "comida",
+   "count": 3,
+   "title": {
+    "pt": "Cozinheiro",
+    "en": "Cook"
+   },
+   "desc": {
+    "pt": "Prepare 3 comidas",
+    "en": "Cook 3 meals"
+   }
+  },
+  {
+   "id": "dq_expedition",
+   "type": "expedition",
+   "target": null,
+   "count": 1,
+   "title": {
+    "pt": "Explorador",
+    "en": "Explorer"
+   },
+   "desc": {
+    "pt": "Conclua 1 expedição",
+    "en": "Complete 1 expedition"
+   }
+  }
+ ],
+ "daily_quest_reward": {
+  "coins": 60,
+  "pass_xp": 100
+ },
+ "daily_all_bonus": {
+  "gems": 10,
+  "pass_xp": 150
+ },
+ "pass": {
+  "season": 1,
+  "name": {
+   "pt": "Temporada 1: Ecos de Ferro",
+   "en": "Season 1: Iron Echoes"
+  },
+  "tiers": 30,
+  "xp_per_tier": 250,
+  "days": 42,
+  "free": [
+   {
+    "items": {
+     "esfera": 3
+    }
+   },
+   {
+    "coins": 150
+   },
+   {
+    "items": {
+     "esfera": 3
+    }
+   },
+   {
+    "coins": 150
+   },
+   {
+    "items": {
+     "esfera_grande": 2
+    }
+   },
+   {
+    "coins": 150
+   },
+   {
+    "items": {
+     "esfera": 3
+    }
+   },
+   {
+    "coins": 150
+   },
+   {
+    "items": {
+     "esfera": 3
+    }
+   },
+   {
+    "gems": 20
+   },
+   {
+    "items": {
+     "esfera": 3
+    }
+   },
+   {
+    "coins": 150
+   },
+   {
+    "items": {
+     "esfera": 3
+    }
+   },
+   {
+    "coins": 150
+   },
+   {
+    "items": {
+     "esfera_grande": 2
+    }
+   },
+   {
+    "coins": 150
+   },
+   {
+    "items": {
+     "esfera": 3
+    }
+   },
+   {
+    "coins": 150
+   },
+   {
+    "items": {
+     "esfera": 3
+    }
+   },
+   {
+    "gems": 20
+   },
+   {
+    "items": {
+     "esfera": 3
+    }
+   },
+   {
+    "coins": 150
+   },
+   {
+    "items": {
+     "esfera": 3
+    }
+   },
+   {
+    "coins": 150
+   },
+   {
+    "items": {
+     "esfera_grande": 2
+    }
+   },
+   {
+    "coins": 150
+   },
+   {
+    "items": {
+     "esfera": 3
+    }
+   },
+   {
+    "coins": 150
+   },
+   {
+    "items": {
+     "esfera": 3
+    }
+   },
+   {
+    "gems": 20
+   }
+  ],
+  "premium": [
+   {
+    "gems": 15
+   },
+   {
+    "items": {
+     "esfera_aurora": 1
+    }
+   },
+   {
+    "gems": 15
+   },
+   {
+    "items": {
+     "esfera_aurora": 1
+    }
+   },
+   {
+    "gems": 40,
+    "items": {
+     "esfera_aurora": 1
+    }
+   },
+   {
+    "items": {
+     "esfera_aurora": 1
+    }
+   },
+   {
+    "gems": 15
+   },
+   {
+    "items": {
+     "esfera_aurora": 1
+    }
+   },
+   {
+    "gems": 15
+   },
+   {
+    "monster": [
+     "lumeflor",
+     10,
+     true
+    ]
+   },
+   {
+    "gems": 15
+   },
+   {
+    "items": {
+     "esfera_aurora": 1
+    }
+   },
+   {
+    "gems": 15
+   },
+   {
+    "items": {
+     "esfera_aurora": 1
+    }
+   },
+   {
+    "gems": 40,
+    "items": {
+     "esfera_aurora": 1
+    }
+   },
+   {
+    "items": {
+     "esfera_aurora": 1
+    }
+   },
+   {
+    "gems": 15
+   },
+   {
+    "items": {
+     "esfera_aurora": 1
+    }
+   },
+   {
+    "gems": 15
+   },
+   {
+    "monster": [
+     "coralume",
+     10,
+     true
+    ]
+   },
+   {
+    "gems": 15
+   },
+   {
+    "items": {
+     "esfera_aurora": 1
+    }
+   },
+   {
+    "gems": 15
+   },
+   {
+    "items": {
+     "esfera_aurora": 1
+    }
+   },
+   {
+    "gems": 40,
+    "items": {
+     "esfera_aurora": 1
+    }
+   },
+   {
+    "items": {
+     "esfera_aurora": 1
+    }
+   },
+   {
+    "gems": 15
+   },
+   {
+    "items": {
+     "esfera_aurora": 1
+    }
+   },
+   {
+    "gems": 15
+   },
+   {
+    "monster": [
+     "vulcanix",
+     10,
+     true
+    ]
+   }
+  ]
+ },
+ "dex_milestones": [
+  {
+   "count": 3,
+   "reward": {
+    "gems": 10
+   }
+  },
+  {
+   "count": 6,
+   "reward": {
+    "items": {
+     "esfera_grande": 3
+    }
+   }
+  },
+  {
+   "count": 10,
+   "reward": {
+    "gems": 25
+   }
+  },
+  {
+   "count": 15,
+   "reward": {
+    "items": {
+     "esfera_aurora": 2
+    }
+   }
+  },
+  {
+   "count": 20,
+   "reward": {
+    "gems": 50
+   }
+  },
+  {
+   "count": 25,
+   "reward": {
+    "gems": 80
+   }
+  },
+  {
+   "count": 31,
+   "reward": {
+    "gems": 150
+   }
+  }
+ ]
+}

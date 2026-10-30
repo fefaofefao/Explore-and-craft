@@ -1,0 +1,1217 @@
+{
+ "maps": {
+  "m1": {
+   "name": {
+    "pt": "Bosque do Berço",
+    "en": "Cradle Grove"
+   },
+   "act": 1,
+   "kind": "wild",
+   "seed": 1101,
+   "half": 120,
+   "biome": {
+    "ground": [
+     "#4f8f3a",
+     "#6aab45",
+     "#88c25a"
+    ],
+    "sand": "#e6d49a",
+    "rock": "#7d7a72",
+    "high": "#9aa38a",
+    "height": 14.0,
+    "freq": 0.012,
+    "mountains": 0.35,
+    "water": "#2f8fc8",
+    "grass": "#6fbf4a",
+    "grass_density": 1.0,
+    "sky_top": "#3d7fd6",
+    "sky_horizon": "#bfe3ff",
+    "fog": "#cfe8f0",
+    "fog_density": 0.006,
+    "sun": "#fff2d8",
+    "ambient": "#b8d0e8",
+    "particles": "leaves",
+    "music": "forest"
+   },
+   "trees": {
+    "arvore": 70,
+    "pinheiro": 25
+   },
+   "nodes": {
+    "rocha": 40,
+    "minerio": 12,
+    "carvao_veio": 10,
+    "arbusto": 45,
+    "capim": 40,
+    "cogumelos": 18,
+    "cristal": 4
+   },
+   "spawns": [
+    [
+     "folhito",
+     2,
+     5,
+     10
+    ],
+    [
+     "espinhoz",
+     2,
+     6,
+     14
+    ],
+    [
+     "cogulume",
+     3,
+     7,
+     10
+    ],
+    [
+     "pedrisco",
+     3,
+     7,
+     10
+    ],
+    [
+     "brasito",
+     3,
+     6,
+     5
+    ],
+    [
+     "marolo",
+     3,
+     6,
+     5
+    ],
+    [
+     "lumeflor",
+     6,
+     9,
+     3
+    ],
+    [
+     "corvoleta",
+     4,
+     8,
+     8
+    ],
+    [
+     "sombrino",
+     6,
+     10,
+     6,
+     "night"
+    ]
+   ],
+   "spawn_count": 22,
+   "hazard": null,
+   "spawn": [
+    0,
+    70
+   ],
+   "cradle": [
+    6,
+    76
+   ],
+   "pois": {
+    "lair": {
+     "pos": [
+      -62,
+      -48
+     ],
+     "r": 14,
+     "boss": "anciao_musgoso",
+     "lvl": 11,
+     "drop": "seiva_ancestral",
+     "barrier": "espinhos",
+     "barrier_count": 3
+    },
+    "bridge": {
+     "pos": [
+      0,
+      -96
+     ],
+     "r": 10
+    }
+   },
+   "portals": [
+    {
+     "to": "m2",
+     "pos": [
+      96,
+      10
+     ],
+     "label": {
+      "pt": "Dunas de Âmbar",
+      "en": "Amber Dunes"
+     }
+    },
+    {
+     "to": "m3",
+     "pos": [
+      -98,
+      16
+     ],
+     "label": {
+      "pt": "Picos de Geada",
+      "en": "Frost Peaks"
+     }
+    },
+    {
+     "to": "m4",
+     "pos": [
+      0,
+      -112
+     ],
+     "label": {
+      "pt": "Porto Ferrugem",
+      "en": "Rustport"
+     },
+     "requires_flag": "bridge_built",
+     "bridge": true
+    }
+   ],
+   "fragments": [
+    "f01",
+    "f02",
+    "f03"
+   ]
+  },
+  "m2": {
+   "name": {
+    "pt": "Dunas de Âmbar",
+    "en": "Amber Dunes"
+   },
+   "act": 1,
+   "kind": "wild",
+   "seed": 1202,
+   "half": 120,
+   "biome": {
+    "ground": [
+     "#e0b86a",
+     "#e8c77e",
+     "#f0d695"
+    ],
+    "sand": "#f2deaa",
+    "rock": "#b0784a",
+    "high": "#c98f55",
+    "height": 12.0,
+    "freq": 0.01,
+    "mountains": 0.25,
+    "water": "#2fb8c8",
+    "grass": "#c8b060",
+    "grass_density": 0.15,
+    "sky_top": "#3a8ae0",
+    "sky_horizon": "#ffe2b0",
+    "fog": "#f5ddb0",
+    "fog_density": 0.008,
+    "sun": "#ffe0b0",
+    "ambient": "#f0d8b8",
+    "particles": "sand",
+    "music": "desert"
+   },
+   "trees": {
+    "palmeira": 22,
+    "arvore_morta": 14
+   },
+   "nodes": {
+    "rocha": 30,
+    "minerio": 16,
+    "carvao_veio": 10,
+    "cacto": 35,
+    "monte_areia": 40,
+    "capim": 10,
+    "cristal": 8
+   },
+   "spawns": [
+    [
+     "areiao",
+     6,
+     11,
+     14
+    ],
+    [
+     "escarabrilho",
+     6,
+     11,
+     12
+    ],
+    [
+     "cactuto",
+     6,
+     10,
+     12
+    ],
+    [
+     "serpenduna",
+     9,
+     13,
+     7
+    ],
+    [
+     "fagulhas",
+     7,
+     12,
+     8
+    ],
+    [
+     "corvoleta",
+     8,
+     12,
+     5
+    ],
+    [
+     "sombrino",
+     9,
+     13,
+     5,
+     "night"
+    ]
+   ],
+   "spawn_count": 20,
+   "hazard": {
+    "kind": "calor",
+    "gear": "cantil",
+    "dps": 0.6
+   },
+   "spawn": [
+    -80,
+    0
+   ],
+   "pois": {
+    "lair": {
+     "pos": [
+      56,
+      -44
+     ],
+     "r": 16,
+     "boss": "ambarraque",
+     "lvl": 15,
+     "drop": "olho_ambar",
+     "barrier": "porta_solar",
+     "barrier_count": 1,
+     "temple": true
+    }
+   },
+   "portals": [
+    {
+     "to": "m1",
+     "pos": [
+      -100,
+      6
+     ],
+     "label": {
+      "pt": "Bosque do Berço",
+      "en": "Cradle Grove"
+     }
+    }
+   ],
+   "fragments": [
+    "f04",
+    "f05",
+    "f06"
+   ]
+  },
+  "m3": {
+   "name": {
+    "pt": "Picos de Geada",
+    "en": "Frost Peaks"
+   },
+   "act": 1,
+   "kind": "wild",
+   "seed": 1303,
+   "half": 120,
+   "biome": {
+    "ground": [
+     "#e8f0f8",
+     "#d8e6f0",
+     "#f8fcff"
+    ],
+    "sand": "#c8d4dc",
+    "rock": "#6a7a8a",
+    "high": "#ffffff",
+    "height": 24.0,
+    "freq": 0.013,
+    "mountains": 0.7,
+    "water": "#4a8ab8",
+    "grass": "#a8c8a0",
+    "grass_density": 0.25,
+    "sky_top": "#5a8ac8",
+    "sky_horizon": "#e0f0ff",
+    "fog": "#e8f2fa",
+    "fog_density": 0.012,
+    "sun": "#f0f6ff",
+    "ambient": "#c8d8f0",
+    "particles": "snow",
+    "music": "snow"
+   },
+   "trees": {
+    "pinheiro": 60
+   },
+   "nodes": {
+    "rocha": 30,
+    "minerio": 18,
+    "carvao_veio": 14,
+    "bloco_gelo": 30,
+    "capim": 12,
+    "arbusto": 10,
+    "cristal": 12
+   },
+   "spawns": [
+    [
+     "flocolino",
+     10,
+     14,
+     14
+    ],
+    [
+     "pinguelo",
+     10,
+     14,
+     12
+    ],
+    [
+     "lupigelo",
+     12,
+     16,
+     10
+    ],
+    [
+     "faiscaro",
+     12,
+     16,
+     7
+    ],
+    [
+     "mamutundra",
+     14,
+     17,
+     3
+    ],
+    [
+     "pedrisco",
+     10,
+     14,
+     6
+    ],
+    [
+     "sombrino",
+     12,
+     16,
+     5,
+     "night"
+    ]
+   ],
+   "spawn_count": 20,
+   "hazard": {
+    "kind": "frio",
+    "gear": "casaco_pele",
+    "dps": 0.7
+   },
+   "spawn": [
+    84,
+    10
+   ],
+   "pois": {
+    "lair": {
+     "pos": [
+      -48,
+      -58
+     ],
+     "r": 15,
+     "boss": "serpegelo",
+     "lvl": 19,
+     "drop": "lagrima_glacial",
+     "barrier": "muro_gelo",
+     "barrier_count": 2
+    }
+   },
+   "portals": [
+    {
+     "to": "m1",
+     "pos": [
+      100,
+      14
+     ],
+     "label": {
+      "pt": "Bosque do Berço",
+      "en": "Cradle Grove"
+     }
+    }
+   ],
+   "fragments": [
+    "f07",
+    "f08",
+    "f09"
+   ]
+  },
+  "m4": {
+   "name": {
+    "pt": "Porto Ferrugem",
+    "en": "Rustport"
+   },
+   "act": 1,
+   "kind": "city",
+   "seed": 1404,
+   "half": 110,
+   "biome": {
+    "ground": [
+     "#7a6a5a",
+     "#8a7a68",
+     "#6a5a4a"
+    ],
+    "sand": "#b8a080",
+    "rock": "#5a4a40",
+    "high": "#7a6a5a",
+    "height": 5.0,
+    "freq": 0.01,
+    "mountains": 0.1,
+    "water": "#3a6a7a",
+    "grass": "#7a8a5a",
+    "grass_density": 0.2,
+    "sky_top": "#6a7a8a",
+    "sky_horizon": "#e0c8a8",
+    "fog": "#c8b098",
+    "fog_density": 0.012,
+    "sun": "#ffd8a8",
+    "ambient": "#c0a890",
+    "particles": "embers",
+    "music": "city"
+   },
+   "trees": {
+    "arvore_morta": 10
+   },
+   "nodes": {
+    "rocha": 10,
+    "minerio": 8,
+    "carvao_veio": 8,
+    "capim": 6
+   },
+   "spawns": [
+    [
+     "ferrugente",
+     14,
+     18,
+     10
+    ],
+    [
+     "corvoleta",
+     14,
+     17,
+     5
+    ],
+    [
+     "faiscaro",
+     14,
+     18,
+     4
+    ]
+   ],
+   "spawn_count": 8,
+   "hazard": null,
+   "spawn": [
+    0,
+    84
+   ],
+   "city": {
+    "ruler": "vorn",
+    "trainers": [
+     "rasha",
+     "brutus",
+     "lin",
+     "vorn"
+    ],
+    "final": "vorn",
+    "cages": [
+     [
+      30,
+      40
+     ],
+     [
+      -34,
+      36
+     ],
+     [
+      52,
+      -10
+     ],
+     [
+      -50,
+      -14
+     ],
+     [
+      10,
+      -50
+     ]
+    ],
+    "cages_needed": 5,
+    "arena": [
+     0,
+     0
+    ],
+    "liberated_flag": "city1_free",
+    "districts": [
+     {
+      "name": {
+       "pt": "Docas",
+       "en": "Docks"
+      },
+      "pos": [
+       62,
+       30
+      ]
+     },
+     {
+      "name": {
+       "pt": "Fundição",
+       "en": "Foundry"
+      },
+      "pos": [
+       -62,
+       20
+      ]
+     },
+     {
+      "name": {
+       "pt": "Torre",
+       "en": "Tower"
+      },
+      "pos": [
+       0,
+       -62
+      ]
+     }
+    ]
+   },
+   "pois": {},
+   "portals": [
+    {
+     "to": "m1",
+     "pos": [
+      0,
+      100
+     ],
+     "label": {
+      "pt": "Bosque do Berço",
+      "en": "Cradle Grove"
+     },
+     "bridge": true
+    },
+    {
+     "to": "m5",
+     "pos": [
+      88,
+      54
+     ],
+     "label": {
+      "pt": "Balsa: Pântano Lúgubre",
+      "en": "Ferry: Gloom Marsh"
+     },
+     "requires_flag": "city1_free",
+     "ferry": true
+    }
+   ],
+   "fragments": [
+    "f10",
+    "f11",
+    "f12"
+   ]
+  },
+  "m5": {
+   "name": {
+    "pt": "Pântano Lúgubre",
+    "en": "Gloom Marsh"
+   },
+   "act": 2,
+   "kind": "wild",
+   "seed": 2505,
+   "half": 120,
+   "biome": {
+    "ground": [
+     "#3e5a3a",
+     "#4a6a40",
+     "#5a7a48"
+    ],
+    "sand": "#6a6a48",
+    "rock": "#4a4a42",
+    "high": "#6a7a5a",
+    "height": 6.0,
+    "freq": 0.016,
+    "mountains": 0.15,
+    "water": "#3a5a3a",
+    "grass": "#5a8a4a",
+    "grass_density": 1.2,
+    "sky_top": "#4a5a6a",
+    "sky_horizon": "#a8b8a0",
+    "fog": "#8a9a80",
+    "fog_density": 0.02,
+    "sun": "#d8e0c0",
+    "ambient": "#8a9a88",
+    "particles": "spores",
+    "music": "swamp"
+   },
+   "trees": {
+    "arvore_morta": 50,
+    "arvore": 20
+   },
+   "nodes": {
+    "rocha": 20,
+    "minerio": 14,
+    "carvao_veio": 10,
+    "lodo_poca": 40,
+    "cogumelos": 40,
+    "capim": 30,
+    "cristal": 10
+   },
+   "spawns": [
+    [
+     "lodolfo",
+     22,
+     27,
+     14
+    ],
+    [
+     "pantanossauro",
+     24,
+     29,
+     7
+    ],
+    [
+     "cogulume",
+     22,
+     26,
+     10
+    ],
+    [
+     "nevoeiro",
+     24,
+     29,
+     8
+    ],
+    [
+     "corvoleta",
+     22,
+     27,
+     8
+    ],
+    [
+     "sombrino",
+     24,
+     29,
+     8,
+     "night"
+    ]
+   ],
+   "spawn_count": 22,
+   "hazard": {
+    "kind": "veneno",
+    "gear": "mascara_filtro",
+    "dps": 0.9
+   },
+   "spawn": [
+    0,
+    80
+   ],
+   "pois": {
+    "lair": {
+     "pos": [
+      -50,
+      -50
+     ],
+     "r": 16,
+     "boss": "lodorei",
+     "lvl": 31,
+     "drop": "raiz_negra"
+    }
+   },
+   "portals": [
+    {
+     "to": "m4",
+     "pos": [
+      0,
+      98
+     ],
+     "label": {
+      "pt": "Balsa: Porto Ferrugem",
+      "en": "Ferry: Rustport"
+     },
+     "ferry": true
+    },
+    {
+     "to": "m6",
+     "pos": [
+      98,
+      0
+     ],
+     "label": {
+      "pt": "Cânion Brasa",
+      "en": "Ember Canyon"
+     }
+    },
+    {
+     "to": "m7",
+     "pos": [
+      -98,
+      10
+     ],
+     "label": {
+      "pt": "Ilhas Tempestade",
+      "en": "Storm Isles"
+     }
+    },
+    {
+     "to": "m8",
+     "pos": [
+      40,
+      -100
+     ],
+     "label": {
+      "pt": "Alta Cinza",
+      "en": "Ashspire"
+     },
+     "requires_flag": "gate2_open"
+    }
+   ],
+   "fragments": [
+    "f13",
+    "f14",
+    "f15"
+   ]
+  },
+  "m6": {
+   "name": {
+    "pt": "Cânion Brasa",
+    "en": "Ember Canyon"
+   },
+   "act": 2,
+   "kind": "wild",
+   "seed": 2606,
+   "half": 120,
+   "biome": {
+    "ground": [
+     "#5a3a2a",
+     "#6a4030",
+     "#7a4a32"
+    ],
+    "sand": "#8a5a3a",
+    "rock": "#3a2a2a",
+    "high": "#2a1a1a",
+    "height": 22.0,
+    "freq": 0.014,
+    "mountains": 0.6,
+    "water": "#ff5a1a",
+    "lava": true,
+    "grass": "#8a6a3a",
+    "grass_density": 0.1,
+    "sky_top": "#5a2a2a",
+    "sky_horizon": "#ff9a5a",
+    "fog": "#a85a3a",
+    "fog_density": 0.014,
+    "sun": "#ffb080",
+    "ambient": "#c08070",
+    "particles": "embers",
+    "music": "volcano"
+   },
+   "trees": {
+    "arvore_morta": 30
+   },
+   "nodes": {
+    "rocha": 30,
+    "minerio": 20,
+    "carvao_veio": 24,
+    "obsidiana_veio": 22,
+    "cristal": 10
+   },
+   "spawns": [
+    [
+     "magmarujo",
+     26,
+     31,
+     12
+    ],
+    [
+     "vulcanix",
+     28,
+     33,
+     3
+    ],
+    [
+     "fagulhas",
+     25,
+     30,
+     12
+    ],
+    [
+     "serpenduna",
+     25,
+     30,
+     10
+    ],
+    [
+     "brasaurus",
+     27,
+     32,
+     5
+    ]
+   ],
+   "spawn_count": 20,
+   "hazard": {
+    "kind": "lava",
+    "gear": "traje_ignifugo",
+    "dps": 1.0
+   },
+   "spawn": [
+    -84,
+    0
+   ],
+   "pois": {
+    "lair": {
+     "pos": [
+      50,
+      -50
+     ],
+     "r": 16,
+     "boss": "magmarca",
+     "lvl": 34,
+     "drop": "brasa_eterna"
+    }
+   },
+   "portals": [
+    {
+     "to": "m5",
+     "pos": [
+      -100,
+      6
+     ],
+     "label": {
+      "pt": "Pântano Lúgubre",
+      "en": "Gloom Marsh"
+     }
+    }
+   ],
+   "fragments": [
+    "f16",
+    "f17",
+    "f18"
+   ]
+  },
+  "m7": {
+   "name": {
+    "pt": "Ilhas Tempestade",
+    "en": "Storm Isles"
+   },
+   "act": 2,
+   "kind": "wild",
+   "seed": 2707,
+   "half": 120,
+   "biome": {
+    "ground": [
+     "#4a7a5a",
+     "#5a8a62",
+     "#6a9a6a"
+    ],
+    "sand": "#d8d0b0",
+    "rock": "#5a6070",
+    "high": "#7a8090",
+    "height": 16.0,
+    "freq": 0.02,
+    "mountains": 0.4,
+    "water": "#2a5a8a",
+    "grass": "#6aa060",
+    "grass_density": 0.9,
+    "sky_top": "#2a3a5a",
+    "sky_horizon": "#8a9ab0",
+    "fog": "#7a8aa0",
+    "fog_density": 0.014,
+    "sun": "#c8d0ff",
+    "ambient": "#8090b0",
+    "particles": "rain",
+    "music": "storm"
+   },
+   "trees": {
+    "palmeira": 30,
+    "arvore": 25
+   },
+   "nodes": {
+    "rocha": 30,
+    "minerio": 14,
+    "carvao_veio": 10,
+    "ninho_pena": 30,
+    "capim": 30,
+    "arbusto": 20,
+    "cristal": 14
+   },
+   "spawns": [
+    [
+     "tempestor",
+     30,
+     35,
+     12
+    ],
+    [
+     "coralume",
+     30,
+     34,
+     4
+    ],
+    [
+     "faiscaro",
+     28,
+     33,
+     12
+    ],
+    [
+     "pinguelo",
+     28,
+     32,
+     8
+    ],
+    [
+     "marujao",
+     30,
+     34,
+     6
+    ],
+    [
+     "nevoeiro",
+     30,
+     35,
+     6,
+     "night"
+    ]
+   ],
+   "spawn_count": 22,
+   "hazard": {
+    "kind": "tempestade",
+    "gear": "para_raios",
+    "dps": 1.0
+   },
+   "spawn": [
+    84,
+    10
+   ],
+   "pois": {
+    "lair": {
+     "pos": [
+      -46,
+      -60
+     ],
+     "r": 16,
+     "boss": "trovaguia",
+     "lvl": 37,
+     "drop": "pena_trovao"
+    }
+   },
+   "portals": [
+    {
+     "to": "m5",
+     "pos": [
+      100,
+      14
+     ],
+     "label": {
+      "pt": "Pântano Lúgubre",
+      "en": "Gloom Marsh"
+     }
+    }
+   ],
+   "fragments": [
+    "f19",
+    "f20",
+    "f21"
+   ]
+  },
+  "m8": {
+   "name": {
+    "pt": "Alta Cinza",
+    "en": "Ashspire"
+   },
+   "act": 2,
+   "kind": "city",
+   "seed": 2808,
+   "half": 110,
+   "biome": {
+    "ground": [
+     "#4a4650",
+     "#56525e",
+     "#3a3640"
+    ],
+    "sand": "#6a6670",
+    "rock": "#2a2630",
+    "high": "#4a4650",
+    "height": 6.0,
+    "freq": 0.01,
+    "mountains": 0.1,
+    "water": "#2a2a4a",
+    "grass": "#5a5a6a",
+    "grass_density": 0.1,
+    "sky_top": "#1a1a2a",
+    "sky_horizon": "#6a5a8a",
+    "fog": "#4a4060",
+    "fog_density": 0.018,
+    "sun": "#c8b8ff",
+    "ambient": "#6a6080",
+    "particles": "ash",
+    "music": "city"
+   },
+   "trees": {
+    "arvore_morta": 12
+   },
+   "nodes": {
+    "rocha": 10,
+    "minerio": 8,
+    "cristal": 6
+   },
+   "spawns": [
+    [
+     "nevoeiro",
+     34,
+     38,
+     8
+    ],
+    [
+     "sombrino",
+     34,
+     38,
+     8
+    ],
+    [
+     "corvoleta",
+     34,
+     38,
+     6
+    ]
+   ],
+   "spawn_count": 8,
+   "hazard": null,
+   "spawn": [
+    0,
+    84
+   ],
+   "city": {
+    "ruler": "sable",
+    "trainers": [
+     "vex",
+     "moira",
+     "kade",
+     "sable"
+    ],
+    "final": "sable",
+    "cages": [
+     [
+      30,
+      40
+     ],
+     [
+      -34,
+      36
+     ],
+     [
+      52,
+      -10
+     ],
+     [
+      -50,
+      -14
+     ],
+     [
+      10,
+      -50
+     ]
+    ],
+    "cages_needed": 5,
+    "arena": [
+     0,
+     0
+    ],
+    "liberated_flag": "city2_free",
+    "districts": [
+     {
+      "name": {
+       "pt": "Mercado Cinza",
+       "en": "Ash Market"
+      },
+      "pos": [
+       62,
+       30
+      ]
+     },
+     {
+      "name": {
+       "pt": "Catedral",
+       "en": "Cathedral"
+      },
+      "pos": [
+       -62,
+       20
+      ]
+     },
+     {
+      "name": {
+       "pt": "Palácio",
+       "en": "Palace"
+      },
+      "pos": [
+       0,
+       -62
+      ]
+     }
+    ]
+   },
+   "pois": {},
+   "portals": [
+    {
+     "to": "m5",
+     "pos": [
+      0,
+      100
+     ],
+     "label": {
+      "pt": "Pântano Lúgubre",
+      "en": "Gloom Marsh"
+     }
+    }
+   ],
+   "fragments": [
+    "f22",
+    "f23",
+    "f24"
+   ]
+  }
+ },
+ "future_acts": [
+  {
+   "act": 3,
+   "city": {
+    "pt": "Talassa, a Cidade Submersa",
+    "en": "Thalassa, the Sunken City"
+   },
+   "ruler": {
+    "pt": "Almirante Corin",
+    "en": "Admiral Corin"
+   }
+  },
+  {
+   "act": 4,
+   "city": {
+    "pt": "Fornalha Rubra",
+    "en": "Crimson Furnace"
+   },
+   "ruler": {
+    "pt": "Duquesa Ignis",
+    "en": "Duchess Ignis"
+   }
+  },
+  {
+   "act": 5,
+   "city": {
+    "pt": "Cidadela Aurora",
+    "en": "Aurora Citadel"
+   },
+   "ruler": {
+    "pt": "Grão-Regente Tessár",
+    "en": "High Regent Tessár"
+   }
+  }
+ ]
+}

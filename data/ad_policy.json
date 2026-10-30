@@ -1,0 +1,41 @@
+{
+ "interstitial_enabled": true,
+ "interstitial_first_after_sec": 600,
+ "interstitial_min_interval_sec": 300,
+ "interstitial_daily_cap": 6,
+ "interstitial_skip_payers": true,
+ "banner_in_menus": false,
+ "rewarded_daily_cap": 25,
+ "rewarded": {
+  "offline_double": {
+   "cooldown": 0
+  },
+  "revive_here": {
+   "cooldown": 0
+  },
+  "free_spheres": {
+   "cooldown": 14400,
+   "items": {
+    "esfera": 3
+   }
+  },
+  "free_gems": {
+   "cooldown": 21600,
+   "gems": 5
+  },
+  "xp_boost": {
+   "cooldown": 3600,
+   "seconds": 1800
+  },
+  "daily_bonus": {
+   "cooldown": 0
+  },
+  "instant_harvest": {
+   "cooldown": 7200,
+   "seconds": 3600
+  },
+  "expedition_rush": {
+   "cooldown": 3600
+  }
+ }
+}

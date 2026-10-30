@@ -1,0 +1,122 @@
+{
+ "version": 1,
+ "player": {
+  "base_hp": 100,
+  "hp_per_level": 6,
+  "hunger_max": 100,
+  "hunger_drain_per_min": 1.1,
+  "starve_dps": 0.5,
+  "starve_min_hp": 10,
+  "regen_per_sec_fed": 0.6,
+  "fed_threshold": 50,
+  "move_speed": 6.5,
+  "sprint_mult": 1.55,
+  "jump": 7.0,
+  "attack_cd": 0.55,
+  "attack_base": 4,
+  "gather_base": 1.0,
+  "interact_range": 3.2,
+  "max_level": 60
+ },
+ "xp": {
+  "player_base": 25,
+  "player_exp": 1.45,
+  "player_kill_share": 0.35,
+  "monster_base": 12,
+  "monster_exp": 1.7,
+  "kill_xp_mult": 6,
+  "share_reserve": 0.5,
+  "capture_xp_mult": 4
+ },
+ "world": {
+  "day_seconds": 840,
+  "night_seconds": 360,
+  "night_aggro_mult": 1.5,
+  "night_level_bonus": 2,
+  "respawn_wild_sec": 45,
+  "aggro_range": 11,
+  "leash_range": 32,
+  "despawn_range": 90
+ },
+ "combat": {
+  "crit_chance": 0.08,
+  "crit_mult": 1.5,
+  "stab": 1.2,
+  "harmony_bonus": 0.1,
+  "harmony_min_types": 3,
+  "basic_power": 25,
+  "basic_cd": 1.2,
+  "player_vs_monster_mult": 0.6,
+  "boss_hp_mult": 3.0,
+  "trainer_hp_mult": 1.2,
+  "monster_contact_dmg": 0.35,
+  "faint_rest_sec": 120
+ },
+ "capture": {
+  "min_chance": 0.03,
+  "max_chance": 0.97,
+  "hp_weight": 0.8,
+  "level_penalty": 0.025,
+  "boss_mult": 0.35,
+  "aurora_variant_chance": 0.0025,
+  "collar_bonus": 1.5,
+  "max_party": 5,
+  "box_start": 40,
+  "box_max": 200
+ },
+ "bond": {
+  "max_level": 10,
+  "xp_per_level": 100,
+  "pet_xp": 25,
+  "feed_xp": 15,
+  "battle_xp": 4,
+  "stat_bonus_per_level": 0.02
+ },
+ "work": {
+  "skill_mult": 0.5,
+  "level_mult": 0.015,
+  "offline_cap_hours": 8,
+  "station_capacity": 60,
+  "bond_mult": 0.03
+ },
+ "expedition": {
+  "durations": [
+   3600,
+   14400,
+   28800
+  ],
+  "base_rolls": [
+   3,
+   9,
+   18
+  ],
+  "fragment_chance": [
+   0.0,
+   0.05,
+   0.12
+  ],
+  "gem_chance": [
+   0.1,
+   0.3,
+   0.6
+  ],
+  "slots": 2,
+  "slots_max": 4
+ },
+ "build": {
+  "cell": 2.0,
+  "max_pieces": 400,
+  "max_slope": 1.4,
+  "refund": 0.5
+ },
+ "save": {
+  "autosave_sec": 30
+ },
+ "sandbox": {
+  "start_items": 999,
+  "no_hunger": true,
+  "all_recipes": true,
+  "all_maps": true,
+  "peaceful_toggle": true
+ }
+}

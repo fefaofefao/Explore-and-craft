@@ -1,0 +1,334 @@
+{
+ "rasha": {
+  "name": {
+   "pt": "Capitã Rasha",
+   "en": "Captain Rasha"
+  },
+  "map": "m4",
+  "pos": [
+   62,
+   30
+  ],
+  "outfit": "#3a6a8a",
+  "team": [
+   [
+    "marujao",
+    16
+   ],
+   [
+    "pinguelo",
+    16
+   ],
+   [
+    "ferrugente",
+    17
+   ]
+  ],
+  "reward": {
+   "coins": 300,
+   "gems": 10,
+   "items": {
+    "esfera_grande": 2
+   }
+  },
+  "intro": "d_rasha_intro",
+  "defeat": "d_rasha_defeat",
+  "requires": []
+ },
+ "brutus": {
+  "name": {
+   "pt": "Capitão Brutus",
+   "en": "Captain Brutus"
+  },
+  "map": "m4",
+  "pos": [
+   -62,
+   20
+  ],
+  "outfit": "#8a3a2a",
+  "team": [
+   [
+    "rochedo",
+    18
+   ],
+   [
+    "brasaurus",
+    18
+   ],
+   [
+    "ferrugente",
+    18
+   ]
+  ],
+  "reward": {
+   "coins": 350,
+   "gems": 10,
+   "items": {
+    "tonico_forte": 3
+   }
+  },
+  "intro": "d_brutus_intro",
+  "defeat": "d_brutus_defeat",
+  "requires": []
+ },
+ "lin": {
+  "name": {
+   "pt": "Engenheira Lin",
+   "en": "Engineer Lin"
+  },
+  "map": "m4",
+  "pos": [
+   0,
+   -62
+  ],
+  "outfit": "#5a8a4a",
+  "team": [
+   [
+    "faiscaro",
+    19
+   ],
+   [
+    "ferrugente",
+    19
+   ],
+   [
+    "escarabrilho",
+    19
+   ],
+   [
+    "lupigelo",
+    20
+   ]
+  ],
+  "reward": {
+   "coins": 400,
+   "gems": 15,
+   "items": {
+    "circuito": 1
+   }
+  },
+  "intro": "d_lin_intro",
+  "defeat": "d_lin_defeat",
+  "requires": []
+ },
+ "vorn": {
+  "name": {
+   "pt": "Barão Vorn",
+   "en": "Baron Vorn"
+  },
+  "map": "m4",
+  "pos": [
+   0,
+   0
+  ],
+  "outfit": "#2a2a30",
+  "ruler": true,
+  "team": [
+   [
+    "serpenduna",
+    21
+   ],
+   [
+    "mamutundra",
+    21
+   ],
+   [
+    "brasaurus",
+    22
+   ],
+   [
+    "ferro_colosso",
+    23
+   ]
+  ],
+  "reward": {
+   "coins": 1000,
+   "gems": 50,
+   "items": {
+    "esfera_aurora": 2
+   },
+   "gift_monster": [
+    "ferro_colosso",
+    23
+   ]
+  },
+  "intro": "d_vorn_intro",
+  "defeat": "d_vorn_defeat",
+  "requires": [
+   "rasha",
+   "brutus",
+   "lin"
+  ],
+  "requires_flag": "cages1_done"
+ },
+ "vex": {
+  "name": {
+   "pt": "Inquisidor Vex",
+   "en": "Inquisitor Vex"
+  },
+  "map": "m8",
+  "pos": [
+   62,
+   30
+  ],
+  "outfit": "#4a2a5a",
+  "team": [
+   [
+    "nevoeiro",
+    36
+   ],
+   [
+    "corvoleta",
+    36
+   ],
+   [
+    "sombrino",
+    37
+   ]
+  ],
+  "reward": {
+   "coins": 700,
+   "gems": 15,
+   "items": {
+    "esfera_grande": 3
+   }
+  },
+  "intro": "d_vex_intro",
+  "defeat": "d_vex_defeat",
+  "requires": []
+ },
+ "moira": {
+  "name": {
+   "pt": "Madre Moira",
+   "en": "Mother Moira"
+  },
+  "map": "m8",
+  "pos": [
+   -62,
+   20
+  ],
+  "outfit": "#6a6a8a",
+  "team": [
+   [
+    "coralume",
+    37
+   ],
+   [
+    "lumeflor",
+    37
+   ],
+   [
+    "cogulume",
+    37
+   ],
+   [
+    "nevoeiro",
+    38
+   ]
+  ],
+  "reward": {
+   "coins": 750,
+   "gems": 15,
+   "items": {
+    "reviver": 3
+   }
+  },
+  "intro": "d_moira_intro",
+  "defeat": "d_moira_defeat",
+  "requires": []
+ },
+ "kade": {
+  "name": {
+   "pt": "General Kade",
+   "en": "General Kade"
+  },
+  "map": "m8",
+  "pos": [
+   0,
+   -62
+  ],
+  "outfit": "#3a3a4a",
+  "team": [
+   [
+    "vulcanix",
+    38
+   ],
+   [
+    "tempestor",
+    38
+   ],
+   [
+    "magmarujo",
+    38
+   ],
+   [
+    "lupigelo",
+    39
+   ]
+  ],
+  "reward": {
+   "coins": 800,
+   "gems": 20,
+   "items": {
+    "tonico_forte": 5
+   }
+  },
+  "intro": "d_kade_intro",
+  "defeat": "d_kade_defeat",
+  "requires": []
+ },
+ "sable": {
+  "name": {
+   "pt": "Imperatriz Sable",
+   "en": "Empress Sable"
+  },
+  "map": "m8",
+  "pos": [
+   0,
+   0
+  ],
+  "outfit": "#1a1028",
+  "ruler": true,
+  "team": [
+   [
+    "nevoeiro",
+    39
+   ],
+   [
+    "vulcanix",
+    40
+   ],
+   [
+    "coralume",
+    40
+   ],
+   [
+    "trovaguia",
+    40
+   ],
+   [
+    "umbra_sable",
+    42
+   ]
+  ],
+  "reward": {
+   "coins": 2500,
+   "gems": 100,
+   "items": {
+    "esfera_aurora": 3
+   },
+   "gift_monster": [
+    "umbra_sable",
+    42
+   ]
+  },
+  "intro": "d_sable_intro",
+  "defeat": "d_sable_defeat",
+  "requires": [
+   "vex",
+   "moira",
+   "kade"
+  ],
+  "requires_flag": "cages2_done"
+ }
+}

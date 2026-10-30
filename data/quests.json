@@ -1,0 +1,895 @@
+[
+ {
+  "id": "q01",
+  "title": {
+   "pt": "O Despertar",
+   "en": "The Awakening"
+  },
+  "desc": {
+   "pt": "Liberte um Eco da coleira ao lado do Berço.",
+   "en": "Free an Echo from its collar beside the Cradle."
+  },
+  "type": "starter",
+  "target": null,
+  "count": 1,
+  "marker": {
+   "map": "m1",
+   "pos": [
+    6,
+    66
+   ]
+  },
+  "reward": {
+   "xp": 30,
+   "items": {
+    "esfera": 3
+   }
+  },
+  "dialog": "d_intro",
+  "done_dialog": "d_starter_done"
+ },
+ {
+  "id": "q02",
+  "title": {
+   "pt": "Mãos à Obra",
+   "en": "Get to Work"
+  },
+  "desc": {
+   "pt": "Colete 6 madeira, 6 pedra e 6 fibra.",
+   "en": "Gather 6 wood, 6 stone and 6 fiber."
+  },
+  "type": "collect",
+  "target": {
+   "madeira": 6,
+   "pedra": 6,
+   "fibra": 6
+  },
+  "count": 1,
+  "marker": null,
+  "reward": {
+   "xp": 40,
+   "coins": 20
+  },
+  "dialog": "d_q02",
+  "done_dialog": null
+ },
+ {
+  "id": "q03",
+  "title": {
+   "pt": "Ferramentas Primitivas",
+   "en": "Primitive Tools"
+  },
+  "desc": {
+   "pt": "Crie um Machado de Pedra e uma Picareta de Pedra.",
+   "en": "Craft a Stone Axe and a Stone Pickaxe."
+  },
+  "type": "craft",
+  "target": {
+   "machado_pedra": 1,
+   "picareta_pedra": 1
+  },
+  "count": 1,
+  "marker": null,
+  "reward": {
+   "xp": 50
+  },
+  "dialog": "d_q03",
+  "done_dialog": null
+ },
+ {
+  "id": "q04",
+  "title": {
+   "pt": "Um Lugar para Criar",
+   "en": "A Place to Create"
+  },
+  "desc": {
+   "pt": "Construa uma Bancada.",
+   "en": "Build a Workbench."
+  },
+  "type": "build",
+  "target": {
+   "bancada": 1
+  },
+  "count": 1,
+  "marker": null,
+  "reward": {
+   "xp": 50,
+   "coins": 30
+  },
+  "dialog": "d_q04",
+  "done_dialog": null
+ },
+ {
+  "id": "q05",
+  "title": {
+   "pt": "Esferas de Vínculo",
+   "en": "Bond Spheres"
+  },
+  "desc": {
+   "pt": "Tenha 5 Esferas de Vínculo.",
+   "en": "Have 5 Bond Spheres."
+  },
+  "type": "collect",
+  "target": {
+   "esfera": 5
+  },
+  "count": 1,
+  "marker": null,
+  "reward": {
+   "xp": 40
+  },
+  "dialog": "d_q05",
+  "done_dialog": null
+ },
+ {
+  "id": "q06",
+  "title": {
+   "pt": "Novos Amigos",
+   "en": "New Friends"
+  },
+  "desc": {
+   "pt": "Recrute 2 Ecos selvagens (enfraqueça e lance uma Esfera).",
+   "en": "Recruit 2 wild Echoes (weaken them, then throw a Sphere)."
+  },
+  "type": "capture",
+  "target": null,
+  "count": 2,
+  "marker": null,
+  "reward": {
+   "xp": 80,
+   "items": {
+    "tonico": 3
+   }
+  },
+  "dialog": "d_q06",
+  "done_dialog": "d_q06_done"
+ },
+ {
+  "id": "q07",
+  "title": {
+   "pt": "Fogo e Comida",
+   "en": "Fire and Food"
+  },
+  "desc": {
+   "pt": "Construa uma Fogueira e asse 2 Carnes.",
+   "en": "Build a Campfire and roast 2 Meats."
+  },
+  "type": "craft",
+  "target": {
+   "carne_assada": 2
+  },
+  "count": 1,
+  "marker": null,
+  "reward": {
+   "xp": 60
+  },
+  "dialog": "d_q07",
+  "done_dialog": null
+ },
+ {
+  "id": "q08",
+  "title": {
+   "pt": "Um Lar",
+   "en": "A Home"
+  },
+  "desc": {
+   "pt": "Construa uma Cama (ela vira seu ponto de retorno).",
+   "en": "Build a Bed (it becomes your respawn point)."
+  },
+  "type": "build",
+  "target": {
+   "cama": 1
+  },
+  "count": 1,
+  "marker": null,
+  "reward": {
+   "xp": 60,
+   "coins": 50
+  },
+  "dialog": "d_q08",
+  "done_dialog": null
+ },
+ {
+  "id": "q09",
+  "title": {
+   "pt": "Ecos Trabalhadores",
+   "en": "Working Echoes"
+  },
+  "desc": {
+   "pt": "Construa uma Horta Eco e aloque um Eco nela.",
+   "en": "Build an Echo Garden and assign an Echo to it."
+  },
+  "type": "assign",
+  "target": {
+   "horta": 1
+  },
+  "count": 1,
+  "marker": null,
+  "reward": {
+   "xp": 80,
+   "gems": 5
+  },
+  "dialog": "d_q09",
+  "done_dialog": "d_q09_done"
+ },
+ {
+  "id": "q10",
+  "title": {
+   "pt": "Espinhos Antigos",
+   "en": "Ancient Thorns"
+  },
+  "desc": {
+   "pt": "Crie uma Tocha e queime os espinhos da Clareira Antiga.",
+   "en": "Craft a Torch and burn the Ancient Clearing's thorns."
+  },
+  "type": "flag",
+  "target": "thorns_burned",
+  "count": 1,
+  "marker": {
+   "map": "m1",
+   "pos": [
+    -62,
+    -48
+   ]
+  },
+  "reward": {
+   "xp": 80
+  },
+  "dialog": "d_q10",
+  "done_dialog": null
+ },
+ {
+  "id": "q11",
+  "title": {
+   "pt": "O Ancião Musgoso",
+   "en": "The Mossy Elder"
+  },
+  "desc": {
+   "pt": "Derrote o Ancião Musgoso e obtenha a Seiva Ancestral.",
+   "en": "Defeat the Mossy Elder and claim the Ancient Sap."
+  },
+  "type": "boss",
+  "target": "anciao_musgoso",
+  "count": 1,
+  "marker": {
+   "map": "m1",
+   "pos": [
+    -62,
+    -48
+   ]
+  },
+  "reward": {
+   "xp": 200,
+   "gems": 10
+  },
+  "dialog": "d_q11",
+  "done_dialog": "d_q11_done"
+ },
+ {
+  "id": "q12",
+  "title": {
+   "pt": "Fogo que Funde",
+   "en": "Fire that Melts"
+  },
+  "desc": {
+   "pt": "Construa uma Fornalha e produza 3 Lingotes de Ferro.",
+   "en": "Build a Furnace and smelt 3 Iron Ingots."
+  },
+  "type": "craft",
+  "target": {
+   "lingote_ferro": 3
+  },
+  "count": 1,
+  "marker": null,
+  "reward": {
+   "xp": 100
+  },
+  "dialog": "d_q12",
+  "done_dialog": null
+ },
+ {
+  "id": "q13",
+  "title": {
+   "pt": "Rumo às Dunas",
+   "en": "Toward the Dunes"
+  },
+  "desc": {
+   "pt": "Crie um Cantil e viaje para as Dunas de Âmbar.",
+   "en": "Craft a Canteen and travel to the Amber Dunes."
+  },
+  "type": "visit",
+  "target": "m2",
+  "count": 1,
+  "marker": {
+   "map": "m1",
+   "pos": [
+    96,
+    10
+   ]
+  },
+  "reward": {
+   "xp": 100
+  },
+  "dialog": "d_q13",
+  "done_dialog": "d_q13_done"
+ },
+ {
+  "id": "q14",
+  "title": {
+   "pt": "A Lente Solar",
+   "en": "The Sun Lens"
+  },
+  "desc": {
+   "pt": "Construa a Bancada Arcana e crie a Lente Solar.",
+   "en": "Build the Arcane Bench and craft the Sun Lens."
+  },
+  "type": "craft",
+  "target": {
+   "lente_solar": 1
+  },
+  "count": 1,
+  "marker": null,
+  "reward": {
+   "xp": 120
+  },
+  "dialog": "d_q14",
+  "done_dialog": null
+ },
+ {
+  "id": "q15",
+  "title": {
+   "pt": "O Templo Solar",
+   "en": "The Sun Temple"
+  },
+  "desc": {
+   "pt": "Abra o Templo Solar e derrote Ambarraque.",
+   "en": "Open the Sun Temple and defeat Ambarraque."
+  },
+  "type": "boss",
+  "target": "ambarraque",
+  "count": 1,
+  "marker": {
+   "map": "m2",
+   "pos": [
+    56,
+    -44
+   ]
+  },
+  "reward": {
+   "xp": 300,
+   "gems": 15
+  },
+  "dialog": "d_q15",
+  "done_dialog": "d_q15_done"
+ },
+ {
+  "id": "q16",
+  "title": {
+   "pt": "Contra o Frio",
+   "en": "Against the Cold"
+  },
+  "desc": {
+   "pt": "Crie um Casaco de Pele e viaje para os Picos de Geada.",
+   "en": "Craft a Fur Coat and travel to the Frost Peaks."
+  },
+  "type": "visit",
+  "target": "m3",
+  "count": 1,
+  "marker": {
+   "map": "m1",
+   "pos": [
+    -98,
+    16
+   ]
+  },
+  "reward": {
+   "xp": 120
+  },
+  "dialog": "d_q16",
+  "done_dialog": null
+ },
+ {
+  "id": "q17",
+  "title": {
+   "pt": "Ferro Contra Gelo",
+   "en": "Iron Against Ice"
+  },
+  "desc": {
+   "pt": "Construa uma Forja e crie uma Picareta de Ferro.",
+   "en": "Build a Forge and craft an Iron Pickaxe."
+  },
+  "type": "craft",
+  "target": {
+   "picareta_ferro": 1
+  },
+  "count": 1,
+  "marker": null,
+  "reward": {
+   "xp": 150
+  },
+  "dialog": "d_q17",
+  "done_dialog": null
+ },
+ {
+  "id": "q18",
+  "title": {
+   "pt": "A Lágrima do Wyrm",
+   "en": "The Wyrm's Tear"
+  },
+  "desc": {
+   "pt": "Quebre o muro de gelo e derrote Serpegelo.",
+   "en": "Break the ice wall and defeat Serpegelo."
+  },
+  "type": "boss",
+  "target": "serpegelo",
+  "count": 1,
+  "marker": {
+   "map": "m3",
+   "pos": [
+    -48,
+    -58
+   ]
+  },
+  "reward": {
+   "xp": 400,
+   "gems": 20
+  },
+  "dialog": "d_q18",
+  "done_dialog": "d_q18_done"
+ },
+ {
+  "id": "q19",
+  "title": {
+   "pt": "O Núcleo da Ponte",
+   "en": "The Bridge Core"
+  },
+  "desc": {
+   "pt": "Una as três relíquias na Bancada Arcana.",
+   "en": "Unite the three relics at the Arcane Bench."
+  },
+  "type": "craft",
+  "target": {
+   "nucleo_ponte": 1
+  },
+  "count": 1,
+  "marker": null,
+  "reward": {
+   "xp": 200
+  },
+  "dialog": "d_q19",
+  "done_dialog": null
+ },
+ {
+  "id": "q20",
+  "title": {
+   "pt": "A Ponte Lumariana",
+   "en": "The Lumarian Bridge"
+  },
+  "desc": {
+   "pt": "Coloque o Núcleo no altar da ponte ao norte do Bosque.",
+   "en": "Place the Core on the bridge altar north of the Grove."
+  },
+  "type": "flag",
+  "target": "bridge_built",
+  "count": 1,
+  "marker": {
+   "map": "m1",
+   "pos": [
+    0,
+    -96
+   ]
+  },
+  "reward": {
+   "xp": 200,
+   "gems": 10
+  },
+  "dialog": "d_q20",
+  "done_dialog": "d_q20_done"
+ },
+ {
+  "id": "q21",
+  "title": {
+   "pt": "Porto Ferrugem",
+   "en": "Rustport"
+  },
+  "desc": {
+   "pt": "Atravesse a ponte e entre em Porto Ferrugem.",
+   "en": "Cross the bridge and enter Rustport."
+  },
+  "type": "visit",
+  "target": "m4",
+  "count": 1,
+  "marker": {
+   "map": "m1",
+   "pos": [
+    0,
+    -112
+   ]
+  },
+  "reward": {
+   "xp": 150
+  },
+  "dialog": null,
+  "done_dialog": "d_vorn_meet"
+ },
+ {
+  "id": "q22",
+  "title": {
+   "pt": "Correntes Partidas",
+   "en": "Broken Chains"
+  },
+  "desc": {
+   "pt": "Crie um Pé de Cabra e liberte os 5 Ecos enjaulados.",
+   "en": "Craft a Crowbar and free the 5 caged Echoes."
+  },
+  "type": "flag",
+  "target": "cages1_done",
+  "count": 1,
+  "marker": {
+   "map": "m4",
+   "pos": [
+    30,
+    40
+   ]
+  },
+  "reward": {
+   "xp": 300,
+   "gems": 15
+  },
+  "dialog": "d_q22",
+  "done_dialog": "d_q22_done"
+ },
+ {
+  "id": "q23",
+  "title": {
+   "pt": "Os Três Capitães",
+   "en": "The Three Captains"
+  },
+  "desc": {
+   "pt": "Derrote Rasha (Docas), Brutus (Fundição) e Lin (Torre).",
+   "en": "Defeat Rasha (Docks), Brutus (Foundry) and Lin (Tower)."
+  },
+  "type": "trainer",
+  "target": [
+   "rasha",
+   "brutus",
+   "lin"
+  ],
+  "count": 1,
+  "marker": {
+   "map": "m4",
+   "pos": [
+    62,
+    30
+   ]
+  },
+  "reward": {
+   "xp": 600,
+   "gems": 20
+  },
+  "dialog": "d_q23",
+  "done_dialog": null
+ },
+ {
+  "id": "q24",
+  "title": {
+   "pt": "O Barão de Ferro",
+   "en": "The Iron Baron"
+  },
+  "desc": {
+   "pt": "Desafie o Barão Vorn na arena central.",
+   "en": "Challenge Baron Vorn in the central arena."
+  },
+  "type": "trainer",
+  "target": [
+   "vorn"
+  ],
+  "count": 1,
+  "marker": {
+   "map": "m4",
+   "pos": [
+    0,
+    0
+   ]
+  },
+  "reward": {
+   "xp": 1000,
+   "gems": 50
+  },
+  "dialog": "d_q24",
+  "done_dialog": "d_act1_end"
+ },
+ {
+  "id": "q25",
+  "title": {
+   "pt": "Além do Mar Cinzento",
+   "en": "Beyond the Grey Sea"
+  },
+  "desc": {
+   "pt": "Pegue a balsa nas Docas até o Pântano Lúgubre.",
+   "en": "Take the ferry at the Docks to the Gloom Marsh."
+  },
+  "type": "visit",
+  "target": "m5",
+  "count": 1,
+  "marker": {
+   "map": "m4",
+   "pos": [
+    88,
+    54
+   ]
+  },
+  "reward": {
+   "xp": 300
+  },
+  "dialog": "d_q25",
+  "done_dialog": "d_q25_done"
+ },
+ {
+  "id": "q26",
+  "title": {
+   "pt": "Respirar no Pântano",
+   "en": "Breathing in the Marsh"
+  },
+  "desc": {
+   "pt": "Crie uma Máscara de Filtro.",
+   "en": "Craft a Filter Mask."
+  },
+  "type": "craft",
+  "target": {
+   "mascara_filtro": 1
+  },
+  "count": 1,
+  "marker": null,
+  "reward": {
+   "xp": 300
+  },
+  "dialog": "d_q26",
+  "done_dialog": null
+ },
+ {
+  "id": "q27",
+  "title": {
+   "pt": "O Rei do Lodo",
+   "en": "The Mud King"
+  },
+  "desc": {
+   "pt": "Derrote Lodorei e obtenha a Raiz Negra.",
+   "en": "Defeat Lodorei and claim the Black Root."
+  },
+  "type": "boss",
+  "target": "lodorei",
+  "count": 1,
+  "marker": {
+   "map": "m5",
+   "pos": [
+    -50,
+    -50
+   ]
+  },
+  "reward": {
+   "xp": 900,
+   "gems": 25
+  },
+  "dialog": "d_q27",
+  "done_dialog": "d_q27_done"
+ },
+ {
+  "id": "q28",
+  "title": {
+   "pt": "Vidro Vulcânico",
+   "en": "Volcanic Glass"
+  },
+  "desc": {
+   "pt": "No Cânion Brasa, crie um Traje Ignífugo.",
+   "en": "In Ember Canyon, craft a Fireproof Suit."
+  },
+  "type": "craft",
+  "target": {
+   "traje_ignifugo": 1
+  },
+  "count": 1,
+  "marker": {
+   "map": "m5",
+   "pos": [
+    98,
+    0
+   ]
+  },
+  "reward": {
+   "xp": 400
+  },
+  "dialog": "d_q28",
+  "done_dialog": null
+ },
+ {
+  "id": "q29",
+  "title": {
+   "pt": "O Coração do Vulcão",
+   "en": "The Volcano's Heart"
+  },
+  "desc": {
+   "pt": "Derrote Magmarca e obtenha a Brasa Eterna.",
+   "en": "Defeat Magmarca and claim the Eternal Ember."
+  },
+  "type": "boss",
+  "target": "magmarca",
+  "count": 1,
+  "marker": {
+   "map": "m6",
+   "pos": [
+    50,
+    -50
+   ]
+  },
+  "reward": {
+   "xp": 1100,
+   "gems": 25
+  },
+  "dialog": "d_q29",
+  "done_dialog": "d_q29_done"
+ },
+ {
+  "id": "q30",
+  "title": {
+   "pt": "Domar o Raio",
+   "en": "Taming the Lightning"
+  },
+  "desc": {
+   "pt": "Crie um Para-raios Portátil.",
+   "en": "Craft a Pocket Lightning Rod."
+  },
+  "type": "craft",
+  "target": {
+   "para_raios": 1
+  },
+  "count": 1,
+  "marker": null,
+  "reward": {
+   "xp": 400
+  },
+  "dialog": "d_q30",
+  "done_dialog": null
+ },
+ {
+  "id": "q31",
+  "title": {
+   "pt": "Asas de Trovão",
+   "en": "Thunder Wings"
+  },
+  "desc": {
+   "pt": "Derrote Trovaguia nas Ilhas Tempestade.",
+   "en": "Defeat Trovaguia in the Storm Isles."
+  },
+  "type": "boss",
+  "target": "trovaguia",
+  "count": 1,
+  "marker": {
+   "map": "m7",
+   "pos": [
+    -46,
+    -60
+   ]
+  },
+  "reward": {
+   "xp": 1300,
+   "gems": 30
+  },
+  "dialog": "d_q31",
+  "done_dialog": "d_q31_done"
+ },
+ {
+  "id": "q32",
+  "title": {
+   "pt": "A Chave Sombria",
+   "en": "The Shadow Key"
+  },
+  "desc": {
+   "pt": "Crie a Chave Sombria e abra o portão norte do Pântano.",
+   "en": "Craft the Shadow Key and open the Marsh's north gate."
+  },
+  "type": "flag",
+  "target": "gate2_open",
+  "count": 1,
+  "marker": {
+   "map": "m5",
+   "pos": [
+    40,
+    -100
+   ]
+  },
+  "reward": {
+   "xp": 600,
+   "gems": 15
+  },
+  "dialog": "d_q32",
+  "done_dialog": null
+ },
+ {
+  "id": "q33",
+  "title": {
+   "pt": "Jaulas de Cinza",
+   "en": "Cages of Ash"
+  },
+  "desc": {
+   "pt": "Liberte os 5 Ecos enjaulados de Alta Cinza.",
+   "en": "Free the 5 caged Echoes of Ashspire."
+  },
+  "type": "flag",
+  "target": "cages2_done",
+  "count": 1,
+  "marker": {
+   "map": "m8",
+   "pos": [
+    30,
+    40
+   ]
+  },
+  "reward": {
+   "xp": 800,
+   "gems": 20
+  },
+  "dialog": "d_q33",
+  "done_dialog": "d_sable_meet"
+ },
+ {
+  "id": "q34",
+  "title": {
+   "pt": "A Guarda da Imperatriz",
+   "en": "The Empress's Guard"
+  },
+  "desc": {
+   "pt": "Derrote Vex, Moira e Kade.",
+   "en": "Defeat Vex, Moira and Kade."
+  },
+  "type": "trainer",
+  "target": [
+   "vex",
+   "moira",
+   "kade"
+  ],
+  "count": 1,
+  "marker": {
+   "map": "m8",
+   "pos": [
+    62,
+    30
+   ]
+  },
+  "reward": {
+   "xp": 1500,
+   "gems": 30
+  },
+  "dialog": "d_q34",
+  "done_dialog": null
+ },
+ {
+  "id": "q35",
+  "title": {
+   "pt": "A Imperatriz das Sombras",
+   "en": "The Shadow Empress"
+  },
+  "desc": {
+   "pt": "Desafie a Imperatriz Sable.",
+   "en": "Challenge Empress Sable."
+  },
+  "type": "trainer",
+  "target": [
+   "sable"
+  ],
+  "count": 1,
+  "marker": {
+   "map": "m8",
+   "pos": [
+    0,
+    0
+   ]
+  },
+  "reward": {
+   "xp": 3000,
+   "gems": 100
+  },
+  "dialog": "d_q35",
+  "done_dialog": "d_act2_end"
+ }
+]

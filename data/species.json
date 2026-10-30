@@ -1,0 +1,2450 @@
+{
+ "folhito": {
+  "name": {
+   "pt": "Folhito",
+   "en": "Folhito"
+  },
+  "types": [
+   "flora"
+  ],
+  "rarity": "comum",
+  "base": {
+   "hp": 45,
+   "atk": 49,
+   "def": 49,
+   "spd": 45
+  },
+  "capture": 0.55,
+  "work": {
+   "corte": 1,
+   "coleta": 2
+  },
+  "body": {
+   "shape": "round",
+   "size": 0.55,
+   "color": "#7cd65a",
+   "color2": "#3f8f2e",
+   "ears": "leaf",
+   "horns": "none",
+   "tail": "leaf",
+   "wings": false,
+   "eyes": "round",
+   "extra": "sprout"
+  },
+  "temper": "dócil",
+  "lore": {
+   "pt": "Brota onde alguém chorou de alegria. Segue quem cuida das plantas.",
+   "en": "Sprouts wherever someone cried with joy. Follows those who tend plants."
+  },
+  "learnset": [
+   [
+    1,
+    "folha_navalha"
+   ],
+   [
+    7,
+    "chicote_vinha"
+   ],
+   [
+    14,
+    "esporos"
+   ],
+   [
+    24,
+    "fotossintese"
+   ],
+   [
+    34,
+    "floresta_furia"
+   ]
+  ],
+  "evolves": {
+   "to": "folhagrao",
+   "level": 16
+  },
+  "boss": false
+ },
+ "folhagrao": {
+  "name": {
+   "pt": "Folhagrão",
+   "en": "Folhagrão"
+  },
+  "types": [
+   "flora",
+   "terra"
+  ],
+  "rarity": "incomum",
+  "base": {
+   "hp": 70,
+   "atk": 72,
+   "def": 78,
+   "spd": 55
+  },
+  "capture": 0.25,
+  "work": {
+   "corte": 3,
+   "coleta": 3
+  },
+  "body": {
+   "shape": "quad",
+   "size": 1.0,
+   "color": "#5fae47",
+   "color2": "#7a5530",
+   "ears": "leaf",
+   "horns": "none",
+   "tail": "leaf",
+   "wings": false,
+   "eyes": "round",
+   "extra": "sprout"
+  },
+  "temper": "dócil",
+  "lore": {
+   "pt": "Carrega um pequeno bosque nas costas. Lembra de cada árvore que já existiu.",
+   "en": "Carries a small grove on its back. Remembers every tree that ever lived."
+  },
+  "learnset": [
+   [
+    1,
+    "folha_navalha"
+   ],
+   [
+    7,
+    "chicote_vinha"
+   ],
+   [
+    12,
+    "pedrada"
+   ],
+   [
+    18,
+    "esporos"
+   ],
+   [
+    26,
+    "pancada"
+   ],
+   [
+    34,
+    "floresta_furia"
+   ]
+  ],
+  "evolves": null,
+  "boss": false
+ },
+ "brasito": {
+  "name": {
+   "pt": "Brasito",
+   "en": "Brasito"
+  },
+  "types": [
+   "brasa"
+  ],
+  "rarity": "comum",
+  "base": {
+   "hp": 39,
+   "atk": 55,
+   "def": 43,
+   "spd": 65
+  },
+  "capture": 0.55,
+  "work": {
+   "chama": 2,
+   "mineracao": 1
+  },
+  "body": {
+   "shape": "quad",
+   "size": 0.55,
+   "color": "#ff8a3d",
+   "color2": "#ffd34d",
+   "ears": "small",
+   "horns": "none",
+   "tail": "flame",
+   "wings": false,
+   "eyes": "happy",
+   "extra": "none"
+  },
+  "temper": "brincalhão",
+  "lore": {
+   "pt": "Sua cauda arde mais forte quando ouve risadas.",
+   "en": "Its tail burns brighter whenever it hears laughter."
+  },
+  "learnset": [
+   [
+    1,
+    "fagulha"
+   ],
+   [
+    7,
+    "investida_chama"
+   ],
+   [
+    14,
+    "anel_fogo"
+   ],
+   [
+    24,
+    "erupcao"
+   ]
+  ],
+  "evolves": {
+   "to": "brasaurus",
+   "level": 16
+  },
+  "boss": false
+ },
+ "brasaurus": {
+  "name": {
+   "pt": "Brasaurus",
+   "en": "Brasaurus"
+  },
+  "types": [
+   "brasa",
+   "terra"
+  ],
+  "rarity": "incomum",
+  "base": {
+   "hp": 68,
+   "atk": 84,
+   "def": 66,
+   "spd": 75
+  },
+  "capture": 0.25,
+  "work": {
+   "chama": 4,
+   "mineracao": 2
+  },
+  "body": {
+   "shape": "quad",
+   "size": 1.1,
+   "color": "#e8642a",
+   "color2": "#5a3a2a",
+   "ears": "none",
+   "horns": "twin",
+   "tail": "flame",
+   "wings": false,
+   "eyes": "round",
+   "extra": "none"
+  },
+  "temper": "valente",
+  "lore": {
+   "pt": "Forja metal com o próprio hálito. Os ferreiros de Ferrugem o temiam e o veneravam.",
+   "en": "Forges metal with its breath. Rustport's smiths both feared and revered it."
+  },
+  "learnset": [
+   [
+    1,
+    "fagulha"
+   ],
+   [
+    7,
+    "investida_chama"
+   ],
+   [
+    12,
+    "pedrada"
+   ],
+   [
+    18,
+    "anel_fogo"
+   ],
+   [
+    26,
+    "pancada"
+   ],
+   [
+    34,
+    "erupcao"
+   ]
+  ],
+  "evolves": null,
+  "boss": false
+ },
+ "marolo": {
+  "name": {
+   "pt": "Marolo",
+   "en": "Marolo"
+  },
+  "types": [
+   "mare"
+  ],
+  "rarity": "comum",
+  "base": {
+   "hp": 50,
+   "atk": 44,
+   "def": 56,
+   "spd": 43
+  },
+  "capture": 0.55,
+  "work": {
+   "irrigacao": 2,
+   "coleta": 1
+  },
+  "body": {
+   "shape": "round",
+   "size": 0.6,
+   "color": "#5bb6ff",
+   "color2": "#e8f6ff",
+   "ears": "fin",
+   "horns": "none",
+   "tail": "fish",
+   "wings": false,
+   "eyes": "happy",
+   "extra": "none"
+  },
+  "temper": "dócil",
+  "lore": {
+   "pt": "Canta baixinho antes de chover. Ninguém sabe para quem.",
+   "en": "Hums softly before it rains. Nobody knows who it sings to."
+  },
+  "learnset": [
+   [
+    1,
+    "jato_agua"
+   ],
+   [
+    7,
+    "onda"
+   ],
+   [
+    14,
+    "bolha_cura"
+   ],
+   [
+    24,
+    "maremoto"
+   ]
+  ],
+  "evolves": {
+   "to": "marujao",
+   "level": 16
+  },
+  "boss": false
+ },
+ "marujao": {
+  "name": {
+   "pt": "Marujão",
+   "en": "Marujão"
+  },
+  "types": [
+   "mare",
+   "gelo"
+  ],
+  "rarity": "incomum",
+  "base": {
+   "hp": 82,
+   "atk": 70,
+   "def": 80,
+   "spd": 58
+  },
+  "capture": 0.25,
+  "work": {
+   "irrigacao": 4,
+   "coleta": 2
+  },
+  "body": {
+   "shape": "quad",
+   "size": 1.1,
+   "color": "#3f8fe0",
+   "color2": "#d8f2ff",
+   "ears": "fin",
+   "horns": "tusk",
+   "tail": "fish",
+   "wings": false,
+   "eyes": "round",
+   "extra": "none"
+  },
+  "temper": "calmo",
+  "lore": {
+   "pt": "Guarda os náufragos até o amanhecer. Depois finge que não viu nada.",
+   "en": "Guards castaways until dawn, then pretends it saw nothing."
+  },
+  "learnset": [
+   [
+    1,
+    "jato_agua"
+   ],
+   [
+    7,
+    "onda"
+   ],
+   [
+    12,
+    "estilhaco"
+   ],
+   [
+    18,
+    "bolha_cura"
+   ],
+   [
+    26,
+    "presa_gelida"
+   ],
+   [
+    34,
+    "maremoto"
+   ]
+  ],
+  "evolves": null,
+  "boss": false
+ },
+ "espinhoz": {
+  "name": {
+   "pt": "Espinhoz",
+   "en": "Espinhoz"
+  },
+  "types": [
+   "flora"
+  ],
+  "rarity": "comum",
+  "base": {
+   "hp": 40,
+   "atk": 52,
+   "def": 60,
+   "spd": 40
+  },
+  "capture": 0.6,
+  "work": {
+   "corte": 2
+  },
+  "body": {
+   "shape": "quad",
+   "size": 0.5,
+   "color": "#8f6b3e",
+   "color2": "#6cc24a",
+   "ears": "small",
+   "horns": "none",
+   "tail": "none",
+   "wings": false,
+   "eyes": "round",
+   "extra": "spikes"
+  },
+  "temper": "tímido",
+  "lore": {
+   "pt": "Enrola-se numa bola de espinhos quando sente medo. Sente medo com frequência.",
+   "en": "Curls into a spiky ball when scared. It is scared often."
+  },
+  "learnset": [
+   [
+    1,
+    "folha_navalha"
+   ],
+   [
+    7,
+    "chicote_vinha"
+   ],
+   [
+    14,
+    "esporos"
+   ],
+   [
+    24,
+    "fotossintese"
+   ],
+   [
+    34,
+    "floresta_furia"
+   ]
+  ],
+  "evolves": null,
+  "boss": false
+ },
+ "cogulume": {
+  "name": {
+   "pt": "Cogulume",
+   "en": "Cogulume"
+  },
+  "types": [
+   "flora",
+   "sombra"
+  ],
+  "rarity": "comum",
+  "base": {
+   "hp": 48,
+   "atk": 50,
+   "def": 45,
+   "spd": 38
+  },
+  "capture": 0.6,
+  "work": {
+   "coleta": 2,
+   "cura": 1
+  },
+  "body": {
+   "shape": "round",
+   "size": 0.5,
+   "color": "#c24d6b",
+   "color2": "#fff0e0",
+   "ears": "none",
+   "horns": "none",
+   "tail": "none",
+   "wings": false,
+   "eyes": "sleepy",
+   "extra": "mushroom"
+  },
+  "temper": "sonolento",
+  "lore": {
+   "pt": "Brilha à noite. Seus esporos causam sonhos com lugares que não existem mais.",
+   "en": "Glows at night. Its spores bring dreams of places that no longer exist."
+  },
+  "learnset": [
+   [
+    1,
+    "folha_navalha"
+   ],
+   [
+    7,
+    "chicote_vinha"
+   ],
+   [
+    12,
+    "garra_sombria"
+   ],
+   [
+    18,
+    "esporos"
+   ],
+   [
+    26,
+    "esfera_sombra"
+   ],
+   [
+    34,
+    "floresta_furia"
+   ]
+  ],
+  "evolves": null,
+  "boss": false
+ },
+ "pedrisco": {
+  "name": {
+   "pt": "Pedrisco",
+   "en": "Pedrisco"
+  },
+  "types": [
+   "terra"
+  ],
+  "rarity": "comum",
+  "base": {
+   "hp": 40,
+   "atk": 60,
+   "def": 80,
+   "spd": 25
+  },
+  "capture": 0.6,
+  "work": {
+   "mineracao": 2
+  },
+  "body": {
+   "shape": "round",
+   "size": 0.5,
+   "color": "#9a8d80",
+   "color2": "#6f6358",
+   "ears": "none",
+   "horns": "none",
+   "tail": "none",
+   "wings": false,
+   "eyes": "angry",
+   "extra": "rocks"
+  },
+  "temper": "teimoso",
+  "lore": {
+   "pt": "Come cascalho e arrota faíscas. Teimoso como uma montanha.",
+   "en": "Eats gravel and burps sparks. Stubborn as a mountain."
+  },
+  "learnset": [
+   [
+    1,
+    "pedrada"
+   ],
+   [
+    7,
+    "pancada"
+   ],
+   [
+    14,
+    "carapaca"
+   ],
+   [
+    24,
+    "terremoto"
+   ]
+  ],
+  "evolves": {
+   "to": "rochedo",
+   "level": 18
+  },
+  "boss": false
+ },
+ "rochedo": {
+  "name": {
+   "pt": "Rochedo",
+   "en": "Rochedo"
+  },
+  "types": [
+   "terra"
+  ],
+  "rarity": "incomum",
+  "base": {
+   "hp": 80,
+   "atk": 95,
+   "def": 115,
+   "spd": 30
+  },
+  "capture": 0.25,
+  "work": {
+   "mineracao": 4
+  },
+  "body": {
+   "shape": "golem",
+   "size": 1.3,
+   "color": "#8a7d70",
+   "color2": "#c9a86a",
+   "ears": "none",
+   "horns": "none",
+   "tail": "none",
+   "wings": false,
+   "eyes": "angry",
+   "extra": "rocks"
+  },
+  "temper": "teimoso",
+  "lore": {
+   "pt": "Dorme por décadas. Algumas aldeias foram construídas em cima de um sem saber.",
+   "en": "Sleeps for decades. Some villages were built on top of one without knowing."
+  },
+  "learnset": [
+   [
+    1,
+    "pedrada"
+   ],
+   [
+    7,
+    "pancada"
+   ],
+   [
+    14,
+    "carapaca"
+   ],
+   [
+    24,
+    "terremoto"
+   ]
+  ],
+  "evolves": null,
+  "boss": false
+ },
+ "lumeflor": {
+  "name": {
+   "pt": "Lumeflor",
+   "en": "Lumeflor"
+  },
+  "types": [
+   "luz",
+   "flora"
+  ],
+  "rarity": "raro",
+  "base": {
+   "hp": 55,
+   "atk": 50,
+   "def": 55,
+   "spd": 80
+  },
+  "capture": 0.3,
+  "work": {
+   "coleta": 2,
+   "cura": 3
+  },
+  "body": {
+   "shape": "bird",
+   "size": 0.45,
+   "color": "#fff2a8",
+   "color2": "#ff9ed1",
+   "ears": "none",
+   "horns": "none",
+   "tail": "none",
+   "wings": true,
+   "eyes": "round",
+   "extra": "petals"
+  },
+  "temper": "gentil",
+  "lore": {
+   "pt": "Fadas-flor que seguem a luz da Aurora. Dizem que guiam os perdidos para casa.",
+   "en": "Flower-sprites that follow the Aurora's light. They say it guides the lost home."
+  },
+  "learnset": [
+   [
+    1,
+    "lampejo"
+   ],
+   [
+    7,
+    "prisma"
+   ],
+   [
+    12,
+    "folha_navalha"
+   ],
+   [
+    18,
+    "aurora_cura"
+   ],
+   [
+    26,
+    "chicote_vinha"
+   ],
+   [
+    34,
+    "julgamento"
+   ]
+  ],
+  "evolves": null,
+  "boss": false
+ },
+ "sombrino": {
+  "name": {
+   "pt": "Sombrino",
+   "en": "Sombrino"
+  },
+  "types": [
+   "sombra"
+  ],
+  "rarity": "incomum",
+  "base": {
+   "hp": 45,
+   "atk": 60,
+   "def": 45,
+   "spd": 85
+  },
+  "capture": 0.4,
+  "work": {
+   "coleta": 1
+  },
+  "body": {
+   "shape": "round",
+   "size": 0.5,
+   "color": "#4b3a78",
+   "color2": "#b48cff",
+   "ears": "horn",
+   "horns": "none",
+   "tail": "wisp",
+   "wings": false,
+   "eyes": "glow",
+   "extra": "none"
+  },
+  "temper": "travesso",
+  "lore": {
+   "pt": "Só aparece à noite. Rouba sombras dos outros por diversão — e devolve.",
+   "en": "Only appears at night. Steals others' shadows for fun — then gives them back."
+  },
+  "learnset": [
+   [
+    1,
+    "garra_sombria"
+   ],
+   [
+    7,
+    "esfera_sombra"
+   ],
+   [
+    14,
+    "pesadelo"
+   ]
+  ],
+  "evolves": null,
+  "boss": false
+ },
+ "areiao": {
+  "name": {
+   "pt": "Areião",
+   "en": "Areião"
+  },
+  "types": [
+   "terra"
+  ],
+  "rarity": "comum",
+  "base": {
+   "hp": 50,
+   "atk": 62,
+   "def": 50,
+   "spd": 70
+  },
+  "capture": 0.5,
+  "work": {
+   "mineracao": 2,
+   "coleta": 1
+  },
+  "body": {
+   "shape": "quad",
+   "size": 0.65,
+   "color": "#e0b66a",
+   "color2": "#fff1cf",
+   "ears": "big",
+   "horns": "none",
+   "tail": "fluffy",
+   "wings": false,
+   "eyes": "round",
+   "extra": "none"
+  },
+  "temper": "curioso",
+  "lore": {
+   "pt": "Raposa das dunas. Escuta água correndo a quilômetros debaixo da areia.",
+   "en": "Dune fox. Hears water running miles beneath the sand."
+  },
+  "learnset": [
+   [
+    1,
+    "pedrada"
+   ],
+   [
+    7,
+    "pancada"
+   ],
+   [
+    14,
+    "carapaca"
+   ],
+   [
+    24,
+    "terremoto"
+   ]
+  ],
+  "evolves": null,
+  "boss": false
+ },
+ "escarabrilho": {
+  "name": {
+   "pt": "Escarabrilho",
+   "en": "Escarabrilho"
+  },
+  "types": [
+   "luz",
+   "terra"
+  ],
+  "rarity": "comum",
+  "base": {
+   "hp": 48,
+   "atk": 55,
+   "def": 70,
+   "spd": 50
+  },
+  "capture": 0.5,
+  "work": {
+   "mineracao": 1,
+   "cura": 1
+  },
+  "body": {
+   "shape": "quad",
+   "size": 0.45,
+   "color": "#3fd0b0",
+   "color2": "#ffe27a",
+   "ears": "none",
+   "horns": "single",
+   "tail": "none",
+   "wings": false,
+   "eyes": "round",
+   "extra": "shell"
+  },
+  "temper": "trabalhador",
+  "lore": {
+   "pt": "Rola esferas de âmbar e as polia até brilharem como pequenos sóis.",
+   "en": "Rolls amber spheres and polishes them until they shine like tiny suns."
+  },
+  "learnset": [
+   [
+    1,
+    "lampejo"
+   ],
+   [
+    7,
+    "prisma"
+   ],
+   [
+    12,
+    "pedrada"
+   ],
+   [
+    18,
+    "aurora_cura"
+   ],
+   [
+    26,
+    "pancada"
+   ],
+   [
+    34,
+    "julgamento"
+   ]
+  ],
+  "evolves": null,
+  "boss": false
+ },
+ "serpenduna": {
+  "name": {
+   "pt": "Serpenduna",
+   "en": "Serpenduna"
+  },
+  "types": [
+   "terra",
+   "brasa"
+  ],
+  "rarity": "incomum",
+  "base": {
+   "hp": 60,
+   "atk": 75,
+   "def": 55,
+   "spd": 72
+  },
+  "capture": 0.35,
+  "work": {
+   "mineracao": 3
+  },
+  "body": {
+   "shape": "serpent",
+   "size": 1.0,
+   "color": "#d49a4a",
+   "color2": "#7a3b1e",
+   "ears": "none",
+   "horns": "single",
+   "tail": "none",
+   "wings": false,
+   "eyes": "angry",
+   "extra": "none"
+  },
+  "temper": "agressivo",
+  "lore": {
+   "pt": "Nada sob a areia quente. Quando emerge, o chão treme.",
+   "en": "Swims beneath hot sand. When it surfaces, the ground trembles."
+  },
+  "learnset": [
+   [
+    1,
+    "pedrada"
+   ],
+   [
+    7,
+    "pancada"
+   ],
+   [
+    12,
+    "fagulha"
+   ],
+   [
+    18,
+    "carapaca"
+   ],
+   [
+    26,
+    "investida_chama"
+   ],
+   [
+    34,
+    "terremoto"
+   ]
+  ],
+  "evolves": null,
+  "boss": false
+ },
+ "cactuto": {
+  "name": {
+   "pt": "Cactuto",
+   "en": "Cactuto"
+  },
+  "types": [
+   "flora"
+  ],
+  "rarity": "comum",
+  "base": {
+   "hp": 55,
+   "atk": 55,
+   "def": 65,
+   "spd": 30
+  },
+  "capture": 0.55,
+  "work": {
+   "irrigacao": 2,
+   "coleta": 2
+  },
+  "body": {
+   "shape": "golem",
+   "size": 0.6,
+   "color": "#4fae5a",
+   "color2": "#ff7ab0",
+   "ears": "none",
+   "horns": "none",
+   "tail": "none",
+   "wings": false,
+   "eyes": "happy",
+   "extra": "cactus"
+  },
+  "temper": "dócil",
+  "lore": {
+   "pt": "Guarda água para viajantes perdidos. Abraços doem, mas são sinceros.",
+   "en": "Stores water for lost travelers. Its hugs hurt, but they're sincere."
+  },
+  "learnset": [
+   [
+    1,
+    "folha_navalha"
+   ],
+   [
+    7,
+    "chicote_vinha"
+   ],
+   [
+    14,
+    "esporos"
+   ],
+   [
+    24,
+    "fotossintese"
+   ],
+   [
+    34,
+    "floresta_furia"
+   ]
+  ],
+  "evolves": null,
+  "boss": false
+ },
+ "flocolino": {
+  "name": {
+   "pt": "Flocolino",
+   "en": "Flocolino"
+  },
+  "types": [
+   "gelo"
+  ],
+  "rarity": "comum",
+  "base": {
+   "hp": 44,
+   "atk": 48,
+   "def": 50,
+   "spd": 70
+  },
+  "capture": 0.55,
+  "work": {
+   "coleta": 2
+  },
+  "body": {
+   "shape": "round",
+   "size": 0.5,
+   "color": "#f4fbff",
+   "color2": "#9fd8ff",
+   "ears": "bunny",
+   "horns": "none",
+   "tail": "fluffy",
+   "wings": false,
+   "eyes": "round",
+   "extra": "none"
+  },
+  "temper": "dócil",
+  "lore": {
+   "pt": "Coelho de neve. Seu pelo nunca derrete, nem dentro de uma fornalha.",
+   "en": "Snow bunny. Its fur never melts, not even inside a furnace."
+  },
+  "learnset": [
+   [
+    1,
+    "estilhaco"
+   ],
+   [
+    7,
+    "presa_gelida"
+   ],
+   [
+    14,
+    "nevasca"
+   ]
+  ],
+  "evolves": null,
+  "boss": false
+ },
+ "pinguelo": {
+  "name": {
+   "pt": "Pinguelo",
+   "en": "Pinguelo"
+  },
+  "types": [
+   "gelo",
+   "mare"
+  ],
+  "rarity": "comum",
+  "base": {
+   "hp": 52,
+   "atk": 52,
+   "def": 55,
+   "spd": 45
+  },
+  "capture": 0.5,
+  "work": {
+   "irrigacao": 2,
+   "coleta": 1
+  },
+  "body": {
+   "shape": "biped",
+   "size": 0.55,
+   "color": "#2d3e5a",
+   "color2": "#ffffff",
+   "ears": "none",
+   "horns": "none",
+   "tail": "small",
+   "wings": false,
+   "eyes": "happy",
+   "extra": "none"
+  },
+  "temper": "brincalhão",
+  "lore": {
+   "pt": "Desliza de barriga pelas encostas. Organiza corridas com os amigos.",
+   "en": "Slides belly-first down slopes. Organizes races with its friends."
+  },
+  "learnset": [
+   [
+    1,
+    "estilhaco"
+   ],
+   [
+    7,
+    "presa_gelida"
+   ],
+   [
+    12,
+    "jato_agua"
+   ],
+   [
+    18,
+    "nevasca"
+   ],
+   [
+    26,
+    "onda"
+   ]
+  ],
+  "evolves": null,
+  "boss": false
+ },
+ "lupigelo": {
+  "name": {
+   "pt": "Lupigelo",
+   "en": "Lupigelo"
+  },
+  "types": [
+   "gelo"
+  ],
+  "rarity": "incomum",
+  "base": {
+   "hp": 65,
+   "atk": 80,
+   "def": 60,
+   "spd": 85
+  },
+  "capture": 0.35,
+  "work": {
+   "corte": 2,
+   "coleta": 2
+  },
+  "body": {
+   "shape": "quad",
+   "size": 0.9,
+   "color": "#cfe9ff",
+   "color2": "#5b7fa8",
+   "ears": "pointy",
+   "horns": "none",
+   "tail": "fluffy",
+   "wings": false,
+   "eyes": "angry",
+   "extra": "none"
+  },
+  "temper": "leal",
+  "lore": {
+   "pt": "Lobo da geada. Uiva para a Aurora em noites claras e nunca abandona a matilha.",
+   "en": "Frost wolf. Howls at the Aurora on clear nights and never abandons its pack."
+  },
+  "learnset": [
+   [
+    1,
+    "estilhaco"
+   ],
+   [
+    7,
+    "presa_gelida"
+   ],
+   [
+    14,
+    "nevasca"
+   ]
+  ],
+  "evolves": null,
+  "boss": false
+ },
+ "faiscaro": {
+  "name": {
+   "pt": "Faíscaro",
+   "en": "Faíscaro"
+  },
+  "types": [
+   "volt"
+  ],
+  "rarity": "incomum",
+  "base": {
+   "hp": 50,
+   "atk": 65,
+   "def": 45,
+   "spd": 100
+  },
+  "capture": 0.4,
+  "work": {
+   "chama": 1,
+   "mineracao": 1
+  },
+  "body": {
+   "shape": "bird",
+   "size": 0.55,
+   "color": "#ffe14a",
+   "color2": "#2f2f3a",
+   "ears": "none",
+   "horns": "none",
+   "tail": "bolt",
+   "wings": true,
+   "eyes": "angry",
+   "extra": "none"
+  },
+  "temper": "agitado",
+  "lore": {
+   "pt": "Pássaro-raio. Carrega energia estática suficiente para acender uma vila.",
+   "en": "Lightning bird. Carries enough static to light up a village."
+  },
+  "learnset": [
+   [
+    1,
+    "faisca"
+   ],
+   [
+    7,
+    "raio"
+   ],
+   [
+    14,
+    "sobrecarga"
+   ],
+   [
+    24,
+    "tempestade"
+   ]
+  ],
+  "evolves": null,
+  "boss": false
+ },
+ "mamutundra": {
+  "name": {
+   "pt": "Mamutundra",
+   "en": "Mamutundra"
+  },
+  "types": [
+   "gelo",
+   "terra"
+  ],
+  "rarity": "raro",
+  "base": {
+   "hp": 100,
+   "atk": 90,
+   "def": 95,
+   "spd": 30
+  },
+  "capture": 0.2,
+  "work": {
+   "mineracao": 3,
+   "corte": 3
+  },
+  "body": {
+   "shape": "quad",
+   "size": 1.6,
+   "color": "#8a6a52",
+   "color2": "#e8f4ff",
+   "ears": "big",
+   "horns": "tusk",
+   "tail": "small",
+   "wings": false,
+   "eyes": "round",
+   "extra": "none"
+  },
+  "temper": "calmo",
+  "lore": {
+   "pt": "Gigante gentil das tundras. Lembra rotas de migração de mil anos atrás.",
+   "en": "Gentle tundra giant. Remembers migration routes from a thousand years ago."
+  },
+  "learnset": [
+   [
+    1,
+    "estilhaco"
+   ],
+   [
+    7,
+    "presa_gelida"
+   ],
+   [
+    12,
+    "pedrada"
+   ],
+   [
+    18,
+    "nevasca"
+   ],
+   [
+    26,
+    "pancada"
+   ]
+  ],
+  "evolves": null,
+  "boss": false
+ },
+ "fagulhas": {
+  "name": {
+   "pt": "Fagulhas",
+   "en": "Fagulhas"
+  },
+  "types": [
+   "brasa"
+  ],
+  "rarity": "comum",
+  "base": {
+   "hp": 45,
+   "atk": 58,
+   "def": 40,
+   "spd": 80
+  },
+  "capture": 0.5,
+  "work": {
+   "chama": 3
+  },
+  "body": {
+   "shape": "bird",
+   "size": 0.5,
+   "color": "#ff5a2a",
+   "color2": "#ffcf3a",
+   "ears": "none",
+   "horns": "none",
+   "tail": "flame",
+   "wings": true,
+   "eyes": "round",
+   "extra": "none"
+  },
+  "temper": "alegre",
+  "lore": {
+   "pt": "Pássaro-brasa. Acende fogueiras para viajantes com frio — às vezes sem pedir.",
+   "en": "Ember bird. Lights campfires for cold travelers — sometimes uninvited."
+  },
+  "learnset": [
+   [
+    1,
+    "fagulha"
+   ],
+   [
+    7,
+    "investida_chama"
+   ],
+   [
+    14,
+    "anel_fogo"
+   ],
+   [
+    24,
+    "erupcao"
+   ]
+  ],
+  "evolves": null,
+  "boss": false
+ },
+ "corvoleta": {
+  "name": {
+   "pt": "Corvoleta",
+   "en": "Corvoleta"
+  },
+  "types": [
+   "sombra"
+  ],
+  "rarity": "comum",
+  "base": {
+   "hp": 48,
+   "atk": 62,
+   "def": 42,
+   "spd": 88
+  },
+  "capture": 0.45,
+  "work": {
+   "coleta": 2
+  },
+  "body": {
+   "shape": "bird",
+   "size": 0.55,
+   "color": "#2a2440",
+   "color2": "#8a5cd6",
+   "ears": "none",
+   "horns": "none",
+   "tail": "none",
+   "wings": true,
+   "eyes": "glow",
+   "extra": "none"
+  },
+  "temper": "esperto",
+  "lore": {
+   "pt": "Coleciona objetos brilhantes e segredos. Troca os dois por comida.",
+   "en": "Collects shiny things and secrets. Trades both for food."
+  },
+  "learnset": [
+   [
+    1,
+    "garra_sombria"
+   ],
+   [
+    7,
+    "esfera_sombra"
+   ],
+   [
+    14,
+    "pesadelo"
+   ]
+  ],
+  "evolves": null,
+  "boss": false
+ },
+ "ferrugente": {
+  "name": {
+   "pt": "Ferrugente",
+   "en": "Ferrugente"
+  },
+  "types": [
+   "volt",
+   "terra"
+  ],
+  "rarity": "incomum",
+  "base": {
+   "hp": 70,
+   "atk": 78,
+   "def": 90,
+   "spd": 40
+  },
+  "capture": 0.3,
+  "work": {
+   "mineracao": 3,
+   "chama": 2
+  },
+  "body": {
+   "shape": "golem",
+   "size": 1.0,
+   "color": "#9a5a3a",
+   "color2": "#5fd0ff",
+   "ears": "none",
+   "horns": "antenna",
+   "tail": "none",
+   "wings": false,
+   "eyes": "visor",
+   "extra": "collar"
+  },
+  "temper": "confuso",
+  "lore": {
+   "pt": "Eco de metal vivo, nascido nas fundições de Ferrugem. A coleira o faz esquecer quem é.",
+   "en": "Living-metal Echo born in Rustport's foundries. The collar makes it forget who it is."
+  },
+  "learnset": [
+   [
+    1,
+    "faisca"
+   ],
+   [
+    7,
+    "raio"
+   ],
+   [
+    12,
+    "pedrada"
+   ],
+   [
+    18,
+    "sobrecarga"
+   ],
+   [
+    26,
+    "pancada"
+   ],
+   [
+    34,
+    "tempestade"
+   ]
+  ],
+  "evolves": null,
+  "boss": false
+ },
+ "lodolfo": {
+  "name": {
+   "pt": "Lodolfo",
+   "en": "Lodolfo"
+  },
+  "types": [
+   "mare",
+   "sombra"
+  ],
+  "rarity": "comum",
+  "base": {
+   "hp": 65,
+   "atk": 68,
+   "def": 60,
+   "spd": 50
+  },
+  "capture": 0.45,
+  "work": {
+   "irrigacao": 3
+  },
+  "body": {
+   "shape": "serpent",
+   "size": 0.9,
+   "color": "#4b6b4a",
+   "color2": "#a8d86a",
+   "ears": "none",
+   "horns": "none",
+   "tail": "none",
+   "wings": false,
+   "eyes": "sleepy",
+   "extra": "none"
+  },
+  "temper": "preguiçoso",
+  "lore": {
+   "pt": "Dorme no lodo e sonha alto: o pântano inteiro ouve.",
+   "en": "Sleeps in the mud and dreams out loud: the whole swamp hears it."
+  },
+  "learnset": [
+   [
+    1,
+    "jato_agua"
+   ],
+   [
+    7,
+    "onda"
+   ],
+   [
+    12,
+    "garra_sombria"
+   ],
+   [
+    18,
+    "bolha_cura"
+   ],
+   [
+    26,
+    "esfera_sombra"
+   ],
+   [
+    34,
+    "maremoto"
+   ]
+  ],
+  "evolves": null,
+  "boss": false
+ },
+ "pantanossauro": {
+  "name": {
+   "pt": "Pantanossauro",
+   "en": "Pantanossauro"
+  },
+  "types": [
+   "mare",
+   "flora"
+  ],
+  "rarity": "incomum",
+  "base": {
+   "hp": 90,
+   "atk": 80,
+   "def": 85,
+   "spd": 40
+  },
+  "capture": 0.3,
+  "work": {
+   "irrigacao": 3,
+   "corte": 3
+  },
+  "body": {
+   "shape": "quad",
+   "size": 1.4,
+   "color": "#3d7a5a",
+   "color2": "#d8c06a",
+   "ears": "none",
+   "horns": "twin",
+   "tail": "long",
+   "wings": false,
+   "eyes": "round",
+   "extra": "moss"
+  },
+  "temper": "calmo",
+  "lore": {
+   "pt": "Ilhas inteiras de musgo crescem sobre ele. Pássaros fazem ninho em suas costas.",
+   "en": "Whole islands of moss grow on it. Birds nest on its back."
+  },
+  "learnset": [
+   [
+    1,
+    "jato_agua"
+   ],
+   [
+    7,
+    "onda"
+   ],
+   [
+    12,
+    "folha_navalha"
+   ],
+   [
+    18,
+    "bolha_cura"
+   ],
+   [
+    26,
+    "chicote_vinha"
+   ],
+   [
+    34,
+    "maremoto"
+   ]
+  ],
+  "evolves": null,
+  "boss": false
+ },
+ "magmarujo": {
+  "name": {
+   "pt": "Magmarujo",
+   "en": "Magmarujo"
+  },
+  "types": [
+   "brasa",
+   "terra"
+  ],
+  "rarity": "incomum",
+  "base": {
+   "hp": 85,
+   "atk": 92,
+   "def": 88,
+   "spd": 35
+  },
+  "capture": 0.3,
+  "work": {
+   "chama": 4,
+   "mineracao": 3
+  },
+  "body": {
+   "shape": "golem",
+   "size": 1.2,
+   "color": "#3a2a2a",
+   "color2": "#ff6a1a",
+   "ears": "none",
+   "horns": "none",
+   "tail": "none",
+   "wings": false,
+   "eyes": "glow",
+   "extra": "lava"
+  },
+  "temper": "valente",
+  "lore": {
+   "pt": "Sangra lava quando está feliz. Os ferreiros chamam isso de bênção.",
+   "en": "Bleeds lava when happy. Smiths call it a blessing."
+  },
+  "learnset": [
+   [
+    1,
+    "fagulha"
+   ],
+   [
+    7,
+    "investida_chama"
+   ],
+   [
+    12,
+    "pedrada"
+   ],
+   [
+    18,
+    "anel_fogo"
+   ],
+   [
+    26,
+    "pancada"
+   ],
+   [
+    34,
+    "erupcao"
+   ]
+  ],
+  "evolves": null,
+  "boss": false
+ },
+ "vulcanix": {
+  "name": {
+   "pt": "Vulcanix",
+   "en": "Vulcanix"
+  },
+  "types": [
+   "brasa"
+  ],
+  "rarity": "raro",
+  "base": {
+   "hp": 75,
+   "atk": 100,
+   "def": 70,
+   "spd": 95
+  },
+  "capture": 0.2,
+  "work": {
+   "chama": 4
+  },
+  "body": {
+   "shape": "quad",
+   "size": 1.0,
+   "color": "#c22a1a",
+   "color2": "#ffb83a",
+   "ears": "pointy",
+   "horns": "twin",
+   "tail": "flame",
+   "wings": false,
+   "eyes": "angry",
+   "extra": "none"
+  },
+  "temper": "orgulhoso",
+  "lore": {
+   "pt": "Raposa vulcânica de nove brasas. Só obedece a quem a encara sem piscar.",
+   "en": "Nine-ember volcanic fox. Only obeys those who meet its gaze unblinking."
+  },
+  "learnset": [
+   [
+    1,
+    "fagulha"
+   ],
+   [
+    7,
+    "investida_chama"
+   ],
+   [
+    14,
+    "anel_fogo"
+   ],
+   [
+    24,
+    "erupcao"
+   ]
+  ],
+  "evolves": null,
+  "boss": false
+ },
+ "tempestor": {
+  "name": {
+   "pt": "Tempestor",
+   "en": "Tempestor"
+  },
+  "types": [
+   "volt",
+   "luz"
+  ],
+  "rarity": "incomum",
+  "base": {
+   "hp": 70,
+   "atk": 85,
+   "def": 60,
+   "spd": 105
+  },
+  "capture": 0.3,
+  "work": {
+   "chama": 2,
+   "coleta": 2
+  },
+  "body": {
+   "shape": "bird",
+   "size": 0.9,
+   "color": "#4a5aff",
+   "color2": "#ffe14a",
+   "ears": "none",
+   "horns": "crest",
+   "tail": "bolt",
+   "wings": true,
+   "eyes": "round",
+   "extra": "none"
+  },
+  "temper": "agitado",
+  "lore": {
+   "pt": "Nasce dentro de nuvens carregadas. Seu grito antecede o trovão.",
+   "en": "Born inside storm clouds. Its cry comes before the thunder."
+  },
+  "learnset": [
+   [
+    1,
+    "faisca"
+   ],
+   [
+    7,
+    "raio"
+   ],
+   [
+    12,
+    "lampejo"
+   ],
+   [
+    18,
+    "sobrecarga"
+   ],
+   [
+    26,
+    "prisma"
+   ],
+   [
+    34,
+    "tempestade"
+   ]
+  ],
+  "evolves": null,
+  "boss": false
+ },
+ "coralume": {
+  "name": {
+   "pt": "Coralume",
+   "en": "Coralume"
+  },
+  "types": [
+   "mare",
+   "luz"
+  ],
+  "rarity": "raro",
+  "base": {
+   "hp": 70,
+   "atk": 60,
+   "def": 75,
+   "spd": 70
+  },
+  "capture": 0.25,
+  "work": {
+   "irrigacao": 3,
+   "cura": 4
+  },
+  "body": {
+   "shape": "round",
+   "size": 0.7,
+   "color": "#ff8fb0",
+   "color2": "#7ff0ff",
+   "ears": "none",
+   "horns": "none",
+   "tail": "none",
+   "wings": false,
+   "eyes": "happy",
+   "extra": "coral"
+  },
+  "temper": "gentil",
+  "lore": {
+   "pt": "Recife vivo. Sua luz cura feridas e acalma tempestades.",
+   "en": "A living reef. Its light heals wounds and calms storms."
+  },
+  "learnset": [
+   [
+    1,
+    "jato_agua"
+   ],
+   [
+    7,
+    "onda"
+   ],
+   [
+    12,
+    "lampejo"
+   ],
+   [
+    18,
+    "bolha_cura"
+   ],
+   [
+    26,
+    "prisma"
+   ],
+   [
+    34,
+    "maremoto"
+   ]
+  ],
+  "evolves": null,
+  "boss": false
+ },
+ "nevoeiro": {
+  "name": {
+   "pt": "Nevoeiro",
+   "en": "Nevoeiro"
+  },
+  "types": [
+   "sombra",
+   "mare"
+  ],
+  "rarity": "incomum",
+  "base": {
+   "hp": 60,
+   "atk": 75,
+   "def": 55,
+   "spd": 90
+  },
+  "capture": 0.35,
+  "work": {
+   "coleta": 2
+  },
+  "body": {
+   "shape": "serpent",
+   "size": 0.8,
+   "color": "#7a8a9a",
+   "color2": "#c8f0ff",
+   "ears": "none",
+   "horns": "none",
+   "tail": "wisp",
+   "wings": false,
+   "eyes": "glow",
+   "extra": "none"
+  },
+  "temper": "misterioso",
+  "lore": {
+   "pt": "Ninguém viu seu corpo inteiro. Talvez ele seja a própria névoa.",
+   "en": "Nobody has seen its whole body. Perhaps it is the fog itself."
+  },
+  "learnset": [
+   [
+    1,
+    "garra_sombria"
+   ],
+   [
+    7,
+    "esfera_sombra"
+   ],
+   [
+    12,
+    "jato_agua"
+   ],
+   [
+    18,
+    "pesadelo"
+   ],
+   [
+    26,
+    "onda"
+   ]
+  ],
+  "evolves": null,
+  "boss": false
+ },
+ "anciao_musgoso": {
+  "name": {
+   "pt": "Ancião Musgoso",
+   "en": "Ancião Musgoso"
+  },
+  "types": [
+   "flora",
+   "terra"
+  ],
+  "rarity": "lendario",
+  "base": {
+   "hp": 120,
+   "atk": 85,
+   "def": 95,
+   "spd": 30
+  },
+  "capture": 0.08,
+  "work": {
+   "corte": 4
+  },
+  "body": {
+   "shape": "golem",
+   "size": 2.4,
+   "color": "#4e7d3a",
+   "color2": "#8a6a3a",
+   "ears": "none",
+   "horns": "none",
+   "tail": "none",
+   "wings": false,
+   "eyes": "glow",
+   "extra": "moss"
+  },
+  "temper": "alfa",
+  "lore": {
+   "pt": "Guardião do Bosque do Berço. Protege a Seiva Ancestral há trezentos anos.",
+   "en": "Guardian of the Cradle Grove. Has protected the Ancient Sap for three hundred years."
+  },
+  "learnset": [
+   [
+    1,
+    "folha_navalha"
+   ],
+   [
+    7,
+    "chicote_vinha"
+   ],
+   [
+    12,
+    "pedrada"
+   ],
+   [
+    18,
+    "esporos"
+   ],
+   [
+    26,
+    "pancada"
+   ],
+   [
+    34,
+    "floresta_furia"
+   ]
+  ],
+  "evolves": null,
+  "boss": true
+ },
+ "ambarraque": {
+  "name": {
+   "pt": "Ambarraque",
+   "en": "Ambarraque"
+  },
+  "types": [
+   "terra",
+   "luz"
+  ],
+  "rarity": "lendario",
+  "base": {
+   "hp": 115,
+   "atk": 95,
+   "def": 100,
+   "spd": 55
+  },
+  "capture": 0.08,
+  "work": {
+   "mineracao": 4
+  },
+  "body": {
+   "shape": "quad",
+   "size": 2.2,
+   "color": "#d99a2a",
+   "color2": "#fff1a0",
+   "ears": "none",
+   "horns": "twin",
+   "tail": "stinger",
+   "wings": false,
+   "eyes": "glow",
+   "extra": "shell"
+  },
+  "temper": "alfa",
+  "lore": {
+   "pt": "Escorpião colossal do Templo Solar. Seu olho guarda a luz de um sol antigo.",
+   "en": "Colossal scorpion of the Sun Temple. Its eye holds the light of an ancient sun."
+  },
+  "learnset": [
+   [
+    1,
+    "pedrada"
+   ],
+   [
+    7,
+    "pancada"
+   ],
+   [
+    12,
+    "lampejo"
+   ],
+   [
+    18,
+    "carapaca"
+   ],
+   [
+    26,
+    "prisma"
+   ],
+   [
+    34,
+    "terremoto"
+   ]
+  ],
+  "evolves": null,
+  "boss": true
+ },
+ "serpegelo": {
+  "name": {
+   "pt": "Serpegelo",
+   "en": "Serpegelo"
+  },
+  "types": [
+   "gelo",
+   "mare"
+  ],
+  "rarity": "lendario",
+  "base": {
+   "hp": 125,
+   "atk": 95,
+   "def": 90,
+   "spd": 60
+  },
+  "capture": 0.08,
+  "work": {
+   "irrigacao": 4
+  },
+  "body": {
+   "shape": "serpent",
+   "size": 2.6,
+   "color": "#aee8ff",
+   "color2": "#3a6ab0",
+   "ears": "none",
+   "horns": "crest",
+   "tail": "none",
+   "wings": false,
+   "eyes": "glow",
+   "extra": "none"
+  },
+  "temper": "alfa",
+  "lore": {
+   "pt": "Wyrm glacial que chora cristais. Cada lágrima é uma memória congelada.",
+   "en": "A glacial wyrm that weeps crystals. Every tear is a frozen memory."
+  },
+  "learnset": [
+   [
+    1,
+    "estilhaco"
+   ],
+   [
+    7,
+    "presa_gelida"
+   ],
+   [
+    12,
+    "jato_agua"
+   ],
+   [
+    18,
+    "nevasca"
+   ],
+   [
+    26,
+    "onda"
+   ]
+  ],
+  "evolves": null,
+  "boss": true
+ },
+ "ferro_colosso": {
+  "name": {
+   "pt": "Ferro-Colosso",
+   "en": "Ferro-Colosso"
+  },
+  "types": [
+   "volt",
+   "terra"
+  ],
+  "rarity": "lendario",
+  "base": {
+   "hp": 150,
+   "atk": 110,
+   "def": 120,
+   "spd": 40
+  },
+  "capture": 0.08,
+  "work": {
+   "mineracao": 4,
+   "chama": 4
+  },
+  "body": {
+   "shape": "golem",
+   "size": 2.4,
+   "color": "#6a4a3a",
+   "color2": "#ff4a2a",
+   "ears": "none",
+   "horns": "antenna",
+   "tail": "none",
+   "wings": false,
+   "eyes": "visor",
+   "extra": "collar"
+  },
+  "temper": "alfa",
+  "lore": {
+   "pt": "O Eco que o Barão Vorn acorrentou ao coração da fundição. Ele grita sem som.",
+   "en": "The Echo Baron Vorn chained to the foundry's heart. It screams without sound."
+  },
+  "learnset": [
+   [
+    1,
+    "faisca"
+   ],
+   [
+    7,
+    "raio"
+   ],
+   [
+    12,
+    "pedrada"
+   ],
+   [
+    18,
+    "sobrecarga"
+   ],
+   [
+    26,
+    "pancada"
+   ],
+   [
+    34,
+    "tempestade"
+   ]
+  ],
+  "evolves": null,
+  "boss": true
+ },
+ "lodorei": {
+  "name": {
+   "pt": "Lodorei",
+   "en": "Lodorei"
+  },
+  "types": [
+   "mare",
+   "sombra"
+  ],
+  "rarity": "lendario",
+  "base": {
+   "hp": 140,
+   "atk": 100,
+   "def": 105,
+   "spd": 45
+  },
+  "capture": 0.08,
+  "work": {
+   "irrigacao": 4
+  },
+  "body": {
+   "shape": "serpent",
+   "size": 2.6,
+   "color": "#2d4a2d",
+   "color2": "#c8ff6a",
+   "ears": "none",
+   "horns": "crest",
+   "tail": "none",
+   "wings": false,
+   "eyes": "glow",
+   "extra": "moss"
+  },
+  "temper": "alfa",
+  "lore": {
+   "pt": "Rei do Pântano Lúgubre. Engoliu a Raiz Negra para que ninguém a usasse.",
+   "en": "King of the Gloom Marsh. Swallowed the Black Root so no one could use it."
+  },
+  "learnset": [
+   [
+    1,
+    "jato_agua"
+   ],
+   [
+    7,
+    "onda"
+   ],
+   [
+    12,
+    "garra_sombria"
+   ],
+   [
+    18,
+    "bolha_cura"
+   ],
+   [
+    26,
+    "esfera_sombra"
+   ],
+   [
+    34,
+    "maremoto"
+   ]
+  ],
+  "evolves": null,
+  "boss": true
+ },
+ "magmarca": {
+  "name": {
+   "pt": "Magmarca",
+   "en": "Magmarca"
+  },
+  "types": [
+   "brasa",
+   "terra"
+  ],
+  "rarity": "lendario",
+  "base": {
+   "hp": 145,
+   "atk": 115,
+   "def": 105,
+   "spd": 40
+  },
+  "capture": 0.08,
+  "work": {
+   "chama": 4
+  },
+  "body": {
+   "shape": "golem",
+   "size": 2.5,
+   "color": "#2a1a1a",
+   "color2": "#ff8a1a",
+   "ears": "none",
+   "horns": "none",
+   "tail": "none",
+   "wings": false,
+   "eyes": "glow",
+   "extra": "lava"
+  },
+  "temper": "alfa",
+  "lore": {
+   "pt": "Coração vivo do Cânion Brasa. A Brasa Eterna pulsa em seu peito.",
+   "en": "Living heart of Ember Canyon. The Eternal Ember beats in its chest."
+  },
+  "learnset": [
+   [
+    1,
+    "fagulha"
+   ],
+   [
+    7,
+    "investida_chama"
+   ],
+   [
+    12,
+    "pedrada"
+   ],
+   [
+    18,
+    "anel_fogo"
+   ],
+   [
+    26,
+    "pancada"
+   ],
+   [
+    34,
+    "erupcao"
+   ]
+  ],
+  "evolves": null,
+  "boss": true
+ },
+ "trovaguia": {
+  "name": {
+   "pt": "Trovaguia",
+   "en": "Trovaguia"
+  },
+  "types": [
+   "volt",
+   "luz"
+  ],
+  "rarity": "lendario",
+  "base": {
+   "hp": 130,
+   "atk": 120,
+   "def": 85,
+   "spd": 110
+  },
+  "capture": 0.08,
+  "work": {
+   "chama": 3
+  },
+  "body": {
+   "shape": "bird",
+   "size": 2.2,
+   "color": "#3a3aff",
+   "color2": "#ffe14a",
+   "ears": "none",
+   "horns": "crest",
+   "tail": "bolt",
+   "wings": true,
+   "eyes": "glow",
+   "extra": "none"
+  },
+  "temper": "alfa",
+  "lore": {
+   "pt": "Águia-trovão que ninguém jamais tocou. Suas penas atraem raios.",
+   "en": "A thunder-eagle no one has ever touched. Its feathers draw lightning."
+  },
+  "learnset": [
+   [
+    1,
+    "faisca"
+   ],
+   [
+    7,
+    "raio"
+   ],
+   [
+    12,
+    "lampejo"
+   ],
+   [
+    18,
+    "sobrecarga"
+   ],
+   [
+    26,
+    "prisma"
+   ],
+   [
+    34,
+    "tempestade"
+   ]
+  ],
+  "evolves": null,
+  "boss": true
+ },
+ "umbra_sable": {
+  "name": {
+   "pt": "Umbra",
+   "en": "Umbra"
+  },
+  "types": [
+   "sombra",
+   "luz"
+  ],
+  "rarity": "lendario",
+  "base": {
+   "hp": 160,
+   "atk": 120,
+   "def": 110,
+   "spd": 95
+  },
+  "capture": 0.08,
+  "work": {
+   "coleta": 4
+  },
+  "body": {
+   "shape": "quad",
+   "size": 2.3,
+   "color": "#1a1028",
+   "color2": "#c890ff",
+   "ears": "pointy",
+   "horns": "crest",
+   "tail": "wisp",
+   "wings": false,
+   "eyes": "glow",
+   "extra": "none"
+  },
+  "temper": "alfa",
+  "lore": {
+   "pt": "A pantera de sombra da Imperatriz Sable. Ela vê através dos olhos dela.",
+   "en": "Empress Sable's shadow panther. She sees through its eyes."
+  },
+  "learnset": [
+   [
+    1,
+    "garra_sombria"
+   ],
+   [
+    7,
+    "esfera_sombra"
+   ],
+   [
+    12,
+    "lampejo"
+   ],
+   [
+    18,
+    "pesadelo"
+   ],
+   [
+    26,
+    "prisma"
+   ]
+  ],
+  "evolves": null,
+  "boss": true
+ }
+}

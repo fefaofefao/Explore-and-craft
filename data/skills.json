@@ -1,0 +1,343 @@
+{
+ "folha_navalha": {
+  "name": {
+   "pt": "Folha Navalha",
+   "en": "Razor Leaf"
+  },
+  "type": "flora",
+  "power": 40,
+  "cd": 3.0,
+  "kind": "projectile",
+  "range": 10
+ },
+ "chicote_vinha": {
+  "name": {
+   "pt": "Chicote de Vinha",
+   "en": "Vine Whip"
+  },
+  "type": "flora",
+  "power": 65,
+  "cd": 6.0,
+  "kind": "melee",
+  "range": 3.5
+ },
+ "esporos": {
+  "name": {
+   "pt": "Nuvem de Esporos",
+   "en": "Spore Cloud"
+  },
+  "type": "flora",
+  "power": 55,
+  "cd": 9.0,
+  "kind": "aoe",
+  "range": 6
+ },
+ "fotossintese": {
+  "name": {
+   "pt": "Fotossíntese",
+   "en": "Photosynthesis"
+  },
+  "type": "flora",
+  "power": 35,
+  "cd": 14.0,
+  "kind": "heal",
+  "range": 0
+ },
+ "floresta_furia": {
+  "name": {
+   "pt": "Fúria da Floresta",
+   "en": "Forest Fury"
+  },
+  "type": "flora",
+  "power": 110,
+  "cd": 16.0,
+  "kind": "aoe",
+  "range": 8
+ },
+ "fagulha": {
+  "name": {
+   "pt": "Fagulha",
+   "en": "Ember Spark"
+  },
+  "type": "brasa",
+  "power": 40,
+  "cd": 3.0,
+  "kind": "projectile",
+  "range": 10
+ },
+ "investida_chama": {
+  "name": {
+   "pt": "Investida em Chamas",
+   "en": "Flame Rush"
+  },
+  "type": "brasa",
+  "power": 70,
+  "cd": 6.5,
+  "kind": "melee",
+  "range": 4
+ },
+ "anel_fogo": {
+  "name": {
+   "pt": "Anel de Fogo",
+   "en": "Fire Ring"
+  },
+  "type": "brasa",
+  "power": 60,
+  "cd": 9.0,
+  "kind": "aoe",
+  "range": 6
+ },
+ "erupcao": {
+  "name": {
+   "pt": "Erupção",
+   "en": "Eruption"
+  },
+  "type": "brasa",
+  "power": 115,
+  "cd": 16.0,
+  "kind": "aoe",
+  "range": 8
+ },
+ "jato_agua": {
+  "name": {
+   "pt": "Jato d'Água",
+   "en": "Water Jet"
+  },
+  "type": "mare",
+  "power": 40,
+  "cd": 3.0,
+  "kind": "projectile",
+  "range": 10
+ },
+ "onda": {
+  "name": {
+   "pt": "Onda",
+   "en": "Surf Wave"
+  },
+  "type": "mare",
+  "power": 60,
+  "cd": 8.0,
+  "kind": "aoe",
+  "range": 6
+ },
+ "bolha_cura": {
+  "name": {
+   "pt": "Bolha Curativa",
+   "en": "Healing Bubble"
+  },
+  "type": "mare",
+  "power": 40,
+  "cd": 14.0,
+  "kind": "heal",
+  "range": 0
+ },
+ "maremoto": {
+  "name": {
+   "pt": "Maremoto",
+   "en": "Tidal Crash"
+  },
+  "type": "mare",
+  "power": 115,
+  "cd": 16.0,
+  "kind": "aoe",
+  "range": 8
+ },
+ "estilhaco": {
+  "name": {
+   "pt": "Estilhaço de Gelo",
+   "en": "Ice Shard"
+  },
+  "type": "gelo",
+  "power": 40,
+  "cd": 3.0,
+  "kind": "projectile",
+  "range": 10
+ },
+ "presa_gelida": {
+  "name": {
+   "pt": "Presa Gélida",
+   "en": "Frost Fang"
+  },
+  "type": "gelo",
+  "power": 68,
+  "cd": 6.0,
+  "kind": "melee",
+  "range": 3.5
+ },
+ "nevasca": {
+  "name": {
+   "pt": "Nevasca",
+   "en": "Blizzard"
+  },
+  "type": "gelo",
+  "power": 105,
+  "cd": 15.0,
+  "kind": "aoe",
+  "range": 8
+ },
+ "faisca": {
+  "name": {
+   "pt": "Faísca",
+   "en": "Spark"
+  },
+  "type": "volt",
+  "power": 42,
+  "cd": 3.0,
+  "kind": "projectile",
+  "range": 11
+ },
+ "raio": {
+  "name": {
+   "pt": "Raio",
+   "en": "Thunderbolt"
+  },
+  "type": "volt",
+  "power": 75,
+  "cd": 7.0,
+  "kind": "projectile",
+  "range": 12
+ },
+ "sobrecarga": {
+  "name": {
+   "pt": "Sobrecarga",
+   "en": "Overcharge"
+  },
+  "type": "volt",
+  "power": 0,
+  "cd": 18.0,
+  "kind": "buff",
+  "range": 0
+ },
+ "tempestade": {
+  "name": {
+   "pt": "Tempestade",
+   "en": "Thunderstorm"
+  },
+  "type": "volt",
+  "power": 112,
+  "cd": 16.0,
+  "kind": "aoe",
+  "range": 9
+ },
+ "pedrada": {
+  "name": {
+   "pt": "Pedrada",
+   "en": "Rock Throw"
+  },
+  "type": "terra",
+  "power": 45,
+  "cd": 3.5,
+  "kind": "projectile",
+  "range": 9
+ },
+ "pancada": {
+  "name": {
+   "pt": "Pancada Sísmica",
+   "en": "Seismic Slam"
+  },
+  "type": "terra",
+  "power": 72,
+  "cd": 6.5,
+  "kind": "melee",
+  "range": 3.5
+ },
+ "terremoto": {
+  "name": {
+   "pt": "Terremoto",
+   "en": "Earthquake"
+  },
+  "type": "terra",
+  "power": 110,
+  "cd": 16.0,
+  "kind": "aoe",
+  "range": 9
+ },
+ "carapaca": {
+  "name": {
+   "pt": "Carapaça",
+   "en": "Stone Shell"
+  },
+  "type": "terra",
+  "power": 0,
+  "cd": 18.0,
+  "kind": "buff",
+  "range": 0
+ },
+ "garra_sombria": {
+  "name": {
+   "pt": "Garra Sombria",
+   "en": "Shadow Claw"
+  },
+  "type": "sombra",
+  "power": 48,
+  "cd": 3.5,
+  "kind": "melee",
+  "range": 3.5
+ },
+ "esfera_sombra": {
+  "name": {
+   "pt": "Esfera Sombria",
+   "en": "Shadow Orb"
+  },
+  "type": "sombra",
+  "power": 72,
+  "cd": 7.0,
+  "kind": "projectile",
+  "range": 11
+ },
+ "pesadelo": {
+  "name": {
+   "pt": "Pesadelo",
+   "en": "Nightmare"
+  },
+  "type": "sombra",
+  "power": 112,
+  "cd": 16.0,
+  "kind": "aoe",
+  "range": 8
+ },
+ "lampejo": {
+  "name": {
+   "pt": "Lampejo",
+   "en": "Flash"
+  },
+  "type": "luz",
+  "power": 42,
+  "cd": 3.0,
+  "kind": "projectile",
+  "range": 11
+ },
+ "prisma": {
+  "name": {
+   "pt": "Prisma",
+   "en": "Prism Beam"
+  },
+  "type": "luz",
+  "power": 74,
+  "cd": 7.0,
+  "kind": "projectile",
+  "range": 12
+ },
+ "aurora_cura": {
+  "name": {
+   "pt": "Aurora Curativa",
+   "en": "Aurora Mend"
+  },
+  "type": "luz",
+  "power": 50,
+  "cd": 15.0,
+  "kind": "heal",
+  "range": 0
+ },
+ "julgamento": {
+  "name": {
+   "pt": "Julgamento",
+   "en": "Judgement"
+  },
+  "type": "luz",
+  "power": 118,
+  "cd": 16.0,
+  "kind": "aoe",
+  "range": 9
+ }
+}

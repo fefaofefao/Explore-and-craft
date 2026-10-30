@@ -1,0 +1,92 @@
+{
+ "order": [
+  "flora",
+  "brasa",
+  "mare",
+  "gelo",
+  "volt",
+  "terra",
+  "sombra",
+  "luz"
+ ],
+ "names": {
+  "flora": {
+   "pt": "Flora",
+   "en": "Flora"
+  },
+  "brasa": {
+   "pt": "Brasa",
+   "en": "Ember"
+  },
+  "mare": {
+   "pt": "Maré",
+   "en": "Tide"
+  },
+  "gelo": {
+   "pt": "Gelo",
+   "en": "Frost"
+  },
+  "volt": {
+   "pt": "Volt",
+   "en": "Volt"
+  },
+  "terra": {
+   "pt": "Terra",
+   "en": "Earth"
+  },
+  "sombra": {
+   "pt": "Sombra",
+   "en": "Shade"
+  },
+  "luz": {
+   "pt": "Luz",
+   "en": "Light"
+  }
+ },
+ "colors": {
+  "flora": "#5fbf4a",
+  "brasa": "#ff7a2f",
+  "mare": "#3a9cff",
+  "gelo": "#9fe6ff",
+  "volt": "#ffd93a",
+  "terra": "#b8864b",
+  "sombra": "#8a5cd6",
+  "luz": "#fff3a8"
+ },
+ "strong": {
+  "flora": [
+   "mare",
+   "terra"
+  ],
+  "brasa": [
+   "flora",
+   "gelo"
+  ],
+  "mare": [
+   "brasa",
+   "terra"
+  ],
+  "gelo": [
+   "flora",
+   "volt"
+  ],
+  "volt": [
+   "mare",
+   "luz"
+  ],
+  "terra": [
+   "volt",
+   "brasa"
+  ],
+  "sombra": [
+   "luz",
+   "flora"
+  ],
+  "luz": [
+   "sombra",
+   "gelo"
+  ]
+ },
+ "super": 1.5,
+ "weak": 0.67
+}

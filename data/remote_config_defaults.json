@@ -1,0 +1,16 @@
+{
+ "xp_mult": 1.0,
+ "drop_mult": 1.0,
+ "work_mult": 1.0,
+ "interstitial_enabled": true,
+ "interstitial_first_after_sec": 600,
+ "interstitial_min_interval_sec": 300,
+ "interstitial_daily_cap": 6,
+ "banner_in_menus": false,
+ "rewarded_daily_cap": 25,
+ "starter_pack_hours": 72,
+ "event_name": "",
+ "event_xp_mult": 1.0,
+ "season_active": true,
+ "min_supported_version": 1
+}

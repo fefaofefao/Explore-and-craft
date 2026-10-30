@@ -1,0 +1,371 @@
+{
+ "fundacao": {
+  "name": {
+   "pt": "Fundação",
+   "en": "Foundation"
+  },
+  "kind": "piece",
+  "cost": {
+   "madeira": 4,
+   "pedra": 2
+  },
+  "lvl": 1,
+  "shape": "foundation",
+  "mat": "wood"
+ },
+ "parede": {
+  "name": {
+   "pt": "Parede",
+   "en": "Wall"
+  },
+  "kind": "piece",
+  "cost": {
+   "madeira": 4
+  },
+  "lvl": 1,
+  "shape": "wall",
+  "mat": "wood"
+ },
+ "porta": {
+  "name": {
+   "pt": "Porta",
+   "en": "Door"
+  },
+  "kind": "piece",
+  "cost": {
+   "madeira": 5,
+   "fibra": 2
+  },
+  "lvl": 1,
+  "shape": "door",
+  "mat": "wood"
+ },
+ "janela": {
+  "name": {
+   "pt": "Janela",
+   "en": "Window"
+  },
+  "kind": "piece",
+  "cost": {
+   "madeira": 4,
+   "vidro": 1
+  },
+  "lvl": 5,
+  "shape": "window",
+  "mat": "wood"
+ },
+ "telhado": {
+  "name": {
+   "pt": "Telhado",
+   "en": "Roof"
+  },
+  "kind": "piece",
+  "cost": {
+   "madeira": 4,
+   "fibra": 3
+  },
+  "lvl": 1,
+  "shape": "roof",
+  "mat": "thatch"
+ },
+ "parede_pedra": {
+  "name": {
+   "pt": "Parede de Pedra",
+   "en": "Stone Wall"
+  },
+  "kind": "piece",
+  "cost": {
+   "pedra": 6,
+   "tijolo": 1
+  },
+  "lvl": 6,
+  "shape": "wall",
+  "mat": "stone"
+ },
+ "fundacao_pedra": {
+  "name": {
+   "pt": "Fundação de Pedra",
+   "en": "Stone Foundation"
+  },
+  "kind": "piece",
+  "cost": {
+   "pedra": 6,
+   "tijolo": 1
+  },
+  "lvl": 6,
+  "shape": "foundation",
+  "mat": "stone"
+ },
+ "cerca": {
+  "name": {
+   "pt": "Cerca",
+   "en": "Fence"
+  },
+  "kind": "piece",
+  "cost": {
+   "madeira": 2
+  },
+  "lvl": 1,
+  "shape": "fence",
+  "mat": "wood"
+ },
+ "tocha_poste": {
+  "name": {
+   "pt": "Poste de Tocha",
+   "en": "Torch Post"
+  },
+  "kind": "deco",
+  "cost": {
+   "madeira": 1,
+   "carvao": 1
+  },
+  "lvl": 2,
+  "shape": "torchpost",
+  "mat": "wood",
+  "light": true
+ },
+ "fogueira": {
+  "name": {
+   "pt": "Fogueira",
+   "en": "Campfire"
+  },
+  "kind": "station",
+  "cost": {
+   "madeira": 5,
+   "pedra": 3
+  },
+  "lvl": 1,
+  "shape": "campfire",
+  "station": "fogueira",
+  "light": true
+ },
+ "bancada": {
+  "name": {
+   "pt": "Bancada",
+   "en": "Workbench"
+  },
+  "kind": "station",
+  "cost": {
+   "madeira": 8,
+   "pedra": 4
+  },
+  "lvl": 1,
+  "shape": "bench",
+  "station": "bancada"
+ },
+ "fornalha": {
+  "name": {
+   "pt": "Fornalha",
+   "en": "Furnace"
+  },
+  "kind": "station",
+  "cost": {
+   "pedra": 12,
+   "madeira": 4
+  },
+  "lvl": 3,
+  "shape": "furnace",
+  "station": "fornalha",
+  "light": true
+ },
+ "forja": {
+  "name": {
+   "pt": "Forja",
+   "en": "Forge"
+  },
+  "kind": "station",
+  "cost": {
+   "pedra": 10,
+   "lingote_ferro": 3,
+   "tijolo": 4
+  },
+  "lvl": 6,
+  "shape": "forge",
+  "station": "forja",
+  "light": true
+ },
+ "bancada_arcana": {
+  "name": {
+   "pt": "Bancada Arcana",
+   "en": "Arcane Bench"
+  },
+  "kind": "station",
+  "cost": {
+   "tabua": 6,
+   "cristal": 3,
+   "lingote_ferro": 2
+  },
+  "lvl": 5,
+  "shape": "arcane",
+  "station": "arcana",
+  "light": true
+ },
+ "cama": {
+  "name": {
+   "pt": "Cama",
+   "en": "Bed"
+  },
+  "kind": "special",
+  "cost": {
+   "madeira": 6,
+   "fibra": 6,
+   "pele": 2
+  },
+  "lvl": 2,
+  "shape": "bed",
+  "special": "bed"
+ },
+ "bau": {
+  "name": {
+   "pt": "Baú",
+   "en": "Chest"
+  },
+  "kind": "special",
+  "cost": {
+   "madeira": 8
+  },
+  "lvl": 2,
+  "shape": "chest",
+  "special": "chest"
+ },
+ "fonte_cura": {
+  "name": {
+   "pt": "Fonte de Cura",
+   "en": "Healing Spring"
+  },
+  "kind": "machine",
+  "cost": {
+   "pedra": 10,
+   "cristal": 2,
+   "baga": 6
+  },
+  "lvl": 4,
+  "shape": "spring",
+  "special": "heal",
+  "light": true
+ },
+ "serraria": {
+  "name": {
+   "pt": "Serraria Eco",
+   "en": "Echo Lumberyard"
+  },
+  "kind": "machine",
+  "cost": {
+   "madeira": 15,
+   "pedra": 5,
+   "corda": 2
+  },
+  "lvl": 3,
+  "shape": "sawmill",
+  "work": "corte",
+  "output": {
+   "madeira": 1.0,
+   "seiva": 0.08,
+   "tabua": 0.15
+  },
+  "rate": 30
+ },
+ "pedreira": {
+  "name": {
+   "pt": "Pedreira Eco",
+   "en": "Echo Quarry"
+  },
+  "kind": "machine",
+  "cost": {
+   "madeira": 10,
+   "pedra": 15
+  },
+  "lvl": 3,
+  "shape": "quarry",
+  "work": "mineracao",
+  "output": {
+   "pedra": 1.0,
+   "carvao": 0.25
+  },
+  "rate": 30
+ },
+ "horta": {
+  "name": {
+   "pt": "Horta Eco",
+   "en": "Echo Garden"
+  },
+  "kind": "machine",
+  "cost": {
+   "madeira": 8,
+   "fibra": 10,
+   "baga": 5
+  },
+  "lvl": 2,
+  "shape": "garden",
+  "work": "coleta",
+  "alt_work": "irrigacao",
+  "output": {
+   "baga": 1.0,
+   "fibra": 0.6,
+   "cogumelo": 0.15
+  },
+  "rate": 30
+ },
+ "mina": {
+  "name": {
+   "pt": "Mina Eco",
+   "en": "Echo Mine"
+  },
+  "kind": "machine",
+  "cost": {
+   "tabua": 10,
+   "pedra": 20,
+   "lingote_ferro": 2
+  },
+  "lvl": 7,
+  "shape": "mine",
+  "work": "mineracao",
+  "output": {
+   "minerio_ferro": 1.0,
+   "carvao": 0.4,
+   "cristal": 0.05
+  },
+  "rate": 18
+ },
+ "fundicao_eco": {
+  "name": {
+   "pt": "Fundição Eco",
+   "en": "Echo Smelter"
+  },
+  "kind": "machine",
+  "cost": {
+   "tijolo": 10,
+   "lingote_ferro": 4,
+   "pedra": 10
+  },
+  "lvl": 9,
+  "shape": "smelter",
+  "work": "chama",
+  "output": {
+   "lingote_ferro": 1.0,
+   "vidro": 0.3
+  },
+  "rate": 8
+ },
+ "rancho": {
+  "name": {
+   "pt": "Rancho de Ecos",
+   "en": "Echo Ranch"
+  },
+  "kind": "machine",
+  "cost": {
+   "madeira": 20,
+   "fibra": 10,
+   "baga": 10
+  },
+  "lvl": 4,
+  "shape": "ranch",
+  "work": "any",
+  "output": {
+   "pele": 0.6,
+   "carne_crua": 0.6,
+   "po_eco": 0.3
+  },
+  "rate": 10
+ }
+}
