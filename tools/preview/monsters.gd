@@ -8,13 +8,20 @@ func _init() -> void:
 	var ids: Array = GameData.db().species.keys()
 	var i := 0
 	var cols := 8
+	var only: Array = []
+	for a in OS.get_cmdline_user_args():
+		if GameData.db().species.has(a):
+			only.append(a)
+	if only.size() > 0:
+		ids = only
+		cols = only.size()
 	for id in ids:
 		var m := MonsterModel.new().build(id, OS.get_cmdline_user_args().has("variant"))
 		var sp: Dictionary = GameData.db().sp(id)
 		var sc := 1.0 / maxf(1.0, float(sp["body"]["size"]))
 		m.scale = Vector3.ONE * sc * 1.4
 		m.position = Vector3((i % cols) * 2.6 - cols * 1.3 + 1.3, 0, (i / cols) * 3.0 - 6.0)
-		m.rotation.y = PI + 0.5
+		m.rotation.y = PI + 0.35
 		root3.add_child(m)
 		var lbl := Label3D.new()
 		lbl.text = Loc.species_name(id)
@@ -38,7 +45,7 @@ func _init() -> void:
 	var cam := Camera3D.new()
 	cam.fov = 50
 	root3.add_child(cam)
-	cam.look_at_from_position(Vector3(0, 13, 12), Vector3(0, 0, 0.5))
+	cam.look_at_from_position(Vector3(0, 1.5, -2.2) if only.size() > 0 else Vector3(0, 13, 12), Vector3(0, 0.55, -6.0) if only.size() > 0 else Vector3(0, 0, 0.5))
 	for f in 8:
 		await process_frame
 	DirAccess.make_dir_recursive_absolute("res://docs/screenshots")

@@ -29,6 +29,7 @@ var _attack_t := 0.0
 var _hurt_t := 0.0
 var _happy_t := 0.0
 var fainted := false
+var _blink := 3.0
 var _faint_k := 0.0
 var _flash_mat: StandardMaterial3D
 
@@ -66,6 +67,7 @@ func build(species_id: String, p_variant: bool = false) -> MonsterModel:
 	_add_extras()
 	if variant:
 		_add_sparkles()
+	_add_ground_shadow()
 	_flash_mat = StandardMaterial3D.new()
 	_flash_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	_flash_mat.albedo_color = Color(1, 1, 1, 0.0)
@@ -74,26 +76,37 @@ func build(species_id: String, p_variant: bool = false) -> MonsterModel:
 
 
 # ------------------------------------------------------------------ helpers
-func _mat(c: Color, outline: bool = true, emissive: float = 0.0) -> Material:
-	var key := "mm_%s_%s_%.1f" % [c.to_html(), outline, emissive]
+static var _toon_shader: Shader
+
+
+static func toon_mat(c: Color, outline: bool = true, emissive: float = 0.0, outline_w: float = 0.025) -> Material:
+	## Material toon compartilhado (cache por cor). Usado por Ecos e personagens.
+	var key := "toon_%s_%s_%.1f_%.3f" % [c.to_html(), outline, emissive, outline_w]
 	if MeshLib._mats.has(key):
 		return MeshLib._mats[key]
-	var m := StandardMaterial3D.new()
-	m.albedo_color = c
-	m.diffuse_mode = BaseMaterial3D.DIFFUSE_TOON
-	m.specular_mode = BaseMaterial3D.SPECULAR_TOON
-	m.roughness = 0.45
-	m.rim_enabled = true
-	m.rim = 0.45
-	m.rim_tint = 0.5
+	if _toon_shader == null:
+		_toon_shader = load("res://assets/shaders/toon.gdshader")
+	var m := ShaderMaterial.new()
+	m.shader = _toon_shader
+	m.set_shader_parameter("albedo", c)
+	# sombra levemente fria e saturada, como em animação
+	var sh := Color.from_hsv(fmod(c.h + 0.62, 1.0) if c.s > 0.08 else 0.66, 0.35, 0.95)
+	m.set_shader_parameter("shade_tint", sh.lerp(Color(0.6, 0.6, 0.85), 0.5))
 	if emissive > 0.0:
-		m.emission_enabled = true
-		m.emission = c
-		m.emission_energy_multiplier = emissive
+		m.set_shader_parameter("emission", c)
+		m.set_shader_parameter("emission_energy", emissive)
 	if outline:
-		m.next_pass = MeshLib.outline_mat(0.025)
+		m.next_pass = MeshLib.outline_mat(outline_w)
 	MeshLib._mats[key] = m
 	return m
+
+
+func _mat(c: Color, outline: bool = true, emissive: float = 0.0) -> Material:
+	return toon_mat(c, outline, emissive, snappedf(0.01 + 0.012 * s, 0.002))
+
+
+static func unlit(c: Color) -> Material:
+	return MeshLib.color_mat(c, 0.0, true)
 
 
 func _part(parent: Node3D, mesh: Mesh, c: Color, pos: Vector3, scl: Vector3 = Vector3.ONE, rot: Vector3 = Vector3.ZERO, outline: bool = true, emissive: float = 0.0) -> MeshInstance3D:
@@ -162,6 +175,19 @@ static func _cyl(r0: float, r1: float, h: float) -> CylinderMesh:
 	return m
 
 
+static func ring_mesh(inner: float, outer: float) -> TorusMesh:
+	var key := "ring_%.3f_%.3f" % [inner, outer]
+	if MeshLib._meshes.has(key):
+		return MeshLib._meshes[key]
+	var m := TorusMesh.new()
+	m.inner_radius = inner
+	m.outer_radius = outer
+	m.rings = 16
+	m.ring_segments = 8
+	MeshLib._meshes[key] = m
+	return m
+
+
 static func _box(v: Vector3) -> BoxMesh:
 	var key := "box_%s" % str(v)
 	if MeshLib._meshes.has(key):
@@ -172,28 +198,69 @@ static func _box(v: Vector3) -> BoxMesh:
 	return m
 
 
+func _eye_color() -> Color:
+	var t: String = GameData.db().sp(sp_id)["types"][0]
+	var tc := Color(GameData.db().types["colors"][t])
+	if variant:
+		tc = Color.from_hsv(fmod(tc.h + 0.45, 1.0), tc.s, tc.v)
+	return tc.darkened(0.15)
+
+
 func _add_eyes(parent: Node3D, center: Vector3, spread: float, r: float, forward: float = -1.0) -> void:
+	## Olhos grandes estilo anime: contorno, esclera, íris colorida, pupila, dois brilhos e cílios. Piscam.
 	var style: String = body_def.get("eyes", "round")
+	r *= 1.3
+	var iris := _eye_color()
 	for side in [-1, 1]:
 		var e := Node3D.new()
-		e.position = center + Vector3(side * spread, 0, 0)
+		e.position = center + Vector3(side * spread * 1.05, 0, 0)
 		parent.add_child(e)
 		eyes.append(e)
+		var f := forward
 		match style:
 			"glow":
-				_part(e, _sph(r * 0.9), c2.lightened(0.4), Vector3.ZERO, Vector3(1, 1.15, 0.6), Vector3.ZERO, false, 2.5)
+				_part(e, _sph(r * 0.95), Color("#1a1028"), Vector3(0, 0, f * r * 0.05), Vector3(1.1, 1.2, 0.45), Vector3.ZERO, false)
+				_part(e, _sph(r * 0.8), c2.lightened(0.5), Vector3(0, 0, f * r * 0.22), Vector3(1, 1.1, 0.4), Vector3.ZERO, false, 3.0)
 			"visor":
 				if side == -1:
-					_part(e, _box(Vector3(spread * 2.6, r * 0.9, r * 0.6)), Color("#5fd0ff"), Vector3(spread, 0, 0), Vector3.ONE, Vector3.ZERO, false, 2.5)
+					_part(e, _box(Vector3(spread * 2.8, r * 0.8, r * 0.5)), Color("#1a2a3a"), Vector3(spread, 0, 0), Vector3.ONE, Vector3.ZERO, false)
+					_part(e, _box(Vector3(spread * 2.5, r * 0.45, r * 0.55)), Color("#5fe0ff"), Vector3(spread, 0, f * r * 0.05), Vector3.ONE, Vector3.ZERO, false, 3.0)
 			_:
-				_part(e, _sph(r), Color("#ffffff"), Vector3.ZERO, Vector3(1, 1.15, 0.55), Vector3.ZERO, false)
-				var pr := r * (0.72 if style == "happy" else 0.58)
-				_part(e, _sph(pr), Color("#1a1420"), Vector3(0, -r * 0.05, forward * r * 0.32), Vector3(1, 1.15, 0.5), Vector3.ZERO, false)
-				_part(e, _sph(r * 0.22), Color("#ffffff"), Vector3(r * 0.25, r * 0.3, forward * r * 0.55), Vector3.ONE, Vector3.ZERO, false, 1.0)
-				if style == "angry":
-					_part(e, _box(Vector3(r * 2.2, r * 0.35, r * 0.4)), c1.darkened(0.5), Vector3(0, r * 1.05, forward * r * 0.2), Vector3.ONE, Vector3(0, 0, side * -0.45), false)
-				elif style == "sleepy":
-					_part(e, _sph(r * 1.05), c1, Vector3(0, r * 0.35, forward * r * 0.05), Vector3(1.05, 0.7, 0.62), Vector3.ZERO, false)
+				var squint := 0.75 if style == "angry" else (0.62 if style == "sleepy" else 1.0)
+				_part(e, _sph(r * 1.12), Color("#1a1420"), Vector3(0, 0, f * r * 0.02), Vector3(1, 1.22 * squint, 0.42), Vector3.ZERO, false)
+				_part(e, _sph(r), Color("#ffffff"), Vector3(0, 0, f * r * 0.12), Vector3(1, 1.18 * squint, 0.45), Vector3.ZERO, false)
+				var ir := r * (0.8 if style == "happy" else 0.68)
+				_part(e, _sph(ir), iris, Vector3(side * -r * 0.06, -r * 0.06, f * r * 0.42), Vector3(1, 1.18 * squint, 0.3), Vector3.ZERO, false)
+				_part(e, _sph(ir * 0.72), iris.lightened(0.4), Vector3(side * -r * 0.06, -r * 0.24, f * r * 0.47), Vector3(1, 0.6 * squint, 0.25), Vector3.ZERO, false)
+				_part(e, _sph(ir * 0.5), Color("#120c18"), Vector3(side * -r * 0.06, -r * 0.02, f * r * 0.52), Vector3(1, 1.2 * squint, 0.25), Vector3.ZERO, false)
+				var hl := MeshInstance3D.new()
+				hl.mesh = _sph(r * 0.27, 8)
+				hl.material_override = unlit(Color.WHITE)
+				hl.position = Vector3(side * -r * 0.02 + r * 0.2, r * 0.28 * squint, f * r * 0.64)
+				e.add_child(hl)
+				var hl2 := MeshInstance3D.new()
+				hl2.mesh = _sph(r * 0.12, 6)
+				hl2.material_override = unlit(Color.WHITE)
+				hl2.position = Vector3(-r * 0.24, -r * 0.3 * squint, f * r * 0.62)
+				e.add_child(hl2)
+				# cílios/pálpebra superior
+				_part(e, _cap(r * 0.09, r * 1.9), Color("#120c18"), Vector3(0, r * 1.0 * squint, f * r * 0.36), Vector3(1, 1, 0.5), Vector3(0, 0, PI / 2 + side * (0.35 if style == "angry" else -0.12)), false)
+				if style == "sleepy":
+					_part(e, _sph(r * 1.08), c1, Vector3(0, r * 0.5, f * r * 0.12), Vector3(1.05, 0.62, 0.5), Vector3.ZERO, false)
+	if style in ["glow", "visor"]:
+		return
+	# boca e bochechas
+	var mouth_y := -r * 1.25
+	_part(parent, _sph(r * 0.32, 8), Color("#3a1420"), center + Vector3(0, mouth_y, forward * r * 0.32), Vector3(1.3, 0.75, 0.4), Vector3.ZERO, false)
+	_part(parent, _sph(r * 0.18, 8), Color("#ff7a8a"), center + Vector3(0, mouth_y - r * 0.08, forward * r * 0.42), Vector3(1.3, 0.6, 0.4), Vector3.ZERO, false)
+	if GameData.db().sp(sp_id).get("temper", "") != "alfa":
+		for side in [-1, 1]:
+			var ch := MeshInstance3D.new()
+			ch.mesh = _sph(r * 0.36, 8)
+			ch.material_override = MeshLib.color_mat(Color(1.0, 0.45, 0.55, 0.45), 0.0, true)
+			ch.position = center + Vector3(side * spread * 1.75, -r * 0.85, forward * r * 0.05)
+			ch.scale = Vector3(1.2, 0.6, 0.35)
+			parent.add_child(ch)
 
 
 func _add_ears(parent: Node3D, top: Vector3, spread: float, k: float) -> void:
@@ -529,6 +596,30 @@ func _add_extras() -> void:
 			_part(body, _sph(0.05 * s), Color("#ff2a2a"), Vector3(0, 0.33 * s if shape != "quad" else 0.0, -0.36 * s if shape != "quad" else -0.62 * s), Vector3.ONE, Vector3.ZERO, false, 3.0)
 
 
+func _add_ground_shadow() -> void:
+	var q := MeshInstance3D.new()
+	var pm := PlaneMesh.new()
+	pm.size = Vector2(1.5, 1.5) * maxf(s, 0.5)
+	q.mesh = pm
+	q.material_override = blob_shadow_mat()
+	q.position.y = 0.03
+	q.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	add_child(q)
+
+
+static func blob_shadow_mat() -> Material:
+	if MeshLib._mats.has("blob_shadow"):
+		return MeshLib._mats["blob_shadow"]
+	var m := StandardMaterial3D.new()
+	m.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	m.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	m.albedo_texture = load("res://assets/textures/blob_shadow.png")
+	m.albedo_color = Color(0.05, 0.05, 0.1, 0.55)
+	m.disable_receive_shadows = true
+	MeshLib._mats["blob_shadow"] = m
+	return m
+
+
 # ------------------------------------------------------------------ animação
 func play_attack() -> void:
 	_attack_t = 0.35
@@ -550,6 +641,14 @@ func _process(delta: float) -> void:
 	if root_pivot == null:
 		return
 	_t += delta
+	_blink -= delta
+	if _blink <= 0.0:
+		_blink = randf_range(2.2, 5.0)
+	var lid := 0.12 if _blink < 0.13 else 1.0
+	if fainted:
+		lid = 0.1
+	for e in eyes:
+		e.scale.y = lerpf(e.scale.y, lid, 0.6)
 	var spd := move_speed
 	var bob := sin(_t * 2.2) * 0.025 * s
 	var pos := Vector3.ZERO

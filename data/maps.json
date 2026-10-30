@@ -31,6 +31,14 @@
     "sun": "#fff2d8",
     "ambient": "#b8d0e8",
     "particles": "leaves",
+    "decor": {
+     "flor": 1.0,
+     "pedrinha": 0.6,
+     "samambaia": 0.7,
+     "cogumelo": 0.3
+    },
+    "dirt": "#7a5a3a",
+    "dirt_amount": 0.35,
     "music": "forest"
    },
    "trees": {
@@ -208,6 +216,14 @@
     "sun": "#ffe0b0",
     "ambient": "#f0d8b8",
     "particles": "sand",
+    "decor": {
+     "pedrinha": 0.8,
+     "graveto": 0.6,
+     "concha": 0.6,
+     "flor_deserto": 0.35
+    },
+    "dirt": "#c89a5a",
+    "dirt_amount": 0.25,
     "music": "desert"
    },
    "trees": {
@@ -323,13 +339,13 @@
    "half": 120,
    "biome": {
     "ground": [
-     "#e8f0f8",
-     "#d8e6f0",
-     "#f8fcff"
+     "#d6e4ef",
+     "#c4d6e6",
+     "#e6eff7"
     ],
-    "sand": "#c8d4dc",
-    "rock": "#6a7a8a",
-    "high": "#ffffff",
+    "sand": "#b8c8d4",
+    "rock": "#5a6878",
+    "high": "#f4f8fc",
     "height": 24.0,
     "freq": 0.013,
     "mountains": 0.7,
@@ -343,6 +359,12 @@
     "sun": "#f0f6ff",
     "ambient": "#c8d8f0",
     "particles": "snow",
+    "decor": {
+     "pedrinha": 0.7,
+     "gelinho": 0.6
+    },
+    "dirt": "#8a8a90",
+    "dirt_amount": 0.15,
     "music": "snow"
    },
    "trees": {
@@ -476,7 +498,13 @@
     "sun": "#ffd8a8",
     "ambient": "#c0a890",
     "particles": "embers",
-    "music": "city"
+    "music": "city",
+    "decor": {
+     "pedrinha": 0.7,
+     "graveto": 0.3
+    },
+    "dirt": "#6a5040",
+    "dirt_amount": 0.6
    },
    "trees": {
     "arvore_morta": 10
@@ -648,6 +676,13 @@
     "sun": "#d8e0c0",
     "ambient": "#8a9a88",
     "particles": "spores",
+    "decor": {
+     "samambaia": 1.0,
+     "cogumelo": 0.8,
+     "pedrinha": 0.4
+    },
+    "dirt": "#4a3a28",
+    "dirt_amount": 0.5,
     "music": "swamp"
    },
    "trees": {
@@ -810,7 +845,13 @@
     "sun": "#ffb080",
     "ambient": "#c08070",
     "particles": "embers",
-    "music": "volcano"
+    "music": "volcano",
+    "decor": {
+     "pedrinha": 1.0,
+     "brasinha": 0.6
+    },
+    "dirt": "#3a2a24",
+    "dirt_amount": 0.5
    },
    "trees": {
     "arvore_morta": 30
@@ -926,6 +967,14 @@
     "sun": "#c8d0ff",
     "ambient": "#8090b0",
     "particles": "rain",
+    "decor": {
+     "flor": 0.8,
+     "samambaia": 0.7,
+     "concha": 0.6,
+     "pedrinha": 0.4
+    },
+    "dirt": "#6a5a3a",
+    "dirt_amount": 0.3,
     "music": "storm"
    },
    "trees": {
@@ -1052,6 +1101,11 @@
     "sun": "#c8b8ff",
     "ambient": "#6a6080",
     "particles": "ash",
+    "decor": {
+     "pedrinha": 0.7
+    },
+    "dirt": "#3a3640",
+    "dirt_amount": 0.5,
     "music": "city"
    },
    "trees": {

@@ -13,7 +13,7 @@ func _init() -> void:
 	for k in keys:
 		var mi := MeshInstance3D.new()
 		mi.mesh = MeshLib.get_mesh(k)
-		mi.material_override = MeshLib.mat("glow" if k in ["cristal", "fragmento"] else "vc")
+		mi.material_override = MeshLib.mat("glow" if k in ["cristal", "fragmento"] else ResourceNode.material_for(k))
 		mi.position = Vector3((i % 7) * 5.0 - 15.0, 0, (i / 7) * 6.0 - 9.0)
 		if k == "casa":
 			mi.scale = Vector3(4, 1, 4)
@@ -41,7 +41,7 @@ func _init() -> void:
 	root3.add_child(env)
 	var cam := Camera3D.new()
 	root3.add_child(cam)
-	cam.look_at_from_position(Vector3(0, 22, 26), Vector3(0, 0, 0))
+	cam.look_at_from_position(Vector3(-4, 9, 8), Vector3(-6, 1.5, -8))
 	for f in 6:
 		await process_frame
 	root.get_texture().get_image().save_png("/tmp/claude-0/props.png")

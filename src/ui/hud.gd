@@ -42,6 +42,7 @@ var banner: PanelContainer
 var banner_label: Label
 var build_bar: PanelContainer
 var overlay: Control  # popups modais
+var minimap: Minimap
 var menu: Node  # GameMenu
 var _lume_t := 0.0
 var _toast_queue: Array = []
@@ -67,8 +68,24 @@ func setup(p_world: World) -> void:
 	hazard_rect.color = Color(1, 0.3, 0.1, 0.0)
 	hazard_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(hazard_rect)
+	var vig := TextureRect.new()
+	vig.texture = load("res://assets/ui/vignette.png")
+	vig.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	vig.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	vig.stretch_mode = TextureRect.STRETCH_SCALE
+	vig.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.add_child(vig)
 	_build_status()
 	_build_objective()
+	minimap = Minimap.new()
+	root.add_child(minimap)
+	minimap.anchor_left = 1.0
+	minimap.anchor_right = 1.0
+	minimap.offset_left = -16 - Minimap.SIZE
+	minimap.offset_right = -16
+	minimap.offset_top = 104
+	minimap.offset_bottom = 104 + Minimap.SIZE
+	minimap.setup(world)
 	_build_buttons()
 	_build_toasts()
 	_build_lume()
@@ -86,6 +103,17 @@ func setup(p_world: World) -> void:
 
 
 # ------------------------------------------------------------------ montagem
+func _icon_rect(name: String, px: float, tint: Color = Color.WHITE) -> TextureRect:
+	var tr := TextureRect.new()
+	tr.texture = UiTheme.ui_icon(name)
+	tr.custom_minimum_size = Vector2(px, px)
+	tr.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	tr.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	tr.modulate = tint
+	tr.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	return tr
+
+
 func _build_status() -> void:
 	var p := PanelContainer.new()
 	p.add_theme_stylebox_override("panel", UiTheme.panel_box(Color(0.06, 0.08, 0.12, 0.72), 20))
@@ -103,12 +131,12 @@ func _build_status() -> void:
 	top.add_child(day_label)
 	var r1 := HBoxContainer.new()
 	v.add_child(r1)
-	r1.add_child(UiTheme.label("♥", 20, UiTheme.DANGER, 900))
+	r1.add_child(_icon_rect("heart", 26, UiTheme.DANGER))
 	hp_bar = Widgets.bar(UiTheme.DANGER, 16, 190)
 	r1.add_child(hp_bar)
 	var r2 := HBoxContainer.new()
 	v.add_child(r2)
-	r2.add_child(UiTheme.label("◆", 18, UiTheme.GOLD, 900))
+	r2.add_child(_icon_rect("food", 24, Color("#f0a850")))
 	hunger_bar = Widgets.bar(Color("#e8a040"), 12, 190)
 	r2.add_child(hunger_bar)
 	xp_bar = Widgets.bar(UiTheme.ACCENT, 6, 214)
@@ -117,10 +145,10 @@ func _build_status() -> void:
 	v.add_child(cur)
 	coins_label = UiTheme.label("0", 20, UiTheme.GOLD, 900)
 	gems_label = UiTheme.label("0", 20, UiTheme.GEM, 900)
-	cur.add_child(UiTheme.label("●", 18, UiTheme.GOLD))
+	cur.add_child(_icon_rect("coin", 22, UiTheme.GOLD))
 	cur.add_child(coins_label)
 	cur.add_child(Widgets.spacer(4))
-	cur.add_child(UiTheme.label("◆", 18, UiTheme.GEM))
+	cur.add_child(_icon_rect("gem", 22, UiTheme.GEM))
 	cur.add_child(gems_label)
 	# cartão do Eco parceiro (toque = trocar)
 	ally_box = PanelContainer.new()
@@ -193,18 +221,18 @@ func _anchor_br(c: Control, x: float, y: float) -> void:
 
 
 func _build_buttons() -> void:
-	action_btn = UiTheme.circle_button(Loc.t("attack"), Color("#e0663a"), 150, 22)
+	action_btn = UiTheme.icon_button("sword", Color("#e0663a"), 150, Loc.t("attack"), 19)
 	_anchor_br(action_btn, 190, 196)
 	action_btn.button_down.connect(func(): world.on_action())
 	root.add_child(action_btn)
-	jump_btn = UiTheme.circle_button(Loc.t("jump"), Color("#3a7ae0"), 96, 18)
+	jump_btn = UiTheme.icon_button("jump", Color("#3a7ae0"), 96)
 	_anchor_br(jump_btn, 300, 118)
 	jump_btn.button_down.connect(func():
 		world.player.jump_held = true
 		world.player.jump())
 	jump_btn.button_up.connect(func(): world.player.jump_held = false)
 	root.add_child(jump_btn)
-	sphere_btn = UiTheme.circle_button(Loc.t("throw_sphere"), Color("#d83a4a"), 96, 17)
+	sphere_btn = UiTheme.icon_button("sphere", Color("#d83a4a"), 100, "0", 18)
 	_anchor_br(sphere_btn, 128, 318)
 	sphere_btn.pressed.connect(func(): world.throw_sphere())
 	root.add_child(sphere_btn)
@@ -239,19 +267,28 @@ func _build_buttons() -> void:
 	tr.offset_top = 14
 	tr.alignment = BoxContainer.ALIGNMENT_END
 	root.add_child(tr)
-	gift_btn = UiTheme.button("★", UiTheme.GOLD.darkened(0.2), 26, Vector2(72, 72))
+	gift_btn = _top_button("gift", UiTheme.GOLD)
 	gift_btn.tooltip_text = Loc.t("daily_login")
 	gift_btn.pressed.connect(show_daily_login)
 	tr.add_child(gift_btn)
-	shop_btn = UiTheme.button("◆", UiTheme.GEM.darkened(0.35), 28, Vector2(72, 72))
+	shop_btn = _top_button("gem", UiTheme.GEM)
 	shop_btn.pressed.connect(func(): open_menu("shop"))
 	tr.add_child(shop_btn)
-	build_btn = UiTheme.button("⚒", Color("#7a5a3a"), 30, Vector2(72, 72))
+	build_btn = _top_button("hammer", Color("#4aa85a"))
 	build_btn.pressed.connect(open_build)
 	tr.add_child(build_btn)
-	menu_btn = UiTheme.button("☰", UiTheme.BG2, 30, Vector2(72, 72))
+	menu_btn = _top_button("bag", Color("#3fd6c6"))
 	menu_btn.pressed.connect(func(): open_menu("inventory"))
 	tr.add_child(menu_btn)
+
+
+func _top_button(icon_name: String, col: Color) -> Button:
+	var b := UiTheme.button("", col, 20, Vector2(76, 76))
+	b.icon = UiTheme.ui_icon(icon_name)
+	b.expand_icon = true
+	b.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	b.add_theme_constant_override("icon_max_width", 46)
+	return b
 
 
 func _build_toasts() -> void:
@@ -260,7 +297,7 @@ func _build_toasts() -> void:
 	toasts.anchor_right = 1.0
 	toasts.offset_left = -420
 	toasts.offset_right = -16
-	toasts.offset_top = 104
+	toasts.offset_top = 310
 	toasts.alignment = BoxContainer.ALIGNMENT_BEGIN
 	toasts.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	toasts.add_theme_constant_override("separation", 6)
@@ -355,8 +392,8 @@ func refresh() -> void:
 	# esferas
 	var orb := world.selected_orb
 	var cnt := st.inv.count(orb) if not st.inv.infinite else 99
-	sphere_btn.text = "%s\n%d" % [Loc.t("throw_sphere"), cnt]
-	sphere_btn.add_theme_stylebox_override("normal", UiTheme.panel_box(Color(Color(GameData.db().item(orb)["color"]), 0.78), 48, Color(1, 1, 1, 0.35)))
+	(sphere_btn.find_child("Label", true, false) as Label).text = "×%d" % cnt
+	UiTheme.set_circle_color(sphere_btn, Color(GameData.db().item(orb)["color"]))
 	refresh_skills()
 	_refresh_objective()
 	gift_btn.visible = RetentionLogic.login_available(st, Game.now()) and not st.is_sandbox()
@@ -380,7 +417,7 @@ func refresh_skills() -> void:
 		var parts := nm.split(" ", false, 1)
 		b.text = ("\n".join(parts) if nm.length() > 9 else nm) if cd <= 0.0 else "%d" % ceili(cd)
 		var col := FX.type_color(sk["type"])
-		b.add_theme_stylebox_override("normal", UiTheme.panel_box(Color(col.darkened(0.25) if cd <= 0.0 else Color(0.25, 0.25, 0.3), 0.85), 44, Color(1, 1, 1, 0.35)))
+		UiTheme.set_circle_color(b, col if cd <= 0.0 else Color(0.3, 0.3, 0.32))
 		b.disabled = cd > 0.0
 
 
@@ -440,16 +477,21 @@ func _process(delta: float) -> void:
 
 func set_context(label: String, kind: String) -> void:
 	_ctx_kind = kind
+	var lbl: Label = action_btn.find_child("Label", true, false)
+	var ico: TextureRect = action_btn.find_child("Icon", true, false)
 	if world.build_mode:
-		action_btn.text = Loc.t("place")
+		lbl.text = Loc.t("place")
+		ico.texture = UiTheme.ui_icon("hammer")
+		UiTheme.set_circle_color(action_btn, Color("#4aa85a"))
 		return
 	if label == "":
-		action_btn.text = Loc.t("attack")
-		action_btn.add_theme_stylebox_override("normal", UiTheme.panel_box(Color(Color("#e0663a"), 0.8), 75, Color(1, 1, 1, 0.35)))
+		lbl.text = Loc.t("attack")
+		ico.texture = UiTheme.ui_icon("sword")
+		UiTheme.set_circle_color(action_btn, Color("#e0663a"))
 	else:
-		action_btn.text = label if label.length() < 16 else label.substr(0, 15) + "…"
-		var col := Color("#4aa85a") if kind == "gather" else Color("#3a8ac8")
-		action_btn.add_theme_stylebox_override("normal", UiTheme.panel_box(Color(col, 0.8), 75, Color(1, 1, 1, 0.35)))
+		lbl.text = label if label.length() < 13 else label.substr(0, 12) + "…"
+		ico.texture = UiTheme.ui_icon("hand" if kind == "gather" else "star")
+		UiTheme.set_circle_color(action_btn, Color("#4aa85a") if kind == "gather" else Color("#3a8ae0"))
 
 
 func hazard_tint(on: bool) -> void:

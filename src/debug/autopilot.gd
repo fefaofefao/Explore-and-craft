@@ -231,16 +231,18 @@ func _smoke() -> void:
 	check(QuestLogic.current(st)["id"] == "q02", "missão 2 ativa")
 	# coletar: bater em nós até esgotar
 	var gathered := 0
-	for k in w.nodes.keys():
-		var n: ResourceNode = w.nodes[k]
-		var want_kind: String = ["arvore", "arbusto", "capim"][gathered % 3]
-		if n.kind == want_kind and not n.harvested and gathered < 12:
-			w.player.global_position = n.global_position + Vector3(1.5, 0.5, 0)
-			for hit in 12:
-				w._gather(n)
-				if n.harvested:
-					break
-			gathered += 1
+	for want_kind in ["arvore", "arbusto", "capim"]:
+		var got_k := 0
+		for k in w.nodes.keys():
+			var n: ResourceNode = w.nodes[k]
+			if n.kind == want_kind and not n.harvested and got_k < 4:
+				w.player.global_position = n.global_position + Vector3(1.5, 0.5, 0)
+				for hit in 12:
+					w._gather(n)
+					if n.harvested:
+						break
+				got_k += 1
+				gathered += 1
 	check(st.inv.count("madeira") > 0 and st.inv.count("fibra") > 0, "coleta deu madeira e fibra (%d/%d, nós=%d, gs=%s)" % [st.inv.count("madeira"), st.inv.count("fibra"), gathered, str(st.stats["gathered"])])
 	# criar ferramentas
 	st.inv.add("pedra", 10)

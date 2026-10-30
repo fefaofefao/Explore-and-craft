@@ -27,6 +27,15 @@ Telas: [docs/screenshots/](docs/screenshots/). História completa e design: [doc
 
 - **Godot 4.5.1** (GDScript), renderer **GL Compatibility**, que roda na grande maioria dos Android com OpenGL ES 3.
 - Malhas, monstros, terreno e efeitos são **100% procedurais**. Não há modelos 3D de terceiros, o que mantém o APK leve e o visual consistente.
+- Shaders próprios (`assets/shaders/`):
+  - **terreno:** mistura grama, terra, areia molhada, rocha estratificada e neve por altura, inclinação e ruído;
+  - **água:** profundidade lida do relevo, espuma na costa, cáusticas e reflexo do céu, além de lava;
+  - **folhagem:** vento por vértice;
+  - **grama:** tufos densos com a cor do chão, em blocos com alcance de visibilidade;
+  - **toon:** usado nos Ecos e nos personagens, com sombras frias, brilho anime e luz de borda;
+  - **minimapa.**
+- Ecos com olhos anime (íris, pupila, dois brilhos, cílios), piscar, bochechas, boca e sombra no chão. Personagens humanos em proporção chibi, com cabelo em camadas e cachecol animado.
+- Interface com painéis e botões texturizados, ícones vetoriais, minimapa giratório, vinheta e logo (`tools/gen_textures.py`).
 - Ícones (`tools/gen_icons.py`) e áudio (`tools/gen_audio.py`) são gerados por script. Fontes: Nunito (OFL) e DejaVu (licença livre).
 - Conteúdo e balanceamento ficam em `data/*.json`, gerados por `tools/gen_data/` com validação de referências cruzadas.
 

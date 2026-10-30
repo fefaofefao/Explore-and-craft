@@ -4,7 +4,7 @@ extends RefCounted
 ## posições de recursos, fragmentos, estruturas de cidade. Sem nós de cena: testável headless.
 
 const WATER_Y := 0.0
-const CELLS := 96  # resolução da malha do terreno
+const CELLS := 128  # resolução da malha do terreno (célula de ~1,9 m)
 
 var map_id: String
 var md: Dictionary

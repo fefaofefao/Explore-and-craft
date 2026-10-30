@@ -88,7 +88,7 @@ func update_time(day_time: float) -> void:
 	sun.light_energy = lerpf(0.0, 1.05, sf)
 	sun.visible = sf > 0.02
 	moon.rotation = Vector3(-0.9, 0.4 + day_time, 0.0)
-	moon.light_energy = lerpf(0.32, 0.0, sf)
+	moon.light_energy = lerpf(0.5, 0.0, sf)
 	# crepúsculo: horizonte alaranjado perto de 0.25 e 0.75
 	var dusk := maxf(0.0, 1.0 - absf(day_time - 0.25) * 14.0) + maxf(0.0, 1.0 - absf(day_time - 0.75) * 14.0)
 	dusk = clampf(dusk, 0.0, 1.0) * 0.7
@@ -101,6 +101,6 @@ func update_time(day_time: float) -> void:
 	env.ambient_light_color = _amb.darkened(0.55 * (1.0 - sf)).lerp(Color("#5a6aa8"), (1.0 - sf) * 0.35)
 	env.ambient_light_energy = lerpf(0.45, 0.55, sf)
 	sun.light_color = _sun_col.lerp(Color("#ffb070"), dusk)
-	grass_light = lerpf(0.25, 1.0, sf)
+	grass_light = lerpf(0.3, 1.32, sf)
 	if grass_mat != null:
 		grass_mat.set_shader_parameter("light_mult", grass_light)

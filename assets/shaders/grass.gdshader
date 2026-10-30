@@ -1,12 +1,12 @@
 shader_type spatial;
 render_mode cull_disabled, unshaded;
-// Grama com vento (sem iluminação dinâmica: barato no celular). A luz do dia vem de "light_mult".
+// Grama com vento (sem iluminação dinâmica: barata no celular). A cor de cada tufo vem do chão (instância);
+// a luz do dia vem de "light_mult". Pontas mais claras dão leitura de volume.
 
-uniform vec4 base_color : source_color = vec4(0.25, 0.45, 0.18, 1.0);
-uniform vec4 tip_color : source_color = vec4(0.55, 0.8, 0.3, 1.0);
 uniform float wind_strength = 0.16;
 uniform float wind_speed = 1.6;
 uniform float light_mult = 1.0;
+uniform vec4 tip_tint : source_color = vec4(1.0, 1.0, 0.85, 1.0);
 varying float vh;
 
 void vertex() {
@@ -18,6 +18,7 @@ void vertex() {
 }
 
 void fragment() {
-	vec3 c = mix(base_color.rgb, tip_color.rgb, vh) * COLOR.rgb;
+	vec3 ground = COLOR.rgb;
+	vec3 c = mix(ground * 0.95, ground * 1.45 * tip_tint.rgb + vec3(0.03), vh);
 	ALBEDO = c * light_mult;
 }

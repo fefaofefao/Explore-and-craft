@@ -65,7 +65,8 @@ func build(p_map: String, p_hud: Node) -> void:
 	add_child(TerrainBuilder.build_water(gen))
 	var grass := TerrainBuilder.build_grass(gen, q)
 	add_child(grass)
-	sky.grass_mat = grass.material_override
+	sky.grass_mat = grass.get_meta("mat") if grass.has_meta("mat") else null
+	add_child(TerrainBuilder.build_decor(gen, q))
 	sky.update_time(st.day_time)
 	_props = Node3D.new()
 	_props.name = "Props"
@@ -152,7 +153,7 @@ func _build_pois() -> void:
 		var cr := Interactable.new().setup("cradle", {}, Loc.t("cradle"), 4.0)
 		_props.add_child(cr)
 		cr.global_position = Vector3(c[0], gen.height(c[0], c[1]), c[1])
-		cr.add_mesh("berco", "vc", Color.WHITE, 1.3, false, Vector3(2.0, 1.0, 3.6))
+		cr.add_mesh("berco", "glow_soft", Color.WHITE, 1.3, false, Vector3(2.4, 1.2, 4.6))
 		cr.add_light(Color("#7ff0ff"), 1.2, 6.0, 1.0)
 		interactables.append(cr)
 		if not st.flags.get("starter_chosen", false):

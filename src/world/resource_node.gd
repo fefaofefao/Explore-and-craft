@@ -25,7 +25,7 @@ func setup(p_key: String, p_kind: String, tint: Color, scl: float, rot: float) -
 	_base_rot = rot
 	mesh_i = MeshInstance3D.new()
 	mesh_i.mesh = MeshLib.get_mesh(kind, hash(key) % 3, tint)
-	mesh_i.material_override = MeshLib.mat("glow" if kind == "cristal" else ("vc_ds" if kind == "palmeira" else "vc"))
+	mesh_i.material_override = MeshLib.mat(material_for(kind))
 	mesh_i.rotation.y = rot
 	mesh_i.scale = Vector3.ONE * scl
 	mesh_i.visibility_range_end = 95.0
@@ -70,6 +70,16 @@ func setup(p_key: String, p_kind: String, tint: Color, scl: float, rot: float) -
 		body.add_child(cs)
 		add_child(body)
 	return self
+
+
+static func material_for(k: String) -> String:
+	if k == "cristal":
+		return "glow"
+	if k == "palmeira":
+		return "foliage_ds"
+	if k in ["arvore", "pinheiro", "arvore_morta", "arbusto", "capim", "cacto", "cogumelos", "espinhos"]:
+		return "foliage"
+	return "vc"
 
 
 func is_barrier() -> bool:

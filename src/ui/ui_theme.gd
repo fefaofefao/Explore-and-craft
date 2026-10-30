@@ -40,23 +40,13 @@ static func theme() -> Theme:
 	t.set_color("font_color", "Label", TEXT)
 	t.set_color("font_outline_color", "Label", Color(0, 0, 0, 0.6))
 	t.set_constant("outline_size", "Label", 0)
-	t.set_stylebox("panel", "PanelContainer", panel_box(BG))
-	t.set_stylebox("panel", "Panel", panel_box(BG))
-	for st in ["normal", "hover", "pressed", "disabled", "focus"]:
-		var c := BG2
-		match st:
-			"hover":
-				c = BG2.lightened(0.08)
-			"pressed":
-				c = ACCENT.darkened(0.35)
-			"disabled":
-				c = Color(0.2, 0.2, 0.24, 0.7)
-			"focus":
-				c = Color(0, 0, 0, 0)
-		var sb := panel_box(c, 16)
-		if st == "focus":
-			sb.draw_center = false
-		t.set_stylebox(st, "Button", sb)
+	t.set_stylebox("panel", "PanelContainer", tex_box("panel", 30, Vector4(18, 12, 18, 12)))
+	t.set_stylebox("panel", "Panel", tex_box("panel", 30))
+	t.set_stylebox("normal", "Button", tex_box("btn", 24, Vector4(14, 8, 14, 8)))
+	t.set_stylebox("hover", "Button", tex_box("btn", 24, Vector4(14, 8, 14, 8)))
+	t.set_stylebox("pressed", "Button", tex_box("btn_accent", 24, Vector4(14, 8, 14, 8)))
+	t.set_stylebox("disabled", "Button", panel_box(Color(0.18, 0.19, 0.23, 0.8), 18))
+	t.set_stylebox("focus", "Button", StyleBoxEmpty.new())
 	t.set_color("font_color", "Button", TEXT)
 	t.set_color("font_pressed_color", "Button", Color.WHITE)
 	t.set_color("font_hover_color", "Button", Color.WHITE)
@@ -92,6 +82,50 @@ static func theme() -> Theme:
 	return t
 
 
+static func tex_box(name: String, margin: int = 26, content: Vector4 = Vector4(16, 10, 16, 10)) -> StyleBox:
+	## 9-patch com degradê, brilho interno e borda (assets/ui/*.png, gerados por tools/gen_textures.py).
+	var key := "tb_%s_%d_%s" % [name, margin, str(content)]
+	if _icons.has(key):
+		return _icons[key]
+	var path := "res://assets/ui/%s.png" % name
+	if not ResourceLoader.exists(path):
+		return panel_box(BG)
+	var sb := StyleBoxTexture.new()
+	sb.texture = load(path)
+	sb.texture_margin_left = margin
+	sb.texture_margin_right = margin
+	sb.texture_margin_top = margin
+	sb.texture_margin_bottom = margin
+	sb.content_margin_left = content.x
+	sb.content_margin_top = content.y
+	sb.content_margin_right = content.z
+	sb.content_margin_bottom = content.w
+	_icons[key] = sb
+	return sb
+
+
+static func variant_for(col: Color) -> String:
+	## Escolhe a textura de botão mais próxima da cor pedida.
+	if col.s < 0.18:
+		return "btn"
+	var h := col.h * 360.0
+	if h < 20 or h >= 340:
+		return "btn_red"
+	if h < 65:
+		return "btn_gold"
+	if h < 150:
+		return "btn_green"
+	if h < 200:
+		return "btn_accent"
+	if h < 250:
+		return "btn_accent"
+	return "btn_purple"
+
+
+static func ui_icon(name: String) -> Texture2D:
+	return icon("ui/" + name)
+
+
 static func panel_box(c: Color, radius: int = 22, border: Color = Color(1, 1, 1, 0.08)) -> StyleBoxFlat:
 	var sb := StyleBoxFlat.new()
 	sb.bg_color = c
@@ -103,6 +137,9 @@ static func panel_box(c: Color, radius: int = 22, border: Color = Color(1, 1, 1,
 	sb.content_margin_top = 10
 	sb.content_margin_bottom = 10
 	sb.anti_aliasing = true
+	sb.shadow_color = Color(0, 0, 0, 0.28)
+	sb.shadow_size = 6
+	sb.shadow_offset = Vector2(0, 3)
 	return sb
 
 
@@ -129,12 +166,19 @@ static func button(text: String, col: Color = BG2, size: int = 24, min_size: Vec
 	b.add_theme_font_size_override("font_size", size)
 	b.add_theme_font_override("font", font(800))
 	if col != BG2:
-		b.add_theme_stylebox_override("normal", panel_box(col, 16, col.lightened(0.25)))
-		b.add_theme_stylebox_override("hover", panel_box(col.lightened(0.1), 16, col.lightened(0.35)))
-		b.add_theme_stylebox_override("pressed", panel_box(col.darkened(0.25), 16, col.lightened(0.2)))
-		b.add_theme_stylebox_override("disabled", panel_box(Color(0.25, 0.25, 0.28, 0.8), 16))
+		var v := variant_for(col)
+		var cm := Vector4(14, 8, 14, 8)
+		b.add_theme_stylebox_override("normal", tex_box(v, 24, cm))
+		b.add_theme_stylebox_override("hover", tex_box(v, 24, cm))
+		b.add_theme_stylebox_override("pressed", tex_box("btn", 24, cm))
+		b.add_theme_stylebox_override("disabled", panel_box(Color(0.18, 0.19, 0.23, 0.8), 18))
+		b.add_theme_constant_override("outline_size", 6)
+		b.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.35))
 	b.focus_mode = Control.FOCUS_NONE
-	b.pressed.connect(func(): Audio.play("click", 0.05))
+	b.pressed.connect(func():
+		var au: Node = Engine.get_main_loop().root.get_node_or_null("Audio") if Engine.get_main_loop() is SceneTree else null
+		if au:
+			au.play("click", 0.05))
 	return b
 
 
@@ -144,13 +188,68 @@ static func circle_button(text: String, col: Color, diameter: float = 110.0, fon
 	b.custom_minimum_size = Vector2(diameter, diameter)
 	b.add_theme_font_size_override("font_size", font_size)
 	b.add_theme_font_override("font", font(900))
-	var r := int(diameter / 2.0)
-	b.add_theme_stylebox_override("normal", panel_box(Color(col, 0.78), r, Color(1, 1, 1, 0.35)))
-	b.add_theme_stylebox_override("hover", panel_box(Color(col.lightened(0.1), 0.85), r, Color(1, 1, 1, 0.5)))
-	b.add_theme_stylebox_override("pressed", panel_box(Color(col.darkened(0.3), 0.95), r, Color(1, 1, 1, 0.6)))
-	b.add_theme_stylebox_override("disabled", panel_box(Color(0.25, 0.25, 0.3, 0.6), r))
+	set_circle_color(b, col)
+	b.add_theme_constant_override("outline_size", 7)
+	b.add_theme_color_override("font_outline_color", Color(0.05, 0.03, 0.08, 0.7))
 	b.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
 	b.focus_mode = Control.FOCUS_NONE
+	return b
+
+
+static func circle_variant(col: Color) -> String:
+	if col.s < 0.2:
+		return "cb_gray"
+	var h := col.h * 360.0
+	if h < 15 or h >= 345:
+		return "cb_red"
+	if h < 30:
+		return "cb_red"
+	if h < 65:
+		return "cb_gold"
+	if h < 160:
+		return "cb_green"
+	if h < 195:
+		return "cb_teal"
+	if h < 270:
+		return "cb_blue"
+	return "cb_pink"
+
+
+static func set_circle_color(b: Button, col: Color) -> void:
+	var v := circle_variant(col)
+	var tb := tex_box(v, 0, Vector4(8, 8, 8, 8))
+	b.add_theme_stylebox_override("normal", tb)
+	b.add_theme_stylebox_override("hover", tb)
+	var pressed := tex_box(v, 0, Vector4(8, 12, 8, 4))
+	b.add_theme_stylebox_override("pressed", pressed)
+	b.add_theme_stylebox_override("disabled", tex_box("cb_gray", 0, Vector4(8, 8, 8, 8)))
+
+
+static func icon_button(icon_name: String, col: Color, diameter: float, label_text: String = "", font_size: int = 16) -> Button:
+	## Botão redondo com ícone grande e rótulo pequeno.
+	var b := circle_button("", col, diameter, font_size)
+	var v := VBoxContainer.new()
+	v.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	v.alignment = BoxContainer.ALIGNMENT_CENTER
+	v.add_theme_constant_override("separation", 0)
+	v.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	b.add_child(v)
+	var tr := TextureRect.new()
+	tr.texture = ui_icon(icon_name)
+	tr.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	tr.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	var isz := diameter * (0.42 if label_text != "" else 0.52)
+	tr.custom_minimum_size = Vector2(isz, isz)
+	tr.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	tr.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	tr.name = "Icon"
+	v.add_child(tr)
+	var l := outlined(label(label_text, font_size, Color.WHITE, 900), 6)
+	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	l.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	l.name = "Label"
+	l.visible = label_text != ""
+	v.add_child(l)
 	return b
 
 

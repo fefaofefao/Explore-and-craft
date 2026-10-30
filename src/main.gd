@@ -56,7 +56,11 @@ func show_title() -> void:
 	sky.update_time(0.31)
 	title_root.add_child(TerrainBuilder.build_terrain(gen))
 	title_root.add_child(TerrainBuilder.build_water(gen))
-	title_root.add_child(TerrainBuilder.build_grass(gen, 0))
+	var tg := TerrainBuilder.build_grass(gen, 1)
+	title_root.add_child(tg)
+	sky.grass_mat = tg.get_meta("mat")
+	sky.update_time(0.31)
+	title_root.add_child(TerrainBuilder.build_decor(gen, 1))
 	var rng := RandomNumberGenerator.new()
 	rng.seed = 7
 	var count := 0
@@ -107,17 +111,18 @@ func _build_title_ui() -> void:
 	var v := VBoxContainer.new()
 	v.anchor_top = 0.5
 	v.anchor_bottom = 0.5
-	v.offset_left = 70
-	v.offset_top = -280
-	v.offset_right = 600
+	v.offset_left = 60
+	v.offset_top = -300
+	v.offset_right = 620
 	v.offset_bottom = 300
 	v.add_theme_constant_override("separation", 14)
 	root.add_child(v)
-	var logo := UiTheme.outlined(UiTheme.label(Loc.t("game_title").to_upper(), 96, Color.WHITE, 1000), 18)
-	logo.add_theme_color_override("font_color", Color("#eafff9"))
+	var logo := TextureRect.new()
+	logo.texture = load("res://assets/ui/logo.png" if Loc.lang == "pt" else "res://assets/ui/logo_en.png")
+	logo.custom_minimum_size = Vector2(540, 162)
+	logo.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	logo.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT
 	v.add_child(logo)
-	var sub := UiTheme.outlined(UiTheme.label(Loc.t("game_subtitle"), 40, UiTheme.GOLD, 900), 10)
-	v.add_child(sub)
 	var tag := UiTheme.outlined(UiTheme.label(Loc.t("story_desc"), 20, Color(1, 1, 1, 0.85), 700), 6)
 	tag.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	v.add_child(tag)
