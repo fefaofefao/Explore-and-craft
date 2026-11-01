@@ -1,0 +1,40 @@
+name: APK
+
+# Publica o APK de dist/ como artefato do Actions e como Release (link direto para baixar no celular).
+on:
+  push:
+    branches: [claude/android-survival-game-aaa-s2hxci, main]
+    paths: ["dist/**.apk", ".github/workflows/apk.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: false
+      - name: Conferir APK
+        run: ls -la dist/ && unzip -l dist/ecoterra-v1.0.0.apk | tail -1
+      - name: Artefato (aba Actions)
+        uses: actions/upload-artifact@v4
+        with:
+          name: ecoterra-apk
+          path: dist/ecoterra-v1.0.0.apk
+          compression-level: 0
+      - name: Release (link direto)
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: apk-latest
+          name: Ecoterra — APK de teste
+          prerelease: true
+          make_latest: true
+          target_commitish: ${{ github.sha }}
+          files: dist/ecoterra-v1.0.0.apk
+          body: |
+            APK de teste do Ecoterra: Despertar (Android 7+, arm64/armv7).
+            Baixe **ecoterra-v1.0.0.apk** abaixo, abra no celular e permita "instalar apps de fontes desconhecidas".
+            Se já tiver uma versão instalada e der erro, desinstale a antiga antes.
