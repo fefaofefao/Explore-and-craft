@@ -1300,8 +1300,10 @@ func _liberate_city() -> void:
 
 # ================================================================== coleta e interação
 func _scan_target() -> void:
-	var best: Node = null
-	var best_score := 999.0
+	## Escolhe o alvo de interação mais próximo (com bônus para o que está à frente).
+	## Atenção: lambdas do GDScript capturam variáveis locais por cópia; por isso o melhor alvo
+	## é guardado num Dictionary (referência), não em variáveis simples.
+	var best := {"node": null, "score": 999.0}
 	var pp := player.global_position
 	var fw := player.facing()
 	var check := func(n: Node3D, rng_m: float) -> void:
@@ -1312,9 +1314,9 @@ func _scan_target() -> void:
 		to.y = 0
 		var facing_bonus := to.normalized().dot(fw) if to.length() > 0.1 else 1.0
 		var score := d - facing_bonus * 1.2
-		if score < best_score:
-			best_score = score
-			best = n
+		if score < float(best["score"]):
+			best["score"] = score
+			best["node"] = n
 	for k in nodes:
 		var n: ResourceNode = nodes[k]
 		if not n.harvested:
@@ -1329,9 +1331,163 @@ func _scan_target() -> void:
 		if is_instance_valid(n):
 			check.call(n, n.interact_range())
 	for a in get_tree().get_nodes_in_group("starter_display"):
-		check.call(a, 3.5)
-	current_target = best
-	hud.set_context(_context_label(best), _context_kind(best))
+		check.call(a, 4.0)
+	_set_target(best["node"])
+	hud.set_context(_context_label(current_target), _context_kind(current_target))
+
+
+# ------------------------------------------------------------------ destaque e marcadores
+var _hl_mat: ShaderMaterial
+var _hl_meshes: Array = []
+var _sparks: Array = []
+
+
+func _highlight_material(col: Color) -> ShaderMaterial:
+	if _hl_mat == null:
+		_hl_mat = ShaderMaterial.new()
+		_hl_mat.shader = load("res://assets/shaders/highlight.gdshader")
+	_hl_mat.set_shader_parameter("glow_color", col)
+	return _hl_mat
+
+
+func _set_target(n: Node) -> void:
+	if n == current_target and (n == null or _hl_meshes.size() > 0):
+		return
+	for mi in _hl_meshes:
+		if is_instance_valid(mi):
+			mi.material_overlay = null
+	_hl_meshes.clear()
+	current_target = n
+	if n == null or not is_instance_valid(n):
+		return
+	var col := Color("#9dff8a") if (n is ResourceNode and not (n as ResourceNode).is_barrier()) else Color("#ffd95a")
+	var mat := _highlight_material(col)
+	var stack: Array = [n]
+	while stack.size() > 0 and _hl_meshes.size() < 40:
+		var c: Node = stack.pop_back()
+		if c is MeshInstance3D and c.visible and not (c.mesh is PlaneMesh) and not (c.mesh is QuadMesh):
+			(c as MeshInstance3D).material_overlay = mat
+			_hl_meshes.append(c)
+		for ch in c.get_children():
+			if not ch is CPUParticles3D and not ch is Label3D:
+				stack.append(ch)
+
+
+var _tut_arrow: Node3D
+var _tut_target: Node3D
+
+
+func set_tutorial_arrow(target: Node3D) -> void:
+	_tut_target = target
+	if _tut_arrow == null:
+		_tut_arrow = Node3D.new()
+		var mi := MeshInstance3D.new()
+		mi.mesh = MonsterModel._cone(0.38, 0.7, 12)
+		mi.rotation.x = PI
+		mi.material_override = MeshLib.color_mat(Color("#ffd23a"), 1.8, false)
+		mi.material_override.next_pass = MeshLib.outline_mat(0.03)
+		mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		_tut_arrow.add_child(mi)
+		add_child(_tut_arrow)
+	_tut_arrow.visible = target != null and is_instance_valid(target)
+
+
+func _update_tut_arrow() -> void:
+	if _tut_arrow == null or not _tut_arrow.visible or _tut_target == null or not is_instance_valid(_tut_target):
+		if _tut_arrow != null:
+			_tut_arrow.visible = false
+		return
+	var h := 2.4
+	if _tut_target is ResourceNode:
+		h = 6.2 if (_tut_target as ResourceNode).kind in ["arvore", "pinheiro", "palmeira"] else 2.6
+	elif _tut_target is MonsterActor:
+		h = (_tut_target as MonsterActor).model.height() + 1.0
+	var t := Time.get_ticks_msec() / 1000.0
+	_tut_arrow.global_position = _tut_target.global_position + Vector3(0, h + absf(sin(t * 3.5)) * 0.5, 0)
+	_tut_arrow.rotation.y = t * 2.0
+
+
+func nearest_node(kinds: Array, max_d: float) -> ResourceNode:
+	var best: ResourceNode = null
+	var bd := max_d
+	for k in nodes:
+		var n: ResourceNode = nodes[k]
+		if n.harvested or not n.kind in kinds:
+			continue
+		var d := n.global_position.distance_to(player.global_position)
+		if d < bd:
+			bd = d
+			best = n
+	return best
+
+
+func nearest_wild(max_d: float) -> MonsterActor:
+	var best: MonsterActor = null
+	var bd := max_d
+	for w in wilds:
+		if not is_instance_valid(w) or w.dead:
+			continue
+		var d: float = w.global_position.distance_to(player.global_position)
+		if d < bd:
+			bd = d
+			best = w
+	return best
+
+
+func _build_sparks() -> void:
+	## Faíscas flutuantes reutilizáveis sobre os coletáveis mais próximos.
+	var mesh := MeshLib.get_mesh("fragmento")
+	for i in 10:
+		var mi := MeshInstance3D.new()
+		mi.mesh = mesh
+		mi.material_override = MeshLib.color_mat(Color("#c8ff9a"), 2.2, true)
+		mi.scale = Vector3(0.32, 0.32, 0.32)
+		mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		mi.visible = false
+		add_child(mi)
+		_sparks.append(mi)
+
+
+func _update_sparks() -> void:
+	if _sparks.is_empty():
+		_build_sparks()
+	var pp := player.global_position
+	var cands: Array = []
+	if not Game.state.flags.get("starter_chosen", false):
+		for a in get_tree().get_nodes_in_group("starter_display"):
+			cands.append([a.global_position.distance_to(pp) - 100.0, a, 1.6, Color("#ffd95a")])
+	for k in nodes:
+		var n: ResourceNode = nodes[k]
+		if n.harvested:
+			continue
+		var d := n.global_position.distance_to(pp)
+		if d < 16.0:
+			var h := 2.2
+			match n.kind:
+				"arvore", "pinheiro", "palmeira":
+					h = 5.4
+				"arvore_morta":
+					h = 4.0
+				"rocha", "minerio", "carvao_veio", "obsidiana_veio", "bloco_gelo", "cristal", "jaula", "espinhos":
+					h = 2.4
+				"muro_gelo", "porta_solar":
+					h = 4.6
+				_:
+					h = 1.4
+			cands.append([d, n, h, Color("#ffd95a") if n.is_barrier() else Color("#c8ff9a")])
+	cands.sort_custom(func(a, b): return a[0] < b[0])
+	var t := Time.get_ticks_msec() / 1000.0
+	for i in _sparks.size():
+		var mi: MeshInstance3D = _sparks[i]
+		if i < cands.size():
+			var c: Array = cands[i]
+			var node: Node3D = c[1]
+			mi.visible = true
+			mi.global_position = node.global_position + Vector3(0, float(c[2]) + sin(t * 2.5 + i) * 0.15, 0)
+			mi.rotation.y = t * 1.8 + i
+			mi.material_override = MeshLib.color_mat(c[3], 2.2, true)
+		else:
+			mi.visible = false
 
 
 func _context_label(n: Node) -> String:
@@ -1705,6 +1861,8 @@ func _process(delta: float) -> void:
 		_scan_target()
 		if build_mode:
 			_update_ghost()
+	_update_sparks()
+	_update_tut_arrow()
 	_spawn_t -= delta
 	if _spawn_t <= 0.0:
 		_spawn_t = 4.0

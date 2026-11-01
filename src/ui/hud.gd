@@ -43,6 +43,12 @@ var banner_label: Label
 var build_bar: PanelContainer
 var overlay: Control  # popups modais
 var minimap: Minimap
+var tut_panel: PanelContainer
+var tut_label: Label
+var tut_ring: TutorialRing
+var _tut_t := 0.0
+var _tut_step := ""
+
 var menu: Node  # GameMenu
 var _lume_t := 0.0
 var _toast_queue: Array = []
@@ -61,6 +67,7 @@ func setup(p_world: World) -> void:
 	add_child(root)
 	controls = TouchControls.new()
 	root.add_child(controls)
+	controls.blocked = func(): return modal_open() or (menu != null and is_instance_valid(menu) and menu.visible)
 	controls.look.connect(func(d): if world and world.rig: world.rig.rotate_by(d))
 	controls.zoom.connect(func(f): if world and world.rig: world.rig.zoom_by(f))
 	hazard_rect = ColorRect.new()
@@ -90,6 +97,7 @@ func setup(p_world: World) -> void:
 	_build_toasts()
 	_build_lume()
 	_build_banner()
+	_build_tutorial()
 	overlay = Control.new()
 	overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -223,23 +231,22 @@ func _anchor_br(c: Control, x: float, y: float) -> void:
 func _build_buttons() -> void:
 	action_btn = UiTheme.icon_button("sword", Color("#e0663a"), 150, Loc.t("attack"), 19)
 	_anchor_br(action_btn, 190, 196)
-	action_btn.button_down.connect(func(): world.on_action())
 	root.add_child(action_btn)
+	controls.register_button(action_btn, func(): world.on_action())
 	jump_btn = UiTheme.icon_button("jump", Color("#3a7ae0"), 96)
 	_anchor_br(jump_btn, 300, 118)
-	jump_btn.button_down.connect(func():
-		world.player.jump_held = true
-		world.player.jump())
-	jump_btn.button_up.connect(func(): world.player.jump_held = false)
 	root.add_child(jump_btn)
+	controls.register_button(jump_btn, func():
+		world.player.jump_held = true
+		world.player.jump(), func(): world.player.jump_held = false)
 	sphere_btn = UiTheme.icon_button("sphere", Color("#d83a4a"), 100, "0", 18)
 	_anchor_br(sphere_btn, 128, 318)
-	sphere_btn.pressed.connect(func(): world.throw_sphere())
 	root.add_child(sphere_btn)
+	controls.register_button(sphere_btn, func(): world.throw_sphere())
 	sphere_cycle = UiTheme.circle_button("⟳", Color("#5a5a6a"), 46, 20)
 	_anchor_br(sphere_cycle, 52, 300)
-	sphere_cycle.pressed.connect(func(): world.cycle_orb())
 	root.add_child(sphere_cycle)
+	controls.register_button(sphere_cycle, func(): world.cycle_orb())
 	for i in 2:
 		var b := UiTheme.circle_button("", Color("#5a8a4a"), 96, 13)
 		b.clip_text = true
@@ -247,7 +254,7 @@ func _build_buttons() -> void:
 		root.add_child(b)
 		skill_btns.append(b)
 		var idx := i
-		b.pressed.connect(func(): world.ally_skill(idx))
+		controls.register_button(b, func(): world.ally_skill(idx))
 	_anchor_br(skill_btns[0], 330, 258)
 	_anchor_br(skill_btns[1], 236, 340)
 	auto_btn = UiTheme.circle_button(Loc.t("auto_skills"), UiTheme.ACCENT.darkened(0.3), 60, 15)
@@ -319,12 +326,10 @@ func _build_lume() -> void:
 	lume_bubble.add_theme_stylebox_override("panel", UiTheme.panel_box(Color(0.05, 0.15, 0.2, 0.88), 22, Color("#9ff0ff")))
 	lume_bubble.anchor_left = 0.5
 	lume_bubble.anchor_right = 0.5
-	lume_bubble.anchor_top = 1.0
-	lume_bubble.anchor_bottom = 1.0
-	lume_bubble.offset_left = -330
-	lume_bubble.offset_right = 330
-	lume_bubble.offset_top = -170
-	lume_bubble.offset_bottom = -96
+	lume_bubble.offset_left = -300
+	lume_bubble.offset_right = 300
+	lume_bubble.offset_top = 108
+	lume_bubble.offset_bottom = 180
 	lume_bubble.visible = false
 	lume_bubble.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(lume_bubble)
@@ -335,6 +340,74 @@ func _build_lume() -> void:
 	lume_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	lume_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	h.add_child(lume_label)
+
+
+func _build_tutorial() -> void:
+	tut_panel = PanelContainer.new()
+	tut_panel.add_theme_stylebox_override("panel", UiTheme.tex_box("panel_gold", 24, Vector4(18, 10, 18, 10)))
+	tut_panel.anchor_left = 0.5
+	tut_panel.anchor_right = 0.5
+	tut_panel.anchor_top = 1.0
+	tut_panel.anchor_bottom = 1.0
+	tut_panel.offset_left = -300
+	tut_panel.offset_right = 230
+	tut_panel.offset_top = -132
+	tut_panel.offset_bottom = -18
+	tut_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	tut_panel.visible = false
+	root.add_child(tut_panel)
+	var h := HBoxContainer.new()
+	tut_panel.add_child(h)
+	var ic := _icon_rect("star", 40, UiTheme.GOLD)
+	h.add_child(ic)
+	var v := VBoxContainer.new()
+	v.add_theme_constant_override("separation", 0)
+	v.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	h.add_child(v)
+	v.add_child(UiTheme.label(Loc.t("tutorial").to_upper(), 15, UiTheme.GOLD, 900))
+	tut_label = UiTheme.label("", 19, Color.WHITE, 800)
+	tut_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	v.add_child(tut_label)
+	tut_ring = TutorialRing.new()
+	root.add_child(tut_ring)
+
+
+func _update_tutorial() -> void:
+	var st: GameState = Game.state
+	for done in TutorialLogic.newly_completed(st):
+		_on_toast(Loc.t("tut_done", [Loc.t("tut_name_" + done)]), "quest")
+		Audio.play("quest")
+		flash_text("✓ " + Loc.t("tut_name_" + done), UiTheme.GOLD)
+	var step := TutorialLogic.current(st)
+	_tut_step = step
+	var busy: bool = modal_open() or (menu != null and is_instance_valid(menu) and menu.visible and step != "build")
+	tut_panel.visible = step != "" and not busy
+	if step == "":
+		tut_ring.target = null
+		world.set_tutorial_arrow(null)
+		return
+	var key := "tut_" + step
+	var ring: Control = action_btn
+	var arrow: Node3D = null
+	match step:
+		"partner":
+			var disp := get_tree().get_nodes_in_group("starter_display")
+			if disp.size() > 0:
+				arrow = disp[min(1, disp.size() - 1)]
+		"gather":
+			arrow = world.nearest_node(["arvore", "pinheiro", "palmeira", "arbusto", "capim"], 40.0)
+		"build":
+			if world.build_mode:
+				key = "tut_build_place"
+			elif menu == null or not is_instance_valid(menu) or not menu.visible:
+				ring = build_btn
+			else:
+				ring = null
+		"fight":
+			arrow = world.nearest_wild(35.0)
+	tut_label.text = Loc.t(key)
+	tut_ring.target = ring if not busy else null
+	world.set_tutorial_arrow(arrow)
 
 
 func _build_banner() -> void:
@@ -473,6 +546,10 @@ func _process(delta: float) -> void:
 			lume_bubble.visible = false
 	if world.ally_actor() != null and Engine.get_process_frames() % 10 == 0:
 		refresh_skills()
+	_tut_t -= delta
+	if _tut_t <= 0.0:
+		_tut_t = 0.25
+		_update_tutorial()
 
 
 func set_context(label: String, kind: String) -> void:

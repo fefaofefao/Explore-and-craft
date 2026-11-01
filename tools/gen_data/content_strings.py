@@ -303,6 +303,17 @@ S = {
     "tip_build": ("Toque em Construir, escolha uma peça e posicione-a.", "Tap Build, pick a piece and place it."),
     "tip_skills": ("Os botões coloridos usam as habilidades do seu Eco.", "The colored buttons use your Echo's skills."),
     "lume_hint": ("Lume", "Lume"),
+    "tutorial": ("Tutorial", "Tutorial"),
+    "tut_partner": ("Chegue perto de um dos três Ecos acorrentados (seta amarela) e toque em LIBERTAR.", "Walk up to one of the three collared Echoes (yellow arrow) and tap FREE IT."),
+    "tut_gather": ("Coletáveis brilham com uma faísca verde. Chegue perto da árvore marcada e toque em COLETAR até ela cair.", "Collectibles glow with a green spark. Walk up to the marked tree and tap GATHER until it falls."),
+    "tut_build": ("Toque no MARTELO (canto superior direito), escolha a BANCADA e toque em Construir.", "Tap the HAMMER (top right), pick the WORKBENCH and tap Build."),
+    "tut_build_place": ("O contorno verde mostra onde vai ficar. Ande para posicionar, use Girar se quiser, e toque em COLOCAR.", "The green outline shows where it goes. Walk to position it, use Rotate if you like, and tap PLACE."),
+    "tut_fight": ("Um Eco selvagem! Chegue perto e toque em ATACAR — seu parceiro luta junto. Os botões coloridos usam as habilidades dele.", "A wild Echo! Walk up and tap ATTACK — your partner fights with you. The colored buttons use its skills."),
+    "tut_done": ("Tutorial concluído: {0}", "Tutorial complete: {0}"),
+    "tut_name_partner": ("Primeiro parceiro", "First partner"),
+    "tut_name_gather": ("Primeira coleta", "First gathering"),
+    "tut_name_build": ("Primeira construção", "First building"),
+    "tut_name_fight": ("Primeira luta", "First fight"),
 }
 
 

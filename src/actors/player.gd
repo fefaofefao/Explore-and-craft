@@ -19,6 +19,8 @@ var hurt_cd := 0.0
 var _dead := false
 var _step_t := 0.0
 var _last_safe := Vector3.ZERO
+var _coyote := 0.0  # tempo desde que saiu do chão (permite pular logo após descer um degrau)
+var _jump_buffer := 0.0  # pulo pedido um pouco antes de tocar o chão
 
 
 func setup(p_gen: WorldGen, p_rig: CameraRig, p_controls: TouchControls) -> void:
@@ -74,7 +76,7 @@ func _physics_process(delta: float) -> void:
 		velocity.y = lerpf(velocity.y, (water_y - 0.7 - global_position.y) * 4.0, clampf(delta * 6.0, 0.0, 1.0))
 		if lava and hurt_cd <= 0.0 and not st.inv.has_protection("lava"):
 			take_damage(8.0)
-	elif not is_on_floor():
+	elif not is_on_floor() and _coyote > 0.14:
 		velocity.y -= GRAVITY * delta
 		var has_glider := st.inv.best_tool("glider").size() > 0
 		gliding = has_glider and (jump_held or Input.is_action_pressed("jump")) and velocity.y < 0.0
@@ -83,9 +85,18 @@ func _physics_process(delta: float) -> void:
 			velocity.x = hv.x * 1.6 if hv.length() > 0.1 else velocity.x
 			velocity.z = hv.z * 1.6 if hv.length() > 0.1 else velocity.z
 	else:
+		if not is_on_floor():
+			velocity.y -= GRAVITY * delta
 		gliding = false
-		_last_safe = global_position
+		if is_on_floor():
+			_last_safe = global_position
 	model.set_gliding(gliding)
+	# tolerâncias de pulo
+	_coyote = 0.0 if is_on_floor() else _coyote + delta
+	if _jump_buffer > 0.0:
+		_jump_buffer -= delta
+		if _can_jump():
+			_do_jump()
 	move_and_slide()
 	# animação e orientação
 	var hspeed := Vector2(velocity.x, velocity.z).length()
@@ -103,12 +114,26 @@ func _physics_process(delta: float) -> void:
 		velocity = Vector3.ZERO
 
 
+func _can_jump() -> bool:
+	return (is_on_floor() or _coyote < 0.15 or swimming) and velocity.y <= 0.5
+
+
+func _do_jump() -> void:
+	_jump_buffer = 0.0
+	_coyote = 1.0
+	velocity.y = float(GameData.db().cfg("player", "jump", 7.0))
+	floor_snap_length = 0.0
+	get_tree().create_timer(0.2).timeout.connect(func(): floor_snap_length = 0.6)
+	Audio.play("jump")
+
+
 func jump() -> void:
 	if _dead:
 		return
-	if is_on_floor() or swimming:
-		velocity.y = float(GameData.db().cfg("player", "jump", 7.0))
-		Audio.play("jump")
+	if _can_jump():
+		_do_jump()
+	else:
+		_jump_buffer = 0.18
 
 
 func face_towards(p: Vector3) -> void:

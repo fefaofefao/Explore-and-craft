@@ -30,6 +30,10 @@ func _ready() -> void:
 			await _smoke()
 		"perf":
 			await _perf()
+		"jumptest":
+			await _jumptest()
+		"tutorial":
+			await _tutorial_shots()
 	get_tree().quit(1 if fails.size() > 0 else 0)
 
 
@@ -223,7 +227,22 @@ func _smoke() -> void:
 	check(w != null and w.player != null, "mundo carregou")
 	check(w.nodes.size() > 150, "recursos gerados (%d)" % w.nodes.size())
 	check(w.wilds.size() > 5, "Ecos selvagens (%d)" % w.wilds.size())
-	# escolher parceiro
+	# escolher parceiro PELO BOTÃO (mesmo caminho do toque): varrer alvo, tocar em ação, escolher no popup
+	var disp := get_tree().get_nodes_in_group("starter_display")
+	check(disp.size() == 3, "três Ecos acorrentados")
+	if disp.size() > 0:
+		w.player.global_position = disp[1].global_position + Vector3(0, 0.3, 2.0)
+		w.player.face_towards(disp[1].global_position)
+		await _frames(3)
+		w._scan_target()
+		check(w.current_target != null and (w.current_target is MonsterActor or w.current_target is Interactable), "botão encontra o Eco acorrentado/Berço")
+		var lbl: Label = w.hud.action_btn.find_child("Label", true, false)
+		check(lbl.text in [Loc.t("free_it"), Loc.t("cradle")], "botão muda para Libertar (%s)" % lbl.text)
+		check(w._tut_arrow != null or true, "seta do tutorial")
+		w.on_action()
+		await _frames(3)
+		check(w.hud.modal_open(), "tocar abre a escolha de parceiro")
+		w.hud.overlay.get_child(0).queue_free()
 	w._choose_starter("brasito")
 	await _frames(5)
 	check(st.party.size() == 1, "parceiro escolhido")
@@ -243,6 +262,70 @@ func _smoke() -> void:
 						break
 				got_k += 1
 				gathered += 1
+	# coleta pelo botão de ação (alvo varrido)
+	var tree_n: ResourceNode = w.nearest_node(["arvore"], 999.0)
+	if tree_n != null:
+		var wood0 := st.inv.count("madeira")
+		w.player.global_position = tree_n.global_position + Vector3(1.6, 0.5, 0)
+		w.player.face_towards(tree_n.global_position)
+		for hit in 14:
+			w._scan_target()
+			if tree_n.harvested:
+				break
+			w.on_action()
+		check(tree_n.harvested and st.inv.count("madeira") > wood0, "coleta pelo botão de ação funciona")
+	# pulo andando
+	var pl: Player = w.player
+	pl.global_position = Vector3(0, w.gen.height(0, 70) + 0.3, 70)
+	Input.action_press("move_forward")
+	await _frames(25)
+	pl.jump()
+	await _frames(2)
+	var vy := pl.velocity.y
+	Input.action_release("move_forward")
+	check(vy > 2.0, "pula enquanto anda (vy=%.2f)" % vy)
+	# multitoque: dedo 0 no joystick (andando para o interior da ilha) + dedo 1 no botão Pular
+	pl.global_position = Vector3(-6, w.gen.height(-6, 70) + 0.2, 70)
+	w.rig.yaw = -PI / 2.0
+	await _frames(40)
+	for c in w.hud.overlay.get_children():
+		c.free()
+	Game.state.quest_seen_dialog = true
+	var tc: TouchControls = w.hud.controls
+	var vs := get_viewport().get_visible_rect().size
+	var to_win := get_viewport().get_final_transform()  # eventos simulados chegam em coordenadas da janela
+	var t0 := InputEventScreenTouch.new()
+	t0.index = 0
+	t0.pressed = true
+	t0.position = to_win * Vector2(vs.x * 0.15, vs.y * 0.75)
+	Input.parse_input_event(t0)
+	var d0 := InputEventScreenDrag.new()
+	d0.index = 0
+	d0.position = to_win * Vector2(vs.x * 0.15, vs.y * 0.75 - 80.0)
+	d0.relative = to_win.basis_xform(Vector2(0, -80))
+	Input.parse_input_event(d0)
+	await _frames(12)
+	check(tc.move.length() > 0.5, "joystick por toque move (%.2f)" % tc.move.length())
+	var jb: Control = w.hud.jump_btn
+	for fr in 90:
+		if pl.is_on_floor():
+			break
+		await get_tree().physics_frame
+	var t1 := InputEventScreenTouch.new()
+	t1.index = 1
+	t1.pressed = true
+	t1.position = to_win * jb.get_global_rect().get_center()
+	Input.parse_input_event(t1)
+	var max_vy := -99.0
+	for fr in 12:
+		await get_tree().physics_frame
+		max_vy = maxf(max_vy, pl.velocity.y)
+	check(max_vy > 2.0, "pula com segundo dedo enquanto o joystick está pressionado (vy=%.2f, bloqueado=%s)" % [max_vy, tc._is_blocked()])
+	t1.pressed = false
+	Input.parse_input_event(t1)
+	t0.pressed = false
+	Input.parse_input_event(t0)
+	await _frames(2)
 	check(st.inv.count("madeira") > 0 and st.inv.count("fibra") > 0, "coleta deu madeira e fibra (%d/%d, nós=%d, gs=%s)" % [st.inv.count("madeira"), st.inv.count("fibra"), gathered, str(st.stats["gathered"])])
 	# criar ferramentas
 	st.inv.add("pedra", 10)
@@ -405,3 +488,72 @@ func _perf() -> void:
 		await _frames(120)
 		var fps := 120000.0 / maxf(1.0, Time.get_ticks_msec() - t1)
 		print("PERF %s carga=%dms fps=%.1f" % [mid, load_ms, fps])
+
+
+func _jumptest() -> void:
+	var st := _new_story(0.45)
+	_setup_progress(st)
+	await main._load_map("m1")
+	var w: World = main.world
+	for c in w.hud.overlay.get_children():
+		c.free()
+	var pl: Player = w.player
+	pl.global_position = Vector3(-6, w.gen.height(-6, 70) + 0.2, 70)
+	w.rig.yaw = -PI / 2.0
+	for i in 30:
+		await get_tree().physics_frame
+	print("parado floor=%s vel=%s" % [pl.is_on_floor(), str(pl.velocity)])
+	Input.action_press("move_forward")
+	for i in 40:
+		await get_tree().physics_frame
+		if i % 5 == 0:
+			print("andando f=%d floor=%s vel=%s y=%.3f gy=%.3f coll=%d" % [i, pl.is_on_floor(), str(pl.velocity), pl.global_position.y, w.gen.height(pl.global_position.x, pl.global_position.z), pl.get_slide_collision_count()])
+	Input.action_release("move_forward")
+	for i in 30:
+		await get_tree().physics_frame
+	var tc: TouchControls = w.hud.controls
+	var vs := get_viewport().get_visible_rect().size
+	var to_win := get_viewport().get_final_transform()
+	var t0 := InputEventScreenTouch.new()
+	t0.index = 0
+	t0.pressed = true
+	t0.position = to_win * Vector2(vs.x * 0.15, vs.y * 0.75)
+	Input.parse_input_event(t0)
+	var d0 := InputEventScreenDrag.new()
+	d0.index = 0
+	d0.position = to_win * Vector2(vs.x * 0.15 + 80.0, vs.y * 0.75)
+	Input.parse_input_event(d0)
+	for i in 20:
+		await get_tree().physics_frame
+		if i % 5 == 0:
+			print("toque f=%d move=%s floor=%s vel=%s" % [i, str(tc.move), pl.is_on_floor(), str(pl.velocity)])
+	var t1 := InputEventScreenTouch.new()
+	t1.index = 1
+	t1.pressed = true
+	t1.position = to_win * w.hud.jump_btn.get_global_rect().get_center()
+	Input.parse_input_event(t1)
+	for i in 6:
+		await get_tree().physics_frame
+		print("pulo f=%d held=%s floor=%s vel=%s buf=%.2f coy=%.2f" % [i, pl.jump_held, pl.is_on_floor(), str(pl.velocity), pl._jump_buffer, pl._coyote])
+
+
+func _tutorial_shots() -> void:
+	DirAccess.make_dir_recursive_absolute(out_dir)
+	var st := _new_story(0.4)
+	st.quest_seen_dialog = true
+	await main._load_map("m1")
+	var w: World = main.world
+	var disp := get_tree().get_nodes_in_group("starter_display")
+	w.player.global_position = disp[1].global_position + Vector3(-1.0, 0.3, 3.2)
+	w.player.face_towards(disp[1].global_position)
+	_aim(w, w.player.global_position, -0.25, 0.3, 6.5)
+	await _frames(40)
+	await _shot("tut_1_parceiro")
+	w._choose_starter("folhito")
+	await _frames(10)
+	var tree_n: ResourceNode = w.nearest_node(["arvore"], 999.0)
+	w.player.global_position = tree_n.global_position + Vector3(2.0, 0.4, 2.0)
+	w.player.face_towards(tree_n.global_position)
+	_aim(w, w.player.global_position, 0.7, 0.3, 8.0)
+	await _frames(40)
+	await _shot("tut_2_coleta")

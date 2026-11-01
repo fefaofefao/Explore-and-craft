@@ -1142,5 +1142,49 @@
  "lume_hint": {
   "pt": "Lume",
   "en": "Lume"
+ },
+ "tutorial": {
+  "pt": "Tutorial",
+  "en": "Tutorial"
+ },
+ "tut_partner": {
+  "pt": "Chegue perto de um dos três Ecos acorrentados (seta amarela) e toque em LIBERTAR.",
+  "en": "Walk up to one of the three collared Echoes (yellow arrow) and tap FREE IT."
+ },
+ "tut_gather": {
+  "pt": "Coletáveis brilham com uma faísca verde. Chegue perto da árvore marcada e toque em COLETAR até ela cair.",
+  "en": "Collectibles glow with a green spark. Walk up to the marked tree and tap GATHER until it falls."
+ },
+ "tut_build": {
+  "pt": "Toque no MARTELO (canto superior direito), escolha a BANCADA e toque em Construir.",
+  "en": "Tap the HAMMER (top right), pick the WORKBENCH and tap Build."
+ },
+ "tut_build_place": {
+  "pt": "O contorno verde mostra onde vai ficar. Ande para posicionar, use Girar se quiser, e toque em COLOCAR.",
+  "en": "The green outline shows where it goes. Walk to position it, use Rotate if you like, and tap PLACE."
+ },
+ "tut_fight": {
+  "pt": "Um Eco selvagem! Chegue perto e toque em ATACAR — seu parceiro luta junto. Os botões coloridos usam as habilidades dele.",
+  "en": "A wild Echo! Walk up and tap ATTACK — your partner fights with you. The colored buttons use its skills."
+ },
+ "tut_done": {
+  "pt": "Tutorial concluído: {0}",
+  "en": "Tutorial complete: {0}"
+ },
+ "tut_name_partner": {
+  "pt": "Primeiro parceiro",
+  "en": "First partner"
+ },
+ "tut_name_gather": {
+  "pt": "Primeira coleta",
+  "en": "First gathering"
+ },
+ "tut_name_build": {
+  "pt": "Primeira construção",
+  "en": "First building"
+ },
+ "tut_name_fight": {
+  "pt": "Primeira luta",
+  "en": "First fight"
  }
 }
