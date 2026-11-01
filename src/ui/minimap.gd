@@ -2,6 +2,8 @@ class_name Minimap
 extends Control
 ## Minimapa circular: textura do relevo gerada do WorldGen, gira com a câmera; marca objetivo, portais, chefe e parceiro.
 
+signal open_big
+
 var world: World
 var tex_rect: TextureRect
 var mat: ShaderMaterial
@@ -23,13 +25,12 @@ func setup(p_world: World) -> void:
 	tex_rect.material = mat
 	add_child(tex_rect)
 	gui_input.connect(func(ev):
-		if (ev is InputEventScreenTouch and ev.pressed) or (ev is InputEventMouseButton and ev.pressed):
-			zoom = 0.38 if zoom < 0.3 else 0.2
-			queue_redraw())
+		if (ev is InputEventScreenTouch and ev.pressed) or (ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT):
+			accept_event()
+			emit_signal("open_big"))
 
 
-static func build_texture(gen: WorldGen) -> ImageTexture:
-	var n := 160
+static func build_texture(gen: WorldGen, n: int = 160) -> ImageTexture:
 	var img := Image.create(n, n, false, Image.FORMAT_RGB8)
 	var b: Dictionary = gen.biome
 	var water := Color(b["water"])

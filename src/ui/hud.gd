@@ -93,6 +93,7 @@ func setup(p_world: World) -> void:
 	minimap.offset_top = 104
 	minimap.offset_bottom = 104 + Minimap.SIZE
 	minimap.setup(world)
+	minimap.open_big.connect(show_big_map)
 	_build_buttons()
 	_build_toasts()
 	_build_lume()
@@ -667,6 +668,11 @@ func _modal(min_size: Vector2 = Vector2(620, 0), dim: float = 0.55) -> Array:
 	tw.tween_property(p, "scale", Vector2.ONE, 0.18).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	get_tree().paused = false
 	return [bg, v]
+
+
+func show_big_map() -> void:
+	Audio.play("click")
+	BigMap.open(world, overlay)
 
 
 func modal_open() -> bool:

@@ -1147,6 +1147,102 @@
   "pt": "Tutorial",
   "en": "Tutorial"
  },
+ "req_title": {
+  "pt": "Requer: {0}",
+  "en": "Requires: {0}"
+ },
+ "req_have": {
+  "pt": "Você tem: {0} — toque para usar",
+  "en": "You have: {0} — tap to use"
+ },
+ "req_craft": {
+  "pt": "Crie em: {0}",
+  "en": "Craft at: {0}"
+ },
+ "req_missing_btn": {
+  "pt": "Falta: {0}",
+  "en": "Missing: {0}"
+ },
+ "req_near": {
+  "pt": "Bloqueado: {0}. Requer {1} ({2}).",
+  "en": "Blocked: {0}. Requires {1} ({2})."
+ },
+ "bar_espinhos": {
+  "pt": "Muralha de Espinhos",
+  "en": "Thorn Wall"
+ },
+ "bar_muro_gelo": {
+  "pt": "Muro de Gelo Eterno",
+  "en": "Eternal Ice Wall"
+ },
+ "bar_porta_solar": {
+  "pt": "Porta do Templo Solar",
+  "en": "Sun Temple Door"
+ },
+ "bar_jaula": {
+  "pt": "Jaula de Eco",
+  "en": "Echo Cage"
+ },
+ "req_bridge": {
+  "pt": "Coloque o Núcleo da Ponte no altar ao sul",
+  "en": "Place the Bridge Core on the altar to the south"
+ },
+ "req_city1": {
+  "pt": "Liberte Porto Ferrugem (vença o Barão Vorn)",
+  "en": "Free Rustport (defeat Baron Vorn)"
+ },
+ "req_gate2": {
+  "pt": "Requer: Chave Sombria",
+  "en": "Requires: Shadow Key"
+ },
+ "req_captains": {
+  "pt": "Antes: vença os 3 capitães e abra as 5 jaulas",
+  "en": "First: beat the 3 captains and open the 5 cages"
+ },
+ "req_hazard": {
+  "pt": "Perigo: {0} — leve {1}",
+  "en": "Hazard: {0} — bring {1}"
+ },
+ "big_map": {
+  "pt": "Mapa",
+  "en": "Map"
+ },
+ "map_you": {
+  "pt": "Você",
+  "en": "You"
+ },
+ "map_objective": {
+  "pt": "Objetivo",
+  "en": "Objective"
+ },
+ "map_portal": {
+  "pt": "Portal",
+  "en": "Portal"
+ },
+ "map_boss": {
+  "pt": "Alfa",
+  "en": "Alpha"
+ },
+ "map_trainer": {
+  "pt": "Capitão/Ditador",
+  "en": "Captain/Ruler"
+ },
+ "map_base": {
+  "pt": "Construção",
+  "en": "Building"
+ },
+ "map_fragment": {
+  "pt": "Memória",
+  "en": "Memory"
+ },
+ "open_map": {
+  "pt": "Ver mapa grande",
+  "en": "Open big map"
+ },
+ "deep_water": {
+  "pt": "Águas profundas demais! O mar aberto é perigoso — volte para a ilha.",
+  "en": "The water is too deep! The open sea is dangerous — head back to the island."
+ },
  "tut_partner": {
   "pt": "Chegue perto de um dos três Ecos acorrentados (seta amarela) e toque em LIBERTAR.",
   "en": "Walk up to one of the three collared Echoes (yellow arrow) and tap FREE IT."

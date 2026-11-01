@@ -326,6 +326,41 @@ func _smoke() -> void:
 	t0.pressed = false
 	Input.parse_input_event(t0)
 	await _frames(2)
+	# mar aberto: nadando para fora, o jogador não passa da água funda
+	for c in w.hud.overlay.get_children():
+		c.free()
+	var shore_x := 0.0
+	for xx in range(0, 130, 2):
+		if w.gen.height(float(xx), 0.0) < -0.9:
+			shore_x = float(xx)
+			break
+	pl.global_position = Vector3(shore_x, -0.6, 0.0)
+	w.rig.yaw = -PI / 2.0  # frente = +x (mar)
+	Input.action_press("move_forward")
+	for fr in 240:
+		await get_tree().physics_frame
+	Input.action_release("move_forward")
+	var far_h := w.gen.height(pl.global_position.x, pl.global_position.z)
+	check(far_h > Player.DEEP - 1.0 and Vector2(pl.global_position.x, pl.global_position.z).length() <= w.gen.half * 0.9 + 0.5, "mar aberto bloqueia (x=%.1f, fundo=%.1f)" % [pl.global_position.x, far_h])
+	# mapa grande pelo minimapa
+	w.hud.minimap.emit_signal("open_big")
+	await _frames(3)
+	check(w.hud.overlay.get_children().any(func(c): return c is BigMap), "toque no minimapa abre o mapa grande")
+	for c in w.hud.overlay.get_children():
+		c.free()
+	# requisito nos espinhos do covil
+	var thorn: ResourceNode = null
+	for k in w.nodes:
+		if w.nodes[k].kind == "espinhos":
+			thorn = w.nodes[k]
+	check(thorn != null, "covil tem espinhos")
+	if thorn != null:
+		var bt := w.barrier_text(thorn)
+		check(not st.inv.has("tocha") and bt[0].contains(Loc.item_name("tocha")) and not bt[1], "placa mostra 'Requer: Tocha'")
+		check(w._context_label(thorn) == Loc.t("req_missing_btn", [Loc.item_name("tocha")]), "botão mostra 'Falta: Tocha'")
+		st.inv.add("tocha", 1)
+		check(w.barrier_text(thorn)[1], "placa fica verde com a tocha")
+		st.inv.remove("tocha", 1)
 	check(st.inv.count("madeira") > 0 and st.inv.count("fibra") > 0, "coleta deu madeira e fibra (%d/%d, nós=%d, gs=%s)" % [st.inv.count("madeira"), st.inv.count("fibra"), gathered, str(st.stats["gathered"])])
 	# criar ferramentas
 	st.inv.add("pedra", 10)
@@ -557,3 +592,19 @@ func _tutorial_shots() -> void:
 	_aim(w, w.player.global_position, 0.7, 0.3, 8.0)
 	await _frames(40)
 	await _shot("tut_2_coleta")
+
+	# covil com placa de requisito
+	var l: Dictionary = w.lair
+	var ent: Vector3 = l["entrance"]
+	var outward := (Vector3(ent.x, 0, ent.z) - Vector3(l["center"].x, 0, l["center"].z)).normalized()
+	w.player.global_position = Vector3(ent.x, 0, ent.z) + outward * 7.0
+	w.player.global_position.y = w.gen.height(w.player.global_position.x, w.player.global_position.z) + 0.4
+	w.player.face_towards(Vector3(ent.x, 0, ent.z))
+	_aim(w, w.player.global_position, atan2(outward.x, outward.z), 0.25, 8.0)
+	for c in w.hud.overlay.get_children():
+		c.free()
+	await _frames(60)
+	await _shot("tut_3_requisito")
+	w.hud.show_big_map()
+	await _frames(20)
+	await _shot("tut_4_mapa")

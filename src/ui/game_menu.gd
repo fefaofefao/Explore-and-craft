@@ -691,6 +691,11 @@ func _tab_map() -> void:
 	title.text = Loc.t("tab_map")
 	var list := VBoxContainer.new()
 	content.add_child(Widgets.scroll(list))
+	var mb := UiTheme.button(Loc.t("open_map"), UiTheme.ACCENT, 22, Vector2(0, 60))
+	mb.pressed.connect(func():
+		visible = false
+		hud.show_big_map())
+	list.add_child(mb)
 	var acts := {1: [], 2: []}
 	for mid in GameData.db().maps:
 		acts[int(GameData.db().maps[mid]["act"])].append(mid)

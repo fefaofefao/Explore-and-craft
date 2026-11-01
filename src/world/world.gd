@@ -83,6 +83,7 @@ func build(p_map: String, p_hud: Node) -> void:
 		_build_city()
 	for b in st.buildings_on(map_id):
 		_spawn_structure(b)
+	_build_requirement_labels()
 	# câmera, controles e jogador
 	rig = CameraRig.new()
 	add_child(rig)
@@ -91,6 +92,7 @@ func build(p_map: String, p_hud: Node) -> void:
 	_actors.add_child(player)
 	player.setup(gen, rig, hud.controls)
 	player.died.connect(_on_player_died)
+	player.deep_water.connect(func(): hud.lume_hint(Loc.t("deep_water"), 4.0))
 	var p := _initial_player_pos()
 	player.global_position = p
 	rig.target = player
@@ -1490,6 +1492,191 @@ func _update_sparks() -> void:
 			mi.visible = false
 
 
+# ------------------------------------------------------------------ requisitos de progressão
+var _req_labels: Array = []  # [Label3D, Callable(texto)]
+var _req_t := 0.0
+var _req_warned := {}
+
+
+func tool_item_for(n: ResourceNode) -> String:
+	var t: String = n.required_tool()
+	if t.begins_with("item:"):
+		return t.substr(5)
+	var tier := int(n.nd["min_tier"])
+	match t:
+		"torch":
+			return "tocha"
+		"crowbar":
+			return "pe_de_cabra"
+		"axe":
+			return "machado_ferro" if tier >= 2 else "machado_pedra"
+		"pick":
+			return "picareta_obsidiana" if tier >= 3 else ("picareta_ferro" if tier >= 2 else "picareta_pedra")
+	return ""
+
+
+func has_requirement(n: ResourceNode) -> bool:
+	var t: String = n.required_tool()
+	var inv := Game.state.inv
+	if t == "any":
+		return true
+	if t.begins_with("item:"):
+		return inv.has(t.substr(5))
+	var tl := inv.best_tool(t)
+	if tl.is_empty():
+		return int(n.nd["min_tier"]) == 0 and not t in ["torch", "crowbar"]
+	return int(tl["tier"]) >= int(n.nd["min_tier"])
+
+
+static func craft_station_of(item_id: String) -> String:
+	for rid in GameData.db().recipes:
+		if GameData.db().recipes[rid]["out"] == item_id:
+			return Loc.t("station_" + GameData.db().recipes[rid]["station"])
+	return ""
+
+
+func _add_req_label(parent: Node3D, height: float, text_fn: Callable) -> void:
+	var l := Label3D.new()
+	l.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	l.font = UiTheme.font(900)
+	l.font_size = 46
+	l.pixel_size = 0.0085
+	l.outline_size = 14
+	l.outline_modulate = Color(0.03, 0.03, 0.06, 0.95)
+	l.position.y = height
+	l.no_depth_test = false
+	l.visibility_range_end = 30.0
+	l.width = 900
+	l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	parent.add_child(l)
+	_req_labels.append([l, text_fn])
+	_refresh_req_label(_req_labels.back())
+
+
+func _refresh_req_label(e: Array) -> void:
+	var l: Label3D = e[0]
+	if not is_instance_valid(l):
+		return
+	var r: Array = (e[1] as Callable).call()  # [texto, ok]
+	l.visible = r[0] != ""
+	l.text = r[0]
+	l.modulate = Color("#8dff8a") if r[1] else Color("#ffb36a")
+
+
+func barrier_text(n: ResourceNode) -> Array:
+	if n.harvested:
+		return ["", true]
+	var item := tool_item_for(n)
+	var name := Loc.t("bar_" + n.kind)
+	var have := has_requirement(n)
+	if have:
+		return ["%s\n%s" % [name, Loc.t("req_have", [Loc.item_name(item)])], true]
+	var st_name := craft_station_of(item)
+	var where := ("\n" + Loc.t("req_craft", [st_name])) if st_name != "" else ""
+	return ["⚠ %s\n%s%s" % [name, Loc.t("req_title", [Loc.item_name(item)]), where], false]
+
+
+func _build_requirement_labels() -> void:
+	# uma placa por grupo de barreiras iguais (ex.: os 3 espinhos da entrada)
+	var groups: Array = []
+	for k in nodes:
+		var n: ResourceNode = nodes[k]
+		if not n.is_barrier():
+			continue
+		var found := false
+		for g in groups:
+			if g[0].kind == n.kind and g[0].global_position.distance_to(n.global_position) < 6.0:
+				g.append(n)
+				found = true
+				break
+		if not found:
+			groups.append([n])
+	for g in groups:
+		var grp: Array = g
+		var mid: ResourceNode = grp[grp.size() / 2]
+		var h := 3.6 if mid.kind in ["espinhos", "jaula"] else 4.8
+		_add_req_label(mid, h, func():
+			for x in grp:
+				if not (x as ResourceNode).harvested:
+					return barrier_text(x)
+			return ["", true])
+	for it in interactables:
+		if it.kind == "portal":
+			var p: Dictionary = it.data
+			var itt: Interactable = it
+			_add_req_label(it, 5.2, func():
+				var st: GameState = Game.state
+				var to: String = p["to"]
+				if st.map_unlocked(to) and (not p.has("requires_flag") or st.flags.get(p["requires_flag"], false)):
+					var md2: Dictionary = GameData.db().maps[to]
+					if md2.get("hazard") != null and not st.inv.has_protection(md2["hazard"]["kind"]):
+						return ["%s\n%s" % [Loc.tx(p["label"]), Loc.t("req_hazard", [Loc.t("hz_" + md2["hazard"]["kind"]), Loc.item_name(md2["hazard"]["gear"])])], false]
+					return [Loc.tx(p["label"]), true]
+				var why := Loc.t("travel_locked")
+				match p.get("requires_flag", ""):
+					"bridge_built":
+						why = Loc.t("req_bridge")
+					"city1_free":
+						why = Loc.t("req_city1")
+					"gate2_open":
+						why = Loc.t("req_gate2")
+				return ["⚠ %s\n%s" % [Loc.tx(p["label"]), why], false])
+		elif it.kind == "altar":
+			var d: Dictionary = it.data
+			_add_req_label(it, 3.6, func():
+				if Game.state.flags.get(d["flag"], false):
+					return ["", true]
+				var have: bool = Game.state.inv.has(d["item"])
+				var line := Loc.t("req_have", [Loc.item_name(d["item"])]) if have else Loc.t("req_title", [Loc.item_name(d["item"])]) + "\n" + Loc.t("req_craft", [craft_station_of(d["item"])])
+				return ["%s\n%s" % [Loc.t("bridge_altar"), line], have])
+	if not lair.is_empty():
+		var holder := Node3D.new()
+		_props.add_child(holder)
+		holder.global_position = lair["entrance"] + Vector3(0, gen.height(lair["entrance"].x, lair["entrance"].z), 0)
+		var bid: String = lair["boss"]
+		var blvl: int = int(lair["lvl"])
+		_add_req_label(holder, 6.4, func():
+			if bid in Game.state.stats["bosses"]:
+				return ["", true]
+			return ["★ %s  %s\n%s" % [Loc.species_name(bid), Loc.t("level_short", [blvl]), Loc.tx(GameData.db().items[lair["drop"]]["name"])], Game.state.level + 2 >= blvl])
+	for npc in npcs:
+		if is_instance_valid(npc) and npc.kind == "trainer":
+			var t: Dictionary = GameData.db().trainers[npc.tid]
+			if t.get("ruler", false):
+				var tid: String = npc.tid
+				_add_req_label(npc, 3.3, func():
+					var st: GameState = Game.state
+					if tid in st.stats["trainers"]:
+						return ["", true]
+					for rq in t.get("requires", []):
+						if not rq in st.stats["trainers"]:
+							return [Loc.t("req_captains"), false]
+					if t.has("requires_flag") and not st.flags.get(t["requires_flag"], false):
+						return [Loc.t("req_captains"), false]
+					return ["", true])
+
+
+func _update_requirements(delta: float) -> void:
+	_req_t -= delta
+	if _req_t > 0.0:
+		return
+	_req_t = 1.0
+	for e in _req_labels:
+		_refresh_req_label(e)
+	# aviso da Lume ao se aproximar de um bloqueio sem o requisito
+	for k in nodes:
+		var n: ResourceNode = nodes[k]
+		if not n.is_barrier() or n.harvested or n.kind == "jaula":
+			continue
+		if n.global_position.distance_to(player.global_position) < 14.0 and not has_requirement(n):
+			var key: String = n.kind
+			if Game.now() - int(_req_warned.get(key, 0)) > 45:
+				_req_warned[key] = Game.now()
+				var item := tool_item_for(n)
+				hud.lume_hint(Loc.t("req_near", [Loc.t("bar_" + n.kind), Loc.item_name(item), Loc.t("req_craft", [craft_station_of(item)])]), 7.0)
+			break
+
+
 func _context_label(n: Node) -> String:
 	if n == null:
 		return ""
@@ -1498,6 +1685,8 @@ func _context_label(n: Node) -> String:
 		if rn.kind == "jaula":
 			return Loc.t("free_it")
 		if rn.is_barrier():
+			if not has_requirement(rn):
+				return Loc.t("req_missing_btn", [Loc.item_name(tool_item_for(rn))])
 			return Loc.t("interact")
 		return Loc.t("gather")
 	if n is Interactable:
@@ -1863,6 +2052,7 @@ func _process(delta: float) -> void:
 			_update_ghost()
 	_update_sparks()
 	_update_tut_arrow()
+	_update_requirements(delta)
 	_spawn_t -= delta
 	if _spawn_t <= 0.0:
 		_spawn_t = 4.0

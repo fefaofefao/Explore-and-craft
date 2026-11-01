@@ -69,6 +69,7 @@ func _physics_process(delta: float) -> void:
 	if swimming:
 		speed *= 0.55
 	var hv := dir * speed * minf(input.length() * 1.15, 1.0)
+	hv = _limit_sea(hv, delta)
 	velocity.x = lerpf(velocity.x, hv.x, clampf(delta * 12.0, 0.0, 1.0))
 	velocity.z = lerpf(velocity.z, hv.z, clampf(delta * 12.0, 0.0, 1.0))
 	if swimming:
@@ -112,6 +113,50 @@ func _physics_process(delta: float) -> void:
 	if global_position.y < -25.0:
 		global_position = _last_safe + Vector3(0, 2, 0)
 		velocity = Vector3.ZERO
+
+
+signal deep_water
+
+const DEEP := -2.2  # profundidade do fundo a partir da qual não dá mais para nadar
+var _deep_warn := 0.0
+
+
+func _limit_sea(hv: Vector3, delta: float) -> Vector3:
+	## Mar aberto é intransponível: na água, o jogador não avança para onde o fundo fica fundo demais
+	## nem passa da borda do mapa. Em cima de pontes (fora da água) nada é bloqueado.
+	_deep_warn = maxf(0.0, _deep_warn - delta)
+	var p := global_position
+	var r := Vector2(p.x, p.z).length()
+	var limit := gen.half * 0.9
+	if r > limit:
+		# empurra de volta para dentro (segurança extra, mesmo fora da água)
+		var back := -Vector3(p.x, 0, p.z).normalized()
+		global_position += back * (r - limit)
+		if hv.dot(back) < 0.0:
+			hv -= back * hv.dot(back)
+	if not swimming or hv.length() < 0.01:
+		return hv
+	var h_here := gen.height(p.x, p.z)
+	if h_here < DEEP:
+		# já está no fundo (ex.: caiu de uma ponte): só deixa nadar em direção à ilha
+		var to_center := -Vector3(p.x, 0, p.z).normalized()
+		var away := hv.dot(to_center)
+		if away < 0.0:
+			hv -= to_center * away
+		return hv
+	var ahead := p + hv.normalized() * 1.5
+	var h_ahead := gen.height(ahead.x, ahead.z)
+	if h_ahead < DEEP and h_ahead <= h_here:
+		# bloqueia só a componente que leva ao fundo; deixa nadar ao longo da costa ou voltar
+		var grad := Vector3(gen.height(p.x + 1.0, p.z) - gen.height(p.x - 1.0, p.z), 0, gen.height(p.x, p.z + 1.0) - gen.height(p.x, p.z - 1.0))
+		var deeper := -grad.normalized() if grad.length() > 0.001 else hv.normalized()
+		var into := hv.dot(deeper)
+		if into > 0.0:
+			hv -= deeper * into
+		if _deep_warn <= 0.0:
+			_deep_warn = 6.0
+			emit_signal("deep_water")
+	return hv
 
 
 func _can_jump() -> bool:
