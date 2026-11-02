@@ -18,6 +18,7 @@ static func mat(kind: String = "vc") -> Material:
 			s2.code = sh.code.replace("cull_back", "cull_disabled")
 			sh = s2
 		sm.shader = sh
+		sm.set_shader_parameter("noise_tex", TerrainBuilder.noise_texture())
 		_mats[kind] = sm
 		return sm
 	var m := StandardMaterial3D.new()
@@ -309,6 +310,23 @@ static func _build(mb: MeshBuilder, key: String, v: int, tint: Color) -> void:
 			for k in 3:
 				var o := Vector3(mb.rng.randf_range(-0.3, 0.3), 0.04, mb.rng.randf_range(-0.3, 0.3))
 				mb.sphere(o, Vector3(0.1, 0.06, 0.1), Color("#2a1a18"), 2, 5, 0.2, null, Color("#ff6a1a"))
+		"rochedo":
+			# rochedo de paisagem: blocos facetados empilhados, topo com musgo/neve/areia (cor do bioma)
+			mb.sway = 0.0
+			var c := tint
+			c.a = 1.0
+			var top := Color(c.r, c.g, c.b).lightened(0.12)
+			match v:
+				0:
+					mb.sphere(Vector3(0, 0.9, 0), Vector3(1.6, 1.2, 1.3), c, 3, 6, 0.28, c.darkened(0.25), top)
+					mb.sphere(Vector3(1.2, 0.45, 0.6), Vector3(0.8, 0.6, 0.7), c.lightened(0.05), 3, 5, 0.25, c.darkened(0.2), top)
+				1:
+					mb.sphere(Vector3(0, 1.3, 0), Vector3(1.0, 1.7, 0.9), c, 3, 6, 0.25, c.darkened(0.25), top)
+					mb.sphere(Vector3(-0.9, 0.5, 0.4), Vector3(0.75, 0.6, 0.7), c.darkened(0.05), 3, 5, 0.25, c.darkened(0.2), top)
+					mb.sphere(Vector3(0.7, 0.3, -0.6), Vector3(0.45, 0.35, 0.45), c.lightened(0.05), 2, 5, 0.2, null, top)
+				_:
+					mb.sphere(Vector3(0, 0.55, 0), Vector3(2.0, 0.75, 1.5), c, 3, 7, 0.22, c.darkened(0.25), top)
+					mb.sphere(Vector3(-0.6, 1.1, 0.2), Vector3(0.9, 0.6, 0.8), c.lightened(0.04), 3, 6, 0.25, null, top)
 		"rocha":
 			var c := Color("#8a8680") * tint
 			c.a = 1.0

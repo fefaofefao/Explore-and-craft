@@ -88,3 +88,66 @@ func test_cached_height_matches_raw() -> void:
 	for i in [0, 10, 48, 90]:
 		var x: float = -g.half + i * step
 		near(g.height(x, x), g.pad_blend(x, x, g.raw_height(x, x)), 0.01, "vértice %d" % i)
+
+
+func _reachable(g: WorldGen) -> PackedByteArray:
+	## Busca em largura pela grade do terreno a partir do spawn: sobe só encostas caminháveis,
+	## desce qualquer altura (não há dano de queda).
+	var n := WorldGen.CELLS + 1
+	var step := g.half * 2.0 / WorldGen.CELLS
+	var max_rise := step * tan(deg_to_rad(48.0))
+	var seen := PackedByteArray()
+	seen.resize(n * n)
+	var sp: Array = g.md["spawn"]
+	var si := clampi(int(round((float(sp[0]) + g.half) / step)), 0, WorldGen.CELLS)
+	var sj := clampi(int(round((float(sp[1]) + g.half) / step)), 0, WorldGen.CELLS)
+	var q: Array = [Vector2i(si, sj)]
+	seen[sj * n + si] = 1
+	var head := 0
+	while head < q.size():
+		var c: Vector2i = q[head]
+		head += 1
+		var h0 := g.grid_height(c.x, c.y)
+		for d in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+			var nb: Vector2i = c + d
+			if nb.x < 0 or nb.y < 0 or nb.x > WorldGen.CELLS or nb.y > WorldGen.CELLS:
+				continue
+			if seen[nb.y * n + nb.x] == 1:
+				continue
+			var h1 := g.grid_height(nb.x, nb.y)
+			if h1 < 0.2 or h1 - h0 > max_rise:
+				continue
+			seen[nb.y * n + nb.x] = 1
+			q.append(nb)
+	return seen
+
+
+func _is_reached(g: WorldGen, seen: PackedByteArray, x: float, z: float) -> bool:
+	var n := WorldGen.CELLS + 1
+	var step := g.half * 2.0 / WorldGen.CELLS
+	var ci := int(round((x + g.half) / step))
+	var cj := int(round((z + g.half) / step))
+	for dj in range(-2, 3):
+		for di in range(-2, 3):
+			var i := ci + di
+			var j := cj + dj
+			if i >= 0 and j >= 0 and i <= WorldGen.CELLS and j <= WorldGen.CELLS and seen[j * n + i] == 1:
+				return true
+	return false
+
+
+func test_points_of_interest_reachable_on_foot() -> void:
+	## Penhascos e platôs não podem isolar portais, covis e fragmentos do ponto de partida.
+	for id in GameData.db().maps:
+		var g := WorldGen.new(id)
+		var seen := _reachable(g)
+		for p in g.md["portals"]:
+			if p.get("bridge", false) or p.get("ferry", false):
+				continue
+			check(_is_reached(g, seen, p["pos"][0], p["pos"][1]), "%s: portal para %s alcançável" % [id, p["to"]])
+		var pois: Dictionary = g.md["pois"]
+		for k in pois:
+			check(_is_reached(g, seen, pois[k]["pos"][0], pois[k]["pos"][1]), "%s: %s alcançável" % [id, k])
+		for f in g.fragment_positions():
+			var fp: Vector3 = f["pos"] if f is Dictionary else f
+			check(_is_reached(g, seen, fp.x, fp.z), "%s: fragmento alcançável" % id)

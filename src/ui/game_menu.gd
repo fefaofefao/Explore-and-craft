@@ -215,6 +215,14 @@ func _tab_inventory() -> void:
 	side.add_child(d)
 	if Inventory.max_dur(s["id"]) > 0:
 		side.add_child(UiTheme.label(Loc.t("durability", [int(s.get("d", Inventory.max_dur(s["id"]))), Inventory.max_dur(s["id"])]), 18, UiTheme.GOLD, 800))
+		var rep := CraftLogic.can_repair(st, s["id"])
+		if rep["reason"] in ["", "missing"]:
+			side.add_child(Widgets.cost_row(rep["cost"], st.inv, 16))
+			var rb := UiTheme.button("🔧 " + Loc.t("repair"), UiTheme.GOLD.darkened(0.45) if rep["ok"] else UiTheme.BG2)
+			rb.disabled = not rep["ok"]
+			var rid0: String = s["id"]
+			rb.pressed.connect(func(): _do_repair(rid0))
+			side.add_child(rb)
 	if it.has("food"):
 		var b := UiTheme.button(Loc.t("eat"), UiTheme.GOOD.darkened(0.45))
 		b.pressed.connect(func():
@@ -320,6 +328,15 @@ func _recipe_row(rid: String, near: Array) -> Control:
 		v.add_child(ol)
 	else:
 		v.add_child(Widgets.cost_row(r["in"], st.inv, 16))
+	if chk["reason"] == "owned":
+		var rep := CraftLogic.can_repair(st, r["out"])
+		if rep["reason"] in ["", "missing"]:
+			v.add_child(Widgets.cost_row(rep["cost"], st.inv, 16))
+			var rb := UiTheme.button(Loc.t("repair"), UiTheme.GOLD.darkened(0.45) if rep["ok"] else UiTheme.BG2, 20, Vector2(120, 58))
+			rb.disabled = not rep["ok"]
+			rb.pressed.connect(func(): _do_repair(r["out"]))
+			h.add_child(rb)
+			return c
 	var b := UiTheme.button(Loc.t("craft"), UiTheme.GOOD.darkened(0.45) if chk["ok"] else UiTheme.BG2, 20, Vector2(120, 58))
 	b.disabled = not chk["ok"]
 	b.pressed.connect(func(): _do_craft(rid, near, 1))
@@ -330,6 +347,18 @@ func _recipe_row(rid: String, near: Array) -> Control:
 		b5.pressed.connect(func(): _do_craft(rid, near, 5))
 		h.add_child(b5)
 	return c
+
+
+func _do_repair(item_id: String) -> void:
+	var r := CraftLogic.repair(Game.state, item_id)
+	if r["ok"]:
+		Audio.play("build")
+		Game.notify(Loc.t("repaired", [Loc.item_name(item_id)]), "item")
+		Firebase.log_event("repair", {"item": item_id})
+	else:
+		Audio.play("error")
+	hud.refresh()
+	refresh()
 
 
 func _do_craft(rid: String, near: Array, times: int) -> void:

@@ -58,9 +58,14 @@ func show_title() -> void:
 	title_root.add_child(TerrainBuilder.build_water(gen))
 	var tg := TerrainBuilder.build_grass(gen, 1)
 	title_root.add_child(tg)
-	sky.grass_mat = tg.get_meta("mat")
+	sky.grass_mats.append(tg.mat)
+	var ttg := TerrainBuilder.build_tall_grass(gen, 1)
+	if ttg != null:
+		title_root.add_child(ttg)
+		sky.grass_mats.append(ttg.mat)
 	sky.update_time(0.31)
 	title_root.add_child(TerrainBuilder.build_decor(gen, 1))
+	title_root.add_child(TerrainBuilder.build_boulders(gen))
 	var rng := RandomNumberGenerator.new()
 	rng.seed = 7
 	var count := 0

@@ -87,6 +87,8 @@ static func terrain_material(gen: WorldGen) -> ShaderMaterial:
 	sm.set_shader_parameter("height_tex", height_texture(gen))
 	sm.set_shader_parameter("map_half", gen.half)
 	sm.set_shader_parameter("deep_tint", Color(b["water"]).darkened(0.35))
+	sm.set_shader_parameter("haze", Color(b["sky_horizon"]).lerp(Color(b["fog"]), 0.4))
+	sm.set_shader_parameter("haze_amount", float(b.get("haze", 0.45)))
 	return sm
 
 
@@ -231,12 +233,21 @@ static func chunked(name: String, mesh: Mesh, xforms: Array, cols: Array, mat: M
 	return root
 
 
-static func build_grass(gen: WorldGen, quality: int) -> Node3D:
-	var density := float(gen.biome.get("grass_density", 1.0))
-	var max_n: int = [5000, 12000, 20000][clampi(quality, 0, 2)]
-	var want := int(max_n * density)
+static func grass_material(blade_h: float, bend_k: float, stiff: float) -> ShaderMaterial:
 	var sm := ShaderMaterial.new()
 	sm.shader = load("res://assets/shaders/grass.gdshader")
+	sm.set_shader_parameter("noise_tex", noise_texture())
+	sm.set_shader_parameter("blade_h", blade_h)
+	sm.set_shader_parameter("bend", bend_k)
+	sm.set_shader_parameter("stiffness", stiff)
+	return sm
+
+
+static func build_grass(gen: WorldGen, quality: int) -> GrassField:
+	var density := float(gen.biome.get("grass_density", 1.0))
+	var max_n: int = [6000, 14000, 24000][clampi(quality, 0, 2)]
+	var want := int(max_n * density)
+	var sm := grass_material(0.6, 0.55, 1.0)
 	var rng := RandomNumberGenerator.new()
 	rng.seed = int(gen.md["seed"]) + 3
 	var xforms: Array = []
@@ -257,12 +268,146 @@ static func build_grass(gen: WorldGen, quality: int) -> Node3D:
 			var y := gen.height(x, z)
 			if y < 1.8:
 				continue
-			var sc := rng.randf_range(0.5, 0.95)
-			xforms.append(Transform3D(Basis(Vector3.UP, rng.randf() * TAU).scaled(Vector3(sc, sc * rng.randf_range(0.8, 1.25), sc)), Vector3(x, y - 0.04, z)))
+			var sc := rng.randf_range(0.55, 1.0)
+			xforms.append(Transform3D(Basis(Vector3.UP, rng.randf() * TAU).scaled(Vector3(sc, sc * rng.randf_range(0.8, 1.3), sc)), Vector3(x, y - 0.04, z)))
 			cols.append(base.lightened(rng.randf_range(-0.06, 0.08)).srgb_to_linear())
-	var node := chunked("Grass", blade_mesh(), xforms, cols, sm, gen.half, [32.0, 44.0, 58.0][clampi(quality, 0, 2)])
-	node.set_meta("mat", sm)
-	return node
+	return GrassField.new().setup("Grass", blade_mesh(), xforms, cols, sm, gen.half, [32.0, 44.0, 58.0][clampi(quality, 0, 2)])
+
+
+static func tall_grass_spot(gen: WorldGen, x: float, z: float) -> bool:
+	## Manchas de capim alto: campos abertos de grama, longe de trilhas e áreas construídas.
+	var hl := 1.5 + float(gen.biome["height"]) * 0.9
+	var h := gen.height(x, z)
+	if h < 2.1 or h > hl or gen.slope_at(x, z, 1.0) > 1.0 or is_dirt(gen, x, z):
+		return false
+	if gen.near_pad(x, z, 2.0):
+		return false
+	return _noise_at(x + 37.0, z - 11.0, 0.011, 2) > 0.57
+
+
+static func build_tall_grass(gen: WorldGen, quality: int) -> GrassField:
+	var density := float(gen.biome.get("grass_density", 1.0))
+	if density < 0.3:
+		return null
+	var want := int([1600, 4200, 7500][clampi(quality, 0, 2)] * minf(density, 1.2))
+	var sm := grass_material(1.15, 0.7, 1.25)
+	sm.set_shader_parameter("tip_tint", Color(1.05, 1.0, 0.72))
+	var rng := RandomNumberGenerator.new()
+	rng.seed = int(gen.md["seed"]) + 9
+	var xforms: Array = []
+	var cols: Array = []
+	var tries := 0
+	var dry := Color(gen.biome.get("tall_grass", "#b8c860"))
+	while xforms.size() < want and tries < want * 6:
+		tries += 1
+		var x := rng.randf_range(-gen.half * 0.84, gen.half * 0.84)
+		var z := rng.randf_range(-gen.half * 0.84, gen.half * 0.84)
+		if not tall_grass_spot(gen, x, z):
+			continue
+		var y := gen.height(x, z)
+		var sc := rng.randf_range(0.75, 1.25)
+		xforms.append(Transform3D(Basis(Vector3.UP, rng.randf() * TAU).scaled(Vector3(sc, sc * rng.randf_range(0.85, 1.25), sc)), Vector3(x, y - 0.05, z)))
+		var base := ground_color(gen, x, z).lerp(dry, rng.randf_range(0.15, 0.4))
+		cols.append(base.lightened(rng.randf_range(-0.05, 0.08)).srgb_to_linear())
+	if xforms.is_empty():
+		return null
+	return GrassField.new().setup("TallGrass", tall_blade_mesh(), xforms, cols, sm, gen.half, [30.0, 40.0, 52.0][clampi(quality, 0, 2)])
+
+
+static func tall_blade_mesh() -> ArrayMesh:
+	## Touceira alta: 8 lâminas longas e curvas (algumas com espiga) — altura ~1,15 m.
+	var mb := MeshBuilder.new(17)
+	for k in 8:
+		var a := TAU * k / 8.0 + 0.2 * (k % 3)
+		var d := Vector3(cos(a), 0, sin(a))
+		var side := d.cross(Vector3.UP).normalized()
+		var h := 0.85 + float((k * 7) % 5) * 0.08
+		var lean := 0.12 + float(k % 3) * 0.08
+		var base := d * 0.06
+		var prev_l := base - side * 0.045
+		var prev_r := base + side * 0.045
+		var segs := 3
+		for sgi in segs:
+			var t := float(sgi + 1) / float(segs)
+			var c := base + d * (lean * t * t) + Vector3.UP * h * t
+			var w := 0.045 * (1.0 - t) + 0.003
+			var l := c - side * w
+			var r := c + side * w
+			mb.quad(prev_l, prev_r, r, l, Color.WHITE)
+			prev_l = l
+			prev_r = r
+		if k % 3 == 0:
+			# espiga: losango fino no topo
+			var top := base + d * lean + Vector3.UP * h
+			var tip := top + Vector3.UP * 0.16 + d * 0.03
+			mb.quad(top - side * 0.025, top + side * 0.025, tip + side * 0.004, tip - side * 0.004, Color(1.0, 0.95, 0.75))
+	return mb.commit()
+
+
+static func build_boulders(gen: WorldGen) -> Node3D:
+	## Rochedos grandes de paisagem (com colisão) espalhados por campos e encostas.
+	var root := Node3D.new()
+	root.name = "Boulders"
+	var want := int(gen.biome.get("boulders", 34))
+	if gen.md.get("city") != null:
+		want = 6
+	var rng := RandomNumberGenerator.new()
+	rng.seed = int(gen.md["seed"]) + 57
+	var avoid: Array = []
+	for n in gen.node_placements():
+		avoid.append(Vector2(n["pos"].x, n["pos"].z))
+	for f in gen.fragment_positions():
+		avoid.append(Vector2(f["pos"].x, f["pos"].z))
+	var rock_c := Color(gen.biome["rock"]).lerp(Color(gen.biome["high"]), 0.35).lightened(0.22)
+	var mat := MeshLib.mat("vc")
+	var placed := 0
+	var tries := 0
+	var xf_by_v := [[], [], []]
+	while placed < want and tries < want * 30:
+		tries += 1
+		var x := rng.randf_range(-gen.half * 0.82, gen.half * 0.82)
+		var z := rng.randf_range(-gen.half * 0.82, gen.half * 0.82)
+		var y := gen.height(x, z)
+		if y < 1.4 or gen.near_pad(x, z, 6.0) or gen.slope_at(x, z, 1.5) > 3.2:
+			continue
+		var ok := true
+		for a in avoid:
+			if (a as Vector2).distance_to(Vector2(x, z)) < 4.5:
+				ok = false
+				break
+		if not ok:
+			continue
+		var sc := rng.randf_range(0.7, 1.5)
+		var v := rng.randi() % 3
+		var t := Transform3D(Basis(Vector3.UP, rng.randf() * TAU).scaled(Vector3.ONE * sc), Vector3(x, y - 0.35 * sc, z))
+		xf_by_v[v].append(t)
+		avoid.append(Vector2(x, z))
+		var body := StaticBody3D.new()
+		body.collision_layer = 1
+		var cs := CollisionShape3D.new()
+		var sph := SphereShape3D.new()
+		sph.radius = 1.1 * sc
+		cs.shape = sph
+		body.add_child(cs)
+		body.position = Vector3(x, y + 0.35 * sc, z)
+		root.add_child(body)
+		placed += 1
+	for v in 3:
+		if xf_by_v[v].is_empty():
+			continue
+		var mm := MultiMesh.new()
+		mm.transform_format = MultiMesh.TRANSFORM_3D
+		mm.mesh = MeshLib.get_mesh("rochedo", v, rock_c)
+		mm.instance_count = xf_by_v[v].size()
+		for i in xf_by_v[v].size():
+			mm.set_instance_transform(i, xf_by_v[v][i])
+		var mmi := MultiMeshInstance3D.new()
+		mmi.multimesh = mm
+		mmi.material_override = mat
+		mmi.visibility_range_end = 140.0
+		root.add_child(mmi)
+	root.set_meta("count", placed)
+	return root
 
 
 static func build_decor(gen: WorldGen, quality: int) -> Node3D:

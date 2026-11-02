@@ -8,7 +8,8 @@
   "power": 40,
   "cd": 3.0,
   "kind": "projectile",
-  "range": 10
+  "range": 10,
+  "fx": "leaf"
  },
  "chicote_vinha": {
   "name": {
@@ -19,7 +20,8 @@
   "power": 65,
   "cd": 6.0,
   "kind": "melee",
-  "range": 3.5
+  "range": 3.5,
+  "fx": "whip"
  },
  "esporos": {
   "name": {
@@ -30,7 +32,8 @@
   "power": 55,
   "cd": 9.0,
   "kind": "aoe",
-  "range": 6
+  "range": 6,
+  "fx": "spores"
  },
  "fotossintese": {
   "name": {
@@ -41,7 +44,8 @@
   "power": 35,
   "cd": 14.0,
   "kind": "heal",
-  "range": 0
+  "range": 0,
+  "fx": "bloom"
  },
  "floresta_furia": {
   "name": {
@@ -52,7 +56,8 @@
   "power": 110,
   "cd": 16.0,
   "kind": "aoe",
-  "range": 8
+  "range": 8,
+  "fx": "forest"
  },
  "fagulha": {
   "name": {
@@ -63,7 +68,8 @@
   "power": 40,
   "cd": 3.0,
   "kind": "projectile",
-  "range": 10
+  "range": 10,
+  "fx": "fire"
  },
  "investida_chama": {
   "name": {
@@ -74,7 +80,8 @@
   "power": 70,
   "cd": 6.5,
   "kind": "melee",
-  "range": 4
+  "range": 4,
+  "fx": "rush"
  },
  "anel_fogo": {
   "name": {
@@ -85,7 +92,8 @@
   "power": 60,
   "cd": 9.0,
   "kind": "aoe",
-  "range": 6
+  "range": 6,
+  "fx": "fire_ring"
  },
  "erupcao": {
   "name": {
@@ -96,7 +104,8 @@
   "power": 115,
   "cd": 16.0,
   "kind": "aoe",
-  "range": 8
+  "range": 8,
+  "fx": "eruption"
  },
  "jato_agua": {
   "name": {
@@ -107,7 +116,8 @@
   "power": 40,
   "cd": 3.0,
   "kind": "projectile",
-  "range": 10
+  "range": 10,
+  "fx": "water"
  },
  "onda": {
   "name": {
@@ -118,7 +128,8 @@
   "power": 60,
   "cd": 8.0,
   "kind": "aoe",
-  "range": 6
+  "range": 6,
+  "fx": "wave"
  },
  "bolha_cura": {
   "name": {
@@ -129,7 +140,8 @@
   "power": 40,
   "cd": 14.0,
   "kind": "heal",
-  "range": 0
+  "range": 0,
+  "fx": "bubble"
  },
  "maremoto": {
   "name": {
@@ -140,7 +152,8 @@
   "power": 115,
   "cd": 16.0,
   "kind": "aoe",
-  "range": 8
+  "range": 8,
+  "fx": "tidal"
  },
  "estilhaco": {
   "name": {
@@ -151,7 +164,8 @@
   "power": 40,
   "cd": 3.0,
   "kind": "projectile",
-  "range": 10
+  "range": 10,
+  "fx": "shard"
  },
  "presa_gelida": {
   "name": {
@@ -162,7 +176,8 @@
   "power": 68,
   "cd": 6.0,
   "kind": "melee",
-  "range": 3.5
+  "range": 3.5,
+  "fx": "fang"
  },
  "nevasca": {
   "name": {
@@ -173,7 +188,8 @@
   "power": 105,
   "cd": 15.0,
   "kind": "aoe",
-  "range": 8
+  "range": 8,
+  "fx": "blizzard"
  },
  "faisca": {
   "name": {
@@ -184,7 +200,8 @@
   "power": 42,
   "cd": 3.0,
   "kind": "projectile",
-  "range": 11
+  "range": 11,
+  "fx": "spark"
  },
  "raio": {
   "name": {
@@ -195,7 +212,8 @@
   "power": 75,
   "cd": 7.0,
   "kind": "projectile",
-  "range": 12
+  "range": 12,
+  "fx": "bolt"
  },
  "sobrecarga": {
   "name": {
@@ -206,7 +224,8 @@
   "power": 0,
   "cd": 18.0,
   "kind": "buff",
-  "range": 0
+  "range": 0,
+  "fx": "charge"
  },
  "tempestade": {
   "name": {
@@ -217,7 +236,8 @@
   "power": 112,
   "cd": 16.0,
   "kind": "aoe",
-  "range": 9
+  "range": 9,
+  "fx": "storm"
  },
  "pedrada": {
   "name": {
@@ -228,7 +248,8 @@
   "power": 45,
   "cd": 3.5,
   "kind": "projectile",
-  "range": 9
+  "range": 9,
+  "fx": "rock"
  },
  "pancada": {
   "name": {
@@ -239,7 +260,8 @@
   "power": 72,
   "cd": 6.5,
   "kind": "melee",
-  "range": 3.5
+  "range": 3.5,
+  "fx": "slam"
  },
  "terremoto": {
   "name": {
@@ -250,7 +272,8 @@
   "power": 110,
   "cd": 16.0,
   "kind": "aoe",
-  "range": 9
+  "range": 9,
+  "fx": "quake"
  },
  "carapaca": {
   "name": {
@@ -261,7 +284,8 @@
   "power": 0,
   "cd": 18.0,
   "kind": "buff",
-  "range": 0
+  "range": 0,
+  "fx": "shell"
  },
  "garra_sombria": {
   "name": {
@@ -272,7 +296,8 @@
   "power": 48,
   "cd": 3.5,
   "kind": "melee",
-  "range": 3.5
+  "range": 3.5,
+  "fx": "claw"
  },
  "esfera_sombra": {
   "name": {
@@ -283,7 +308,8 @@
   "power": 72,
   "cd": 7.0,
   "kind": "projectile",
-  "range": 11
+  "range": 11,
+  "fx": "shadow"
  },
  "pesadelo": {
   "name": {
@@ -294,7 +320,8 @@
   "power": 112,
   "cd": 16.0,
   "kind": "aoe",
-  "range": 8
+  "range": 8,
+  "fx": "nightmare"
  },
  "lampejo": {
   "name": {
@@ -305,7 +332,8 @@
   "power": 42,
   "cd": 3.0,
   "kind": "projectile",
-  "range": 11
+  "range": 11,
+  "fx": "light"
  },
  "prisma": {
   "name": {
@@ -316,7 +344,8 @@
   "power": 74,
   "cd": 7.0,
   "kind": "projectile",
-  "range": 12
+  "range": 12,
+  "fx": "prism"
  },
  "aurora_cura": {
   "name": {
@@ -327,7 +356,8 @@
   "power": 50,
   "cd": 15.0,
   "kind": "heal",
-  "range": 0
+  "range": 0,
+  "fx": "aurora"
  },
  "julgamento": {
   "name": {
@@ -338,6 +368,7 @@
   "power": 118,
   "cd": 16.0,
   "kind": "aoe",
-  "range": 9
+  "range": 9,
+  "fx": "judgement"
  }
 }

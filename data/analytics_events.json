@@ -12,6 +12,7 @@
  "capture_success",
  "aurora_variant",
  "craft",
+ "repair",
  "build",
  "assign_worker",
  "harvest",

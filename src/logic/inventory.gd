@@ -48,6 +48,17 @@ func use_durability(id: String, amount: int = 1) -> bool:
 	return false
 
 
+func set_durability(id: String, value: int) -> bool:
+	## Ajusta a durabilidade do primeiro item com esse id (reparo). Devolve false se não houver.
+	for i in slots.size():
+		var sl: Dictionary = slots[i]
+		if not sl.is_empty() and sl["id"] == id:
+			sl["d"] = clampi(value, 1, max_dur(id))
+			changed.emit()
+			return true
+	return false
+
+
 func durability_of(id: String) -> int:
 	for sl in slots:
 		if not sl.is_empty() and sl["id"] == id:

@@ -109,3 +109,62 @@ func test_stations_near() -> void:
 	check("bancada" in near_st, "bancada perto")
 	check(not "bancada" in BuildLogic.stations_near(s, "m1", Vector3(40, 0, 40)), "longe")
 	check(not "bancada" in BuildLogic.stations_near(s, "m2", Vector3(1, 0, 1)), "outro mapa")
+
+
+func test_gear_wears_out_and_breaks() -> void:
+	var s := fresh()
+	s.inv.add("machado_pedra", 1)
+	var mx := Inventory.max_dur("machado_pedra")
+	check(mx > 0, "machado tem durabilidade")
+	eq(s.inv.durability_of("machado_pedra"), mx, "começa cheio")
+	check(not s.inv.use_durability("machado_pedra", mx - 1), "não quebra antes do fim")
+	eq(s.inv.durability_of("machado_pedra"), 1, "resta 1 uso")
+	check(s.inv.use_durability("machado_pedra"), "quebra no último uso")
+	eq(s.inv.count("machado_pedra"), 0, "some da mochila")
+
+
+func test_repair_cost_scales_with_wear() -> void:
+	var s := fresh()
+	s.inv.add("machado_pedra", 1)
+	eq(CraftLogic.can_repair(s, "machado_pedra")["reason"], "full", "novo não precisa de reparo")
+	var mx := Inventory.max_dur("machado_pedra")
+	s.inv.use_durability("machado_pedra", mx / 5)
+	var light := CraftLogic.repair_cost(s, "machado_pedra")
+	s.inv.use_durability("machado_pedra", mx / 2)
+	var heavy := CraftLogic.repair_cost(s, "machado_pedra")
+	var tl := 0
+	var th := 0
+	for k in light:
+		tl += int(light[k])
+	for k in heavy:
+		th += int(heavy[k])
+	check(tl >= 1, "reparo leve custa algo")
+	check(th > tl, "mais desgaste, reparo mais caro (%d > %d)" % [th, tl])
+	# nunca mais que metade da receita
+	var req: Dictionary = GameData.db().recipes["r_machado_pedra"]["in"]
+	for k in heavy:
+		check(int(heavy[k]) <= int(ceil(int(req[k]) * 0.5)), "no máximo metade de " + k)
+
+
+func test_repair_restores_durability_and_spends_materials() -> void:
+	var s := fresh()
+	s.inv.add("picareta_pedra", 1)
+	var mx := Inventory.max_dur("picareta_pedra")
+	s.inv.use_durability("picareta_pedra", mx - 3)
+	var chk := CraftLogic.can_repair(s, "picareta_pedra")
+	eq(chk["reason"], "missing", "sem materiais")
+	for k in chk["cost"]:
+		s.inv.add(k, int(chk["cost"][k]))
+	var r := CraftLogic.repair(s, "picareta_pedra")
+	check(r["ok"], "reparou")
+	eq(s.inv.durability_of("picareta_pedra"), mx, "durabilidade cheia")
+	for k in chk["cost"]:
+		eq(s.inv.count(k), 0, "gastou " + k)
+	eq(s.stats["repairs"], 1, "estatística de reparos")
+
+
+func test_non_wearing_items_cannot_be_repaired() -> void:
+	var s := fresh()
+	s.inv.add("corda", 2)
+	eq(CraftLogic.can_repair(s, "corda")["reason"], "no_repair", "corda não se repara")
+	eq(CraftLogic.can_repair(s, "machado_ferro")["reason"], "no_item", "sem o item")

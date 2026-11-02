@@ -94,3 +94,58 @@ static func recipes_unlocked_at(level: int) -> Array:
 		if int(db.recipes[rid]["lvl"]) == level:
 			out.append(rid)
 	return out
+
+
+# ------------------------------------------------------------------ reparo
+static func recipe_of(item_id: String) -> String:
+	for rid in GameData.db().recipes:
+		if GameData.db().recipes[rid]["out"] == item_id:
+			return rid
+	return ""
+
+
+static func repair_cost(state: GameState, item_id: String) -> Dictionary:
+	## Metade dos materiais da receita, proporcional ao desgaste (mínimo 1 material).
+	var mx := Inventory.max_dur(item_id)
+	var rid := recipe_of(item_id)
+	if mx <= 0 or rid == "":
+		return {}
+	var cur := state.inv.durability_of(item_id)
+	var missing := clampf(1.0 - float(cur) / mx, 0.0, 1.0)
+	var out := {}
+	if missing <= 0.0:
+		return out
+	var req: Dictionary = GameData.db().recipes[rid]["in"]
+	for k in req:
+		var n := int(ceil(int(req[k]) * missing * 0.5))
+		if n > 0:
+			out[k] = n
+	if out.is_empty():
+		out[req.keys()[0]] = 1
+	return out
+
+
+static func can_repair(state: GameState, item_id: String) -> Dictionary:
+	if state.inv.count(item_id) <= 0:
+		return {"ok": false, "reason": "no_item", "cost": {}}
+	var mx := Inventory.max_dur(item_id)
+	if mx <= 0 or recipe_of(item_id) == "":
+		return {"ok": false, "reason": "no_repair", "cost": {}}
+	if state.inv.durability_of(item_id) >= mx:
+		return {"ok": false, "reason": "full", "cost": {}}
+	var cost := repair_cost(state, item_id)
+	if not state.inv.infinite and not state.inv.has_all(cost):
+		return {"ok": false, "reason": "missing", "cost": cost}
+	return {"ok": true, "reason": "", "cost": cost}
+
+
+static func repair(state: GameState, item_id: String) -> Dictionary:
+	## Restaura a durabilidade toda gastando os materiais do reparo.
+	var chk := can_repair(state, item_id)
+	if not chk["ok"]:
+		return chk
+	if not state.inv.infinite:
+		state.inv.remove_all(chk["cost"])
+	state.inv.set_durability(item_id, Inventory.max_dur(item_id))
+	state.stats["repairs"] = int(state.stats.get("repairs", 0)) + 1
+	return chk

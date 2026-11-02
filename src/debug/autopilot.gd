@@ -35,6 +35,8 @@ func _ready() -> void:
 			await _jumptest()
 		"tutorial":
 			await _tutorial_shots()
+		"showcase":
+			await _showcase()
 	get_tree().quit(1 if fails.size() > 0 else 0)
 
 
@@ -217,6 +219,80 @@ func _aim(w: World, at: Vector3, yaw: float, pitch: float, dist: float = 7.5) ->
 		var p := Vector3(at.x, w.gen.height(at.x, at.z) + 0.5, at.z)
 		w.player.global_position = p
 	w.rig.snap()
+
+
+# ================================================================== vitrine (v1.4)
+func _showcase() -> void:
+	DirAccess.make_dir_recursive_absolute(out_dir)
+	var st := _new_story(0.4)
+	_setup_progress(st)
+	st.map_id = "m1"
+	await main._load_map("m1")
+	var w: World = main.world
+	await _frames(10)
+	# capim alto ao vento
+	var spot := w.player.global_position
+	var best := -1
+	for key in w.tall_grass.chunks:
+		var xf: Array = w.tall_grass.chunks[key]["xf"]
+		if xf.size() > best:
+			best = xf.size()
+			spot = xf[xf.size() / 2].origin
+	_aim(w, spot, 0.6, 0.18, 6.5)
+	await _frames(90)
+	await _shot("30_capim_alto")
+	# personagem de perto, correndo
+	_aim(w, spot + Vector3(6, 0, 6), 3.4, 0.1, 3.2)
+	await _frames(20)
+	w.player.model.move_speed = 1.2
+	await _frames(9)
+	await _shot("31_personagem_correndo")
+	w.player.model.move_speed = 0.0
+	await _frames(30)
+	w.player.model.play_swing("attack", 2)
+	await _frames(11)
+	await _shot("32_golpe_final")
+	# ataques dos Ecos
+	var caster: MonsterActor = w.ally_actor()
+	var foe: MonsterActor = null
+	var i := 0
+	for sk in [["floresta_furia", 22], ["tempestade", 16], ["erupcao", 14], ["chicote_vinha", 14], ["pancada", 16], ["prisma", 8], ["nevasca", 18], ["fagulha", 14]]:
+		i += 1
+		var base := spot + Vector3(12 + i * 3, 0, -10)
+		_aim(w, base, 2.4, 0.32, 9.5)
+		await _frames(4)
+		caster.global_position = w.player.global_position + Vector3(1.0, 0.5, -1.0)
+		if foe == null or not is_instance_valid(foe) or foe.dead:
+			foe = MonsterActor.new().setup(MonsterLogic.create("pedrisco", 8, Game.rng), "wild", w, w.gen)
+			w._actors.add_child(foe)
+			foe.m["hp"] = 99999
+			foe.max_hp = 99999
+		foe.global_position = caster.global_position + Vector3(-1.5, 0.3, -4.0)
+		foe.state = "idle"
+		await _frames(10)
+		caster.target = foe
+		caster.cast(sk[0]) if caster.skill_ready(sk[0]) else w.cast_skill(caster, sk[0], foe)
+		caster.skill_cd.clear()
+		await get_tree().create_timer(SkillFX.windup(SkillFX.anim_for(GameData.db().skills[sk[0]])) + float(sk[1]) / 100.0).timeout
+		await _shot("%d_ataque_%s" % [32 + i, sk[0]])
+		await _frames(40)
+	# paisagem do alto
+	var hi := Vector3.ZERO
+	var hh := -99.0
+	for k in 400:
+		var x := randf_range(-80, 80)
+		var z := randf_range(-80, 80)
+		var y := w.gen.height(x, z)
+		if y > hh:
+			hh = y
+			hi = Vector3(x, y, z)
+	_aim(w, hi, 1.8, 0.22, 14.0)
+	await _frames(80)
+	await _shot("41_paisagem_alto")
+	st.day_time = 0.72
+	w.sky.update_time(0.72)
+	await _frames(10)
+	await _shot("42_por_do_sol")
 
 
 # ================================================================== teste de integração
@@ -581,6 +657,82 @@ func _smoke() -> void:
 		await _frames(3)
 		check(sc.scroll_vertical > 50, "arrastar rola a lista de criação (%d)" % sc.scroll_vertical)
 	w.hud.menu.close_menu()
+	# ===== recursos da versão 1.4
+	# vento muda de direção e a grama/árvores recebem os parâmetros
+	check(w.wind != null and w.tall_grass != null, "vento global e capim alto no Bosque")
+	var wd0: Vector2 = w.wind.dir()
+	for k in 60 * 40:
+		w.wind.update(1.0 / 60.0)
+	check(w.wind.dir().dot(wd0) < 0.97, "a direção do vento muda")
+	w._update_wind(0.016)
+	check((w.grass.mat.get_shader_parameter("wind_dir") as Vector2).is_equal_approx(w.wind.dir()), "grama recebe a direção do vento")
+	check((w.tall_grass.mat.get_shader_parameter("pushers") as Array).size() == 4, "jogador/Ecos empurram a grama")
+	# golpe corta capim alto (que volta a crescer)
+	var tg: GrassField = w.tall_grass
+	var spot := Vector3.ZERO
+	for key in tg.chunks:
+		var xf: Array = tg.chunks[key]["xf"]
+		if xf.size() > 0:
+			spot = xf[0].origin
+			break
+	var alive0 := tg.alive_count()
+	var cutn := w.cut_grass(spot, 2.0)
+	check(cutn > 0 and tg.alive_count() < alive0, "golpe corta o capim (%d tufos)" % cutn)
+	# combo de 3 golpes do jogador
+	w.player.global_position = spot + Vector3(0, 0.5, 0)
+	w.player_attack()
+	w.player_attack()
+	w.player_attack()
+	check(w._combo == 2, "combo chega ao 3º golpe")
+	# reparo de durabilidade pela mochila
+	st.inv.add("picareta_pedra", 1)
+	var pmx := Inventory.max_dur("picareta_pedra")
+	st.inv.use_durability("picareta_pedra", pmx - 2)
+	var rc := CraftLogic.can_repair(st, "picareta_pedra")
+	for k in rc["cost"]:
+		st.inv.add(k, int(rc["cost"][k]) + 2)
+	w.hud.open_menu("craft")
+	await _frames(3)
+	w.hud.menu._do_repair("picareta_pedra")
+	await _frames(2)
+	check(st.inv.durability_of("picareta_pedra") == pmx, "reparar restaura a durabilidade")
+	w.hud.menu.close_menu()
+	# todos os ataques (31 estilos) rodam sem erro, com o alvo recebendo dano
+	var caster: MonsterActor = w.ally_actor()
+	var dummy: MonsterActor = null
+	for a in w.wilds:
+		if is_instance_valid(a) and not a.dead:
+			dummy = a
+			break
+	if caster != null and dummy != null:
+		dummy.global_position = caster.global_position + Vector3(0, 0.3, -3.0)
+		dummy.state = "idle"
+		var hp_before := int(dummy.m["hp"])
+		dummy.m["hp"] = 99999
+		dummy.max_hp = 99999
+		var n_sk := 0
+		for sid in GameData.db().skills:
+			caster.target = dummy
+			w.cast_skill(caster, sid, dummy)
+			n_sk += 1
+			await _frames(2)
+		await get_tree().create_timer(1.6).timeout
+		check(n_sk == GameData.db().skills.size(), "todos os %d ataques executados" % n_sk)
+		check(is_instance_valid(dummy) and int(dummy.m["hp"]) < 99999, "ataques causam dano")
+		if is_instance_valid(dummy):
+			dummy.m["hp"] = hp_before
+	# animações de ataque de todos os formatos de corpo
+	var shapes_ok := 0
+	for st_name in ["bite", "pounce", "slam", "spin", "cast", "charge", "dive", "coil", "punch", "roar", "glow", "bounce"]:
+		var mm2 := MonsterModel.new().build("folhito")
+		w.add_child(mm2)
+		mm2.play_attack(st_name)
+		for k in 6:
+			mm2._process(0.06)
+		if mm2.root_pivot.position.length() > 0.001 or mm2.root_pivot.rotation.length() > 0.001 or mm2.root_pivot.scale != Vector3.ONE:
+			shapes_ok += 1
+		mm2.queue_free()
+	check(shapes_ok == 12, "12 animações de ataque movem o corpo (%d)" % shapes_ok)
 	# salvar e recarregar
 	Game.save_now()
 	var loaded := SaveSystem.load_state("story")

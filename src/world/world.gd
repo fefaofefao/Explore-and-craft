@@ -46,6 +46,14 @@ var _particles: CPUParticles3D
 var _boss_spawned := false
 var _capturing := false
 var rng := RandomNumberGenerator.new()
+var grass: GrassField
+var tall_grass: GrassField
+var wind: Wind
+var wind_fx: WindFX
+var _wind_mats: Array = []
+var _pushers: Array = []
+var _combo := 0
+var _combo_clock := 0.0
 
 
 # ================================================================== construção do mapa
@@ -63,10 +71,22 @@ func build(p_map: String, p_hud: Node) -> void:
 	sky.update_time(st.day_time)
 	add_child(TerrainBuilder.build_terrain(gen))
 	add_child(TerrainBuilder.build_water(gen))
-	var grass := TerrainBuilder.build_grass(gen, q)
+	grass = TerrainBuilder.build_grass(gen, q)
 	add_child(grass)
-	sky.grass_mat = grass.get_meta("mat") if grass.has_meta("mat") else null
+	sky.grass_mats.append(grass.mat)
+	tall_grass = TerrainBuilder.build_tall_grass(gen, q)
+	if tall_grass != null:
+		add_child(tall_grass)
+		sky.grass_mats.append(tall_grass.mat)
+	wind = Wind.new(int(md["seed"]) + 5, float(md["biome"].get("wind", 0.5)))
+	_wind_mats = sky.grass_mats.duplicate()
+	_wind_mats.append(MeshLib.mat("foliage"))
+	_wind_mats.append(MeshLib.mat("foliage_ds"))
+	var pk: String = md["biome"].get("particles", "")
+	wind_fx = WindFX.new().setup(wind, q, Color(md["biome"]["ground"][2]), pk in ["leaves", "spores", "rain"])
+	add_child(wind_fx)
 	add_child(TerrainBuilder.build_decor(gen, q))
+	add_child(TerrainBuilder.build_boulders(gen))
 	sky.update_time(st.day_time)
 	_props = Node3D.new()
 	_props.name = "Props"
@@ -950,49 +970,164 @@ func resolve_hit(attacker: Node, target: Node, power: float, type: String) -> vo
 			hud.refresh()
 
 
+func delayed_hit(attacker: MonsterActor, target: Node, power: float, type: String, delay: float) -> void:
+	## Golpe básico: o dano entra no impacto da animação (depois da antecipação).
+	get_tree().create_timer(delay).timeout.connect(func():
+		if not is_instance_valid(attacker) or attacker.dead or not is_instance_valid(target):
+			return
+		var tp: Vector3 = (target as Node3D).global_position
+		if attacker.global_position.distance_to(tp) > attacker._reach() + 2.5:
+			return  # o alvo escapou durante a antecipação
+		resolve_hit(attacker, target, power, type)
+		Audio.play("hit_soft", 0.2)
+		var tcol := FX.type_color(attacker.types()[0])
+		FX.burst(self, tp + Vector3(0, 0.7, 0), tcol.lightened(0.3), 6, 3.0, false, true, 0.35))
+
+
 func cast_skill(actor: MonsterActor, s: String, target: Node3D) -> void:
+	## O efeito sai depois da antecipação da animação do Eco (o golpe "conecta" com o movimento).
+	var sk: Dictionary = GameData.db().skills[s]
+	var col := FX.type_color(sk["type"])
+	if actor.role == "ally":
+		FX.number(self, actor.center() + Vector3(0, 1.2, 0), Loc.tx(sk["name"]), col)
+	# brilho de carga no Eco durante a antecipação
+	var style: String = sk.get("fx", "")
+	if sk["kind"] in ["projectile", "aoe"]:
+		SkillFX.particles(self, actor.center(), col, 10, 0.35, 1.5, Vector3.ZERO, MonsterModel._sph(0.07, 6), 180.0)
+	var delay := SkillFX.windup(SkillFX.anim_for(sk))
+	get_tree().create_timer(delay).timeout.connect(func():
+		if is_instance_valid(actor) and not actor.dead:
+			_skill_effect(actor, s, target if is_instance_valid(target) else null))
+
+
+func _skill_effect(actor: MonsterActor, s: String, target: Node3D) -> void:
 	var sk: Dictionary = GameData.db().skills[s]
 	var col := FX.type_color(sk["type"])
 	var power := float(sk["power"])
-	if actor.role == "ally":
-		FX.number(self, actor.center() + Vector3(0, 1.2, 0), Loc.tx(sk["name"]), col)
+	var style: String = sk.get("fx", "")
 	match sk["kind"]:
 		"projectile":
 			if target == null:
 				return
+			if style in SkillFX.INSTANT_STYLES:
+				var tp: Vector3 = target.center() if target.has_method("center") else target.global_position + Vector3(0, 0.8, 0)
+				if style == "bolt":
+					SkillFX.bolt_strike(self, tp, col)
+					if rig:
+						rig.shake = minf(1.0, rig.shake + 0.2)
+				else:
+					SkillFX.prism_beam(self, actor.center(), tp)
+				resolve_hit(actor, target, power, sk["type"])
+				Audio.play("skill_shot", 0.15)
+				return
 			var pr := Projectile.new().setup(actor.center(), target, col, func():
 				if is_instance_valid(actor) and is_instance_valid(target):
-					resolve_hit(actor, target, power, sk["type"]))
+					resolve_hit(actor, target, power, sk["type"]), style)
 			add_child(pr)
 			Audio.play("skill_shot", 0.15)
 		"melee":
 			if target == null:
 				return
-			FX.beam(self, actor.center(), target.global_position + Vector3(0, 0.8, 0), col, 0.2)
+			var tp: Vector3 = target.global_position + Vector3(0, 0.8, 0)
+			match style:
+				"whip":
+					SkillFX.whip(self, actor.center(), tp, col)
+				"rush":
+					SkillFX.rush_trail(self, actor, col)
+					actor.knockback((target.global_position - actor.global_position).normalized() * 9.0)
+				"fang":
+					SkillFX.fang(self, tp, col)
+				"slam":
+					SkillFX.slam(self, target.global_position, col, self)
+					if rig:
+						rig.shake = minf(1.0, rig.shake + 0.35)
+				"claw":
+					SkillFX.claw(self, tp, col)
+				_:
+					FX.beam(self, actor.center(), tp, col, 0.2)
 			resolve_hit(actor, target, power, sk["type"])
-			FX.burst(self, target.global_position + Vector3(0, 0.8, 0), col, 14, 4.0, false, true)
+			FX.burst(self, tp, col, 10, 4.0, false, true)
 			Audio.play("hit_hard", 0.15)
 		"aoe":
 			var rr := float(sk["range"])
-			FX.ring(self, actor.global_position, col, rr, 0.5)
-			FX.burst(self, actor.global_position + Vector3(0, 0.5, 0), col, 26, 6.0, false, true, 0.9)
 			if rig:
-				rig.shake = minf(1.0, rig.shake + 0.3)
+				rig.shake = minf(1.0, rig.shake + (0.45 if style in ["quake", "eruption", "storm"] else 0.25))
 			Audio.play("skill_aoe", 0.1)
 			var victims: Array = []
 			for w in wilds + [boss, trainer_enemy, ally, player]:
 				if w != null and is_instance_valid(w) and w != actor and w.global_position.distance_to(actor.global_position) <= rr:
 					if (w is MonsterActor and actor.is_enemy_of(w)) or (w is Player and actor.is_enemy_of(w)):
 						victims.append(w)
+			SkillFX.aoe(self, style, actor.global_position, rr, col, self, victims)
 			for v in victims:
 				resolve_hit(actor, v, power * (0.7 if victims.size() > 1 else 1.0), sk["type"])
 		"heal":
 			actor.heal_frac(power / 100.0)
+			SkillFX.support(self, style, actor, col)
 			Audio.play("heal")
 		"buff":
 			actor.buff_t = 8.0
-			FX.ring(self, actor.global_position, col, 2.0, 0.5)
+			SkillFX.support(self, style, actor, col)
 			Audio.play("buff")
+
+
+func _update_wind(delta: float) -> void:
+	if wind == null:
+		return
+	wind.update(delta)
+	for m in _wind_mats:
+		wind.apply(m)
+	if rig and rig.cam:
+		wind_fx.follow(rig.cam.global_position, -rig.cam.global_basis.z)
+	# quem abre caminho na grama: jogador, parceiro e os Ecos selvagens mais próximos
+	_pushers.clear()
+	_pushers.append(Vector4(player.global_position.x, player.global_position.y, player.global_position.z, 1.3))
+	if ally != null and is_instance_valid(ally) and not ally.dead:
+		_pushers.append(Vector4(ally.global_position.x, ally.global_position.y, ally.global_position.z, 0.9 + ally.radius))
+	var near: Array = []
+	for w in wilds + [boss]:
+		if w != null and is_instance_valid(w) and not w.dead:
+			var d: float = w.global_position.distance_squared_to(player.global_position)
+			if d < 900.0:
+				near.append([d, w])
+	near.sort_custom(func(a, b): return a[0] < b[0])
+	for e in near:
+		if _pushers.size() >= 4:
+			break
+		var w: MonsterActor = e[1]
+		_pushers.append(Vector4(w.global_position.x, w.global_position.y, w.global_position.z, 0.9 + w.radius))
+	while _pushers.size() < 4:
+		_pushers.append(Vector4.ZERO)
+	for gm in sky.grass_mats:
+		(gm as ShaderMaterial).set_shader_parameter("pushers", _pushers)
+
+
+func cut_grass(at: Vector3, r: float) -> int:
+	## Golpes cortam a grama (como num campo de verdade); capim alto às vezes solta fibra ou erva.
+	var n := 0
+	var drops := {}
+	for gf in [grass, tall_grass]:
+		if gf == null:
+			continue
+		var cut: Array = (gf as GrassField).cut(at, r)
+		n += cut.size()
+		if gf == tall_grass:
+			for p in cut:
+				var roll := rng.randf()
+				if roll < 0.04:
+					drops["fibra"] = int(drops.get("fibra", 0)) + 1
+				elif roll < 0.046:
+					drops["erva_vital"] = int(drops.get("erva_vital", 0)) + 1
+	if n > 0:
+		var col := Color(md["biome"]["ground"][1]).lightened(0.15)
+		FX.burst(self, at + Vector3(0, 0.4, 0), col, mini(6 + n, 22), 3.5, true, false, 0.8)
+		Audio.play("gather_plant", 0.25)
+	for id in drops:
+		Game.state.inv.add(id, int(drops[id]))
+		Game.notify(Loc.t("got_item", [drops[id], Loc.item_name(id)]), "item")
+	if not drops.is_empty():
+		hud.refresh()
+	return n
 
 
 func player_attack() -> void:
@@ -1007,18 +1142,27 @@ func player_attack() -> void:
 		if d < best_d and (to.dot(player.facing()) > 0.2 or d < 1.2):
 			best = w
 			best_d = d
-	player.model.play_swing("attack")
+	# combo de 3 golpes: horizontal, revés e golpe final por cima (mais forte)
+	_combo = (_combo + 1) % 3 if _combo_clock > 0.0 else 0
+	_combo_clock = 0.85
+	if best != null:
+		player.face_towards(best.global_position)
+	player.model.play_swing("attack", _combo)
 	Audio.play("swing", 0.1)
+	var wid0 := Game.state.inv.best_weapon_id()
+	var wcol := Color(GameData.db().item(wid0).get("color", "#e8f0ff")) if wid0 != "" else Color("#e8f0ff")
+	SkillFX.slash(self, player.global_position + Vector3(0, 0.9, 0), player.facing(), wcol.lightened(0.4), _combo)
+	cut_grass(player.global_position + player.facing() * 1.1, 1.5 if _combo < 2 else 2.0)
 	if best == null:
 		return
-	player.face_towards(best.global_position)
 	var dmg := CombatLogic.player_damage(Game.state.level, Game.state.inv.best_weapon_dmg())
-	best.take_hit(dmg, 1.0, false, player)
-	best.knockback((best.global_position - player.global_position).normalized() * 4.0)
+	if _combo == 2:
+		dmg = int(dmg * 1.35)
+	best.take_hit(dmg, 1.0, _combo == 2, player)
+	best.knockback((best.global_position - player.global_position).normalized() * (4.0 if _combo < 2 else 7.0))
 	_hit_stop(0.05)
 	var wid := Game.state.inv.best_weapon_id()
-	if wid != "" and Game.state.inv.use_durability(wid):
-		Game.notify(Loc.t("tool_broke", [Loc.item_name(wid)]), "warn")
+	if wid != "" and wear_gear(wid):
 		_update_held()
 	_focus = best
 	Audio.play("hit_soft", 0.15)
@@ -1841,13 +1985,24 @@ func _gather(n: ResourceNode) -> void:
 	if rig:
 		rig.shake = minf(1.0, rig.shake + 0.08)
 	var depleted := n.hit(power)
-	if held != "" and st.inv.use_durability(held):
-		Game.notify(Loc.t("tool_broke", [Loc.item_name(held)]), "warn")
+	if held != "" and wear_gear(held):
 		Audio.play("error")
 		_update_held()
 	if not depleted:
 		return
 	_on_node_depleted(n)
+
+
+func wear_gear(id: String) -> bool:
+	## Gasta 1 de durabilidade; avisa quando está acabando (dá para reparar) e quando quebra.
+	var inv: Inventory = Game.state.inv
+	if inv.use_durability(id):
+		Game.notify(Loc.t("tool_broke", [Loc.item_name(id)]), "warn")
+		return true
+	var mx := Inventory.max_dur(id)
+	if mx > 0 and inv.durability_of(id) == maxi(1, int(mx * 0.15)):
+		Game.notify(Loc.t("worn_hint", [Loc.item_name(id)]), "warn")
+	return false
 
 
 func _on_node_depleted(n: ResourceNode) -> void:
@@ -1856,8 +2011,8 @@ func _on_node_depleted(n: ResourceNode) -> void:
 	var nd := n.nd
 	if n.is_barrier():
 		var tool_id := tool_item_for(n)
-		if tool_id != "" and st.inv.max_dur(tool_id) > 0 and st.inv.use_durability(tool_id):
-			Game.notify(Loc.t("tool_broke", [Loc.item_name(tool_id)]), "warn")
+		if tool_id != "" and st.inv.max_dur(tool_id) > 0:
+			wear_gear(tool_id)
 		n.set_harvested(true)
 		ms["barriers"].append(n.key)
 		Game.add_xp(int(nd["xp"]))
@@ -2127,8 +2282,8 @@ func _process(delta: float) -> void:
 	_update_tut_arrow()
 	if rig and rig.cam:
 		sky.follow(rig.cam.global_position)
-	if sky.grass_mat != null:
-		sky.grass_mat.set_shader_parameter("player_pos", player.global_position)
+	_update_wind(delta)
+	_combo_clock -= delta
 	_auto_gather(delta)
 	if current_target != null and not is_instance_valid(current_target):
 		current_target = null

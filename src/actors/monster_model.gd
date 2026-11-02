@@ -26,6 +26,16 @@ var move_speed := 0.0  # 0..1 (definido pelo ator)
 var flying := false
 var _t := 0.0
 var _attack_t := 0.0
+var _atk_dur := 0.45
+var _atk_style := "bite"
+var _basic_alt := false
+var _hurt_dir := Vector3.ZERO
+var in_combat := false
+var _flash_req := 0.0
+var _flash_tint := Color.WHITE
+var _combat_k := 0.0
+const ATTACK_DUR := {"bite": 0.42, "pounce": 0.6, "slam": 0.75, "spin": 0.55, "cast": 0.5, "charge": 0.6,
+	"dive": 0.6, "coil": 0.55, "punch": 0.55, "roar": 0.7, "glow": 0.6, "bounce": 0.5}
 var _hurt_t := 0.0
 var _happy_t := 0.0
 var fainted := false
@@ -621,12 +631,46 @@ static func blob_shadow_mat() -> Material:
 
 
 # ------------------------------------------------------------------ animação
-func play_attack() -> void:
-	_attack_t = 0.35
+func play_attack(style: String = "", tint: Color = Color.WHITE) -> void:
+	## Estilos: bite, pounce, slam, spin, cast, charge, dive, coil, punch, roar, glow, bounce.
+	## Sem estilo: golpe básico típico do formato do corpo (alternando entre dois).
+	if style == "":
+		_basic_alt = not _basic_alt
+		match shape:
+			"quad":
+				style = "pounce" if _basic_alt else "bite"
+			"round":
+				style = "bounce" if _basic_alt else "bite"
+			"bird":
+				style = "dive" if _basic_alt else "bite"
+			"serpent":
+				style = "coil"
+			"golem":
+				style = "punch" if _basic_alt else "slam"
+			"biped":
+				style = "punch" if _basic_alt else "spin"
+			_:
+				style = "bite"
+	_atk_style = style
+	_flash_tint = tint
+	_atk_dur = ATTACK_DUR.get(style, 0.45)
+	_attack_t = _atk_dur
 
 
-func play_hurt() -> void:
-	_hurt_t = 0.3
+func basic_windup() -> float:
+	## Antecipação do próximo golpe básico (para o dano coincidir com o impacto visual).
+	match shape:
+		"golem":
+			return 0.26
+		"quad", "bird":
+			return 0.2
+	return 0.16
+
+
+func play_hurt(from_dir: Vector3 = Vector3.ZERO) -> void:
+	_hurt_t = 0.32
+	_hurt_dir = from_dir
+	_flash_tint = Color.WHITE
 
 
 func play_happy() -> void:
@@ -694,12 +738,20 @@ func _process(delta: float) -> void:
 		tail.rotation.y = sin(_t * 3.0) * 0.35
 	if head != null and head != body:
 		head.rotation.x = sin(_t * 1.3) * 0.06
-	# ataque: avanço rápido
+	# postura de luta: inclina para frente e balança como quem espera a brecha
+	_combat_k = move_toward(_combat_k, 1.0 if in_combat and not fainted else 0.0, delta * 3.0)
+	if _combat_k > 0.0:
+		rot.x += 0.12 * _combat_k
+		pos.x += sin(_t * 3.4) * 0.05 * s * _combat_k
+		pos.y += absf(sin(_t * 6.8)) * 0.03 * s * _combat_k
+	# ataque: antecipação -> golpe -> recuperação, diferente para cada estilo
 	if _attack_t > 0.0:
 		_attack_t -= delta
-		var k := sin((0.35 - _attack_t) / 0.35 * PI)
-		pos.z -= k * 0.35 * s
-		scl *= Vector3(1.0 + k * 0.1, 1.0 - k * 0.1, 1.0 + k * 0.15)
+		var k := clampf(1.0 - _attack_t / _atk_dur, 0.0, 1.0)
+		var a := _anim_attack(k)
+		pos += a[0]
+		rot += a[1]
+		scl *= a[2]
 	# alegria: pulinhos
 	if _happy_t > 0.0:
 		_happy_t -= delta
@@ -708,10 +760,18 @@ func _process(delta: float) -> void:
 	# dano: tremida + flash
 	if _hurt_t > 0.0:
 		_hurt_t -= delta
-		pos.x += sin(_hurt_t * 80.0) * 0.06 * s
-		_set_flash(clampf(_hurt_t / 0.3, 0.0, 1.0) * 0.7)
+		var hk := clampf(_hurt_t / 0.32, 0.0, 1.0)
+		# recuo (inclina para trás), achata e treme
+		pos.x += sin(_hurt_t * 80.0) * 0.05 * s * hk
+		pos.z += 0.22 * s * hk * hk
+		rot.x -= 0.35 * hk * hk
+		scl *= Vector3(1.0 + 0.12 * hk, 1.0 - 0.15 * hk, 1.0 + 0.12 * hk)
+		_set_flash(maxf(hk * 0.75, _flash_req))
+	elif _flash_req > 0.0:
+		_set_flash(_flash_req)
 	elif _flash_mat != null and _flash_mat.albedo_color.a > 0.0:
 		_set_flash(0.0)
+	_flash_req = 0.0
 	# desmaio: tomba de lado
 	_faint_k = move_toward(_faint_k, 1.0 if fainted else 0.0, delta * 3.0)
 	rot.z += _faint_k * PI * 0.5
@@ -721,8 +781,132 @@ func _process(delta: float) -> void:
 	root_pivot.scale = scl
 
 
+static func _phase(k: float, wind: float, strike: float) -> Array:
+	## Divide 0..1 em antecipação (0..wind), golpe (wind..strike) e recuperação (strike..1).
+	## Devolve [w, h, r]: quanto da antecipação (sobe e fica até o golpe), do golpe e da recuperação.
+	var w := smoothstep(0.0, wind, k)
+	var h := clampf((k - wind) / maxf(strike - wind, 0.001), 0.0, 1.0)
+	var r := clampf((k - strike) / maxf(1.0 - strike, 0.001), 0.0, 1.0)
+	return [w, h, r]
+
+
+func _anim_attack(k: float) -> Array:
+	## [deslocamento, rotação, escala] do corpo para o estilo atual. -Z é a frente.
+	var p := Vector3.ZERO
+	var r := Vector3.ZERO
+	var sc := Vector3.ONE
+	match _atk_style:
+		"bite":
+			var ph := _phase(k, 0.35, 0.55)
+			var wind: float = ph[0] * (1.0 - ph[1])
+			var hit: float = sin(float(ph[1]) * PI * 0.5) * (1.0 - ease(float(ph[2]), 0.6))
+			p.z += 0.18 * s * wind - 0.5 * s * hit
+			r.x += -0.3 * wind + 0.35 * hit
+			sc = Vector3(1.0 - 0.06 * wind + 0.08 * hit, 1.0 + 0.08 * wind - 0.08 * hit, 1.0 + 0.2 * hit)
+			if head != null and head != body:
+				head.rotation.x += -0.5 * wind + 0.4 * hit
+		"pounce":
+			var ph := _phase(k, 0.3, 0.6)
+			var wind: float = ph[0] * (1.0 - ph[1])
+			var air: float = sin(float(ph[1]) * PI)
+			var fwd: float = float(ph[1]) * (1.0 - float(ph[2]))
+			p.y += air * 0.55 * s - 0.08 * s * wind
+			p.z += 0.15 * s * wind - 0.8 * s * fwd
+			r.x += 0.3 * wind - 0.35 * air + 0.25 * fwd * (1.0 - air)
+			var land := maxf(0.0, 1.0 - absf(float(ph[2]) - 0.1) * 6.0)
+			sc = Vector3(1.0 + 0.15 * wind + 0.15 * land, 1.0 - 0.22 * wind + 0.12 * air - 0.2 * land, 1.0 + 0.15 * wind)
+		"bounce":
+			var ph := _phase(k, 0.3, 0.6)
+			var wind: float = ph[0] * (1.0 - ph[1])
+			var air: float = sin(float(ph[1]) * PI)
+			p.y += air * 0.6 * s
+			p.z -= float(ph[1]) * (1.0 - float(ph[2])) * 0.6 * s
+			var land := maxf(0.0, 1.0 - absf(float(ph[2]) - 0.1) * 5.0)
+			sc = Vector3(1.0 + 0.25 * wind + 0.3 * land, 1.0 - 0.3 * wind + 0.2 * air - 0.35 * land, 1.0 + 0.25 * wind + 0.3 * land)
+		"slam":
+			var ph := _phase(k, 0.45, 0.58)
+			var up: float = ph[0] * (1.0 - ph[1])
+			var impact: float = ph[1] * (1.0 - ease(float(ph[2]), 0.5))
+			p.y += 0.75 * s * up
+			p.z += -0.25 * s * impact
+			r.x += -0.45 * up + 0.3 * impact
+			sc = Vector3(1.0 - 0.08 * up + 0.3 * impact, 1.0 + 0.12 * up - 0.32 * impact, 1.0 - 0.08 * up + 0.3 * impact)
+			for w in wings:
+				if shape == "golem":
+					w[0].rotation.x += -2.6 * up + 0.5 * impact
+		"spin":
+			var ph := _phase(k, 0.3, 0.65)
+			var wind: float = ph[0] * (1.0 - ph[1])
+			r.y += -0.6 * wind + TAU * ease(float(ph[1]), -2.0) * (1.0 if float(ph[2]) < 1.0 else 1.0)
+			r.z += sin(float(ph[1]) * PI) * 0.3
+			p.y += sin(float(ph[1]) * PI) * 0.2 * s
+			p.z -= sin(float(ph[1]) * PI) * 0.3 * s
+		"cast":
+			var ph := _phase(k, 0.4, 0.55)
+			var wind: float = ph[0] * (1.0 - ph[1])
+			var shot: float = ph[1] * (1.0 - ease(float(ph[2]), 0.7))
+			p.z += 0.15 * s * wind - 0.2 * s * shot
+			r.x += -0.35 * wind + 0.25 * shot
+			sc = Vector3.ONE * (1.0 + 0.1 * wind) + Vector3(0, 0, 0.12 * shot)
+			_flash_req = maxf(_flash_req, 0.35 * wind)
+		"charge":
+			var ph := _phase(k, 0.35, 0.6)
+			var wind: float = ph[0] * (1.0 - ph[1])
+			var go: float = ph[1] * (1.0 - float(ph[2]))
+			p.z += 0.3 * s * wind - 0.9 * s * go
+			p.y -= 0.08 * s * wind
+			r.x += 0.3 * wind + 0.2 * go
+			sc = Vector3(1.0 + 0.12 * wind, 1.0 - 0.15 * wind, 1.0 - 0.1 * wind + 0.3 * go)
+		"dive":
+			var ph := _phase(k, 0.4, 0.6)
+			var up: float = ph[0] * (1.0 - ph[1])
+			var dv: float = ph[1] * (1.0 - float(ph[2]))
+			p.y += 0.7 * s * up - 0.25 * s * dv
+			p.z += 0.2 * s * up - 0.9 * s * dv
+			r.x += -0.45 * up + 0.7 * dv
+			for w in wings:
+				w[0].rotation.z += w[1] * (1.1 * up - 0.6 * dv)
+		"coil":
+			var ph := _phase(k, 0.4, 0.55)
+			var wind: float = ph[0] * (1.0 - ph[1])
+			var st: float = ph[1] * (1.0 - ease(float(ph[2]), 0.6))
+			p.z += 0.35 * s * wind - 0.85 * s * st
+			p.y += 0.25 * s * wind
+			r.x += -0.4 * wind + 0.3 * st
+			sc = Vector3(1.0 + 0.1 * wind, 1.0 + 0.1 * wind, 1.0 - 0.25 * wind + 0.35 * st)
+		"punch":
+			var ph := _phase(k, 0.4, 0.55)
+			var wind: float = ph[0] * (1.0 - ph[1])
+			var hit: float = ph[1] * (1.0 - ease(float(ph[2]), 0.6))
+			r.y += 0.5 * wind - 0.4 * hit
+			p.z += 0.1 * s * wind - 0.35 * s * hit
+			r.x += 0.2 * hit
+			for w in wings:
+				if shape == "golem":
+					var lead: bool = w[1] > 0
+					w[0].rotation.x += (-2.2 * wind + 1.8 * hit) if lead else (0.4 * wind - 0.3 * hit)
+				else:
+					w[0].rotation.z += w[1] * (0.8 * wind - 0.5 * hit)
+		"roar", "glow":
+			var ph := _phase(k, 0.35, 0.5)
+			var wind: float = ph[0] * (1.0 - ph[1])
+			var peak: float = ph[1] * (1.0 - ease(float(ph[2]), 0.5))
+			r.x += -0.5 * wind - 0.2 * peak
+			p.y += 0.2 * s * wind + 0.1 * s * peak
+			sc = Vector3.ONE * (1.0 + 0.08 * wind + 0.14 * peak)
+			p.x += sin(k * 90.0) * 0.03 * s * peak
+			if _atk_style == "glow" or peak > 0.0:
+				_flash_req = maxf(_flash_req, 0.45 * maxf(wind * 0.6, peak))
+			for w in wings:
+				if shape == "bird" or shape == "biped":
+					w[0].rotation.z += w[1] * 1.2 * (wind + peak)
+				elif shape == "golem":
+					w[0].rotation.x += -2.4 * (wind + peak) * 0.5
+	return [p, r, sc]
+
+
 func _set_flash(a: float) -> void:
-	_flash_mat.albedo_color = Color(1, 1, 1, a)
+	_flash_mat.albedo_color = Color(_flash_tint.r, _flash_tint.g, _flash_tint.b, a)
 	for mi in _mats:
 		if is_instance_valid(mi):
 			mi.material_overlay = _flash_mat if a > 0.0 else null

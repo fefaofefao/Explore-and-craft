@@ -175,3 +175,21 @@ func test_analytics_and_ads_config() -> void:
 		ids.append(p["id"])
 		check(float(p["price_usd"]) > 0.0, "preço " + p["id"])
 	check("remove_ads" in ids and "season_pass" in ids and "starter_pack" in ids, "produtos principais")
+
+
+func test_every_skill_has_a_known_visual_style() -> void:
+	var styles := SkillFX.all_styles()
+	var used := {}
+	for s in GameData.db().skills:
+		var sk: Dictionary = GameData.db().skills[s]
+		check(sk.has("fx") and sk["fx"] in styles, "%s tem estilo visual válido" % s)
+		used[sk.get("fx", "")] = true
+		check(SkillFX.windup(SkillFX.anim_for(sk)) > 0.05, "%s tem antecipação" % s)
+	check(used.size() >= 25, "ataques variados (%d estilos)" % used.size())
+
+
+func test_biomes_have_wind_and_landscape_params() -> void:
+	for id in GameData.db().maps:
+		var b: Dictionary = GameData.db().maps[id]["biome"]
+		check(float(b.get("wind", 0)) > 0.0, "%s tem vento" % id)
+		check(b.has("tall_grass") and b.has("boulders"), "%s tem capim alto e rochedos" % id)

@@ -175,7 +175,7 @@ func take_hit(dmg: int, mult: float, crit: bool, from: Node3D = null) -> void:
 	if dead or capturing:
 		return
 	m["hp"] = maxi(0, int(m["hp"]) - dmg)
-	model.play_hurt()
+	model.play_hurt((global_position - from.global_position).normalized() if from != null and is_instance_valid(from) else Vector3.ZERO)
 	_bar_show = 4.0
 	_bar_root.visible = true
 	_update_bar()
@@ -271,6 +271,7 @@ func _physics_process(delta: float) -> void:
 		_decide()
 	var want := Vector3.ZERO
 	var spd := speed
+	model.in_combat = state == "chase" and target != null and is_instance_valid(target) and (target is Player or (target is MonsterActor and is_enemy_of(target)))
 	match state:
 		"wander":
 			want = _wander_to - global_position
@@ -471,9 +472,8 @@ func _try_attack() -> void:
 			cast(s)
 			return
 	model.play_attack()
-	Audio.play("hit_soft", 0.2)
 	var t1: String = types()[0]
-	world.resolve_hit(self, target, float(cfgc["basic_power"]), t1)
+	world.delayed_hit(self, target, float(cfgc["basic_power"]), t1, model.basic_windup())
 
 
 func skill_ready(s: String) -> bool:
@@ -485,7 +485,7 @@ func cast(s: String) -> bool:
 		return false
 	var sk: Dictionary = GameData.db().skills[s]
 	skill_cd[s] = float(sk["cd"])
-	model.play_attack()
+	model.play_attack(SkillFX.anim_for(sk), FX.type_color(sk["type"]))
 	world.cast_skill(self, s, target)
 	return true
 

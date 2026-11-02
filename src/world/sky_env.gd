@@ -8,7 +8,7 @@ var sun: DirectionalLight3D
 var moon: DirectionalLight3D
 var biome: Dictionary
 var quality: int = 1
-var grass_mat: ShaderMaterial
+var grass_mats: Array = []
 var grass_light := 1.0
 var clouds: MeshInstance3D
 var cloud_mat: ShaderMaterial
@@ -28,7 +28,7 @@ func setup(p_biome: Dictionary, p_quality: int) -> void:
 	quality = p_quality
 	_sky_top = Color(biome["sky_top"])
 	_sky_hor = Color(biome["sky_horizon"])
-	_fog = Color(biome["fog"])
+	_fog = Color(biome["fog"]).lerp(Color(biome["sky_horizon"]), 0.35)
 	_sun_col = Color(biome["sun"])
 	_amb = Color(biome["ambient"])
 	var we := WorldEnvironment.new()
@@ -54,7 +54,7 @@ func setup(p_biome: Dictionary, p_quality: int) -> void:
 	env.fog_enabled = true
 	env.fog_light_color = _fog
 	env.fog_density = float(biome["fog_density"]) * 0.45
-	env.fog_sky_affect = 0.2
+	env.fog_sky_affect = 0.3
 	env.fog_aerial_perspective = 0.0
 	env.glow_enabled = quality >= 2
 	env.glow_intensity = 0.35
@@ -69,8 +69,8 @@ func setup(p_biome: Dictionary, p_quality: int) -> void:
 	sun.light_color = _sun_col
 	sun.light_energy = 1.25
 	sun.shadow_enabled = quality >= 1
-	sun.shadow_bias = 0.04
-	sun.shadow_normal_bias = 1.2
+	sun.shadow_bias = 0.09
+	sun.shadow_normal_bias = 2.2
 	sun.directional_shadow_mode = DirectionalLight3D.SHADOW_PARALLEL_2_SPLITS
 	sun.directional_shadow_max_distance = 50.0 if quality < 2 else 75.0
 	sun.directional_shadow_blend_splits = true
@@ -124,8 +124,8 @@ func update_time(day_time: float) -> void:
 	if cloud_mat != null:
 		cloud_mat.set_shader_parameter("light", lerpf(0.18, 1.0, sf))
 		cloud_mat.set_shader_parameter("cloud_color", Color.WHITE.lerp(Color("#ffc890"), dusk))
-	if grass_mat != null:
-		grass_mat.set_shader_parameter("light_mult", grass_light)
+	for gm in grass_mats:
+		(gm as ShaderMaterial).set_shader_parameter("light_mult", grass_light)
 
 
 func follow(cam_pos: Vector3) -> void:

@@ -70,7 +70,17 @@ func raw_height(x: float, z: float) -> float:
 	var n := (noise.get_noise_2d(x, z) * 0.5 + 0.5)
 	var r := ridge.get_noise_2d(x, z) * 0.5 + 0.5
 	var mtn := float(biome["mountains"])
-	var h := 1.5 + n * hamp + pow(r, 2.0) * hamp * 1.6 * mtn
+	# montanhas em platôs: a parte "rochosa" do relevo sobe em degraus suaves (penhascos com topo plano)
+	var m_part := pow(r, 2.0) * hamp * 1.6 * mtn
+	var terr := float(biome.get("terrace", 0.6))
+	if terr > 0.0 and m_part > 1.0:
+		var stp := float(biome.get("terrace_step", 3.4))
+		var t := m_part / stp
+		var stepped: float = (floor(t) + smoothstep(0.3, 0.7, t - floor(t))) * stp
+		m_part = lerpf(m_part, stepped, terr * clampf((m_part - 1.0) / 3.0, 0.0, 1.0))
+	var h := 1.5 + n * hamp + m_part
+	# colinas suaves com ondulação extra (vales e lombadas como campos abertos)
+	h += sin(x * 0.045 + noise.get_noise_2d(z * 0.5, x * 0.5) * 3.0) * 0.45 * hamp * 0.06
 	h += detail.get_noise_2d(x, z) * 0.35
 	var mask := island_mask(x, z)
 	return lerpf(-5.0, h, mask)
