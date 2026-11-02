@@ -182,7 +182,7 @@ func _tab_inventory() -> void:
 	h.add_child(sc)
 	for i in st.inv.slots.size():
 		var s: Dictionary = st.inv.slots[i]
-		var slot := Widgets.item_slot(s.get("id", ""), int(s.get("n", 0)), 76, i == _sel_slot)
+		var slot := Widgets.item_slot(s.get("id", ""), int(s.get("n", 0)), 76, i == _sel_slot, int(s.get("d", -1)))
 		var idx := i
 		slot.gui_input.connect(func(ev):
 			if (ev is InputEventScreenTouch and ev.pressed) or (ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT):
@@ -213,6 +213,8 @@ func _tab_inventory() -> void:
 	var d := UiTheme.label(Loc.tx(it["desc"]), 19, UiTheme.TEXT, 700)
 	d.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	side.add_child(d)
+	if Inventory.max_dur(s["id"]) > 0:
+		side.add_child(UiTheme.label(Loc.t("durability", [int(s.get("d", Inventory.max_dur(s["id"]))), Inventory.max_dur(s["id"])]), 18, UiTheme.GOLD, 800))
 	if it.has("food"):
 		var b := UiTheme.button(Loc.t("eat"), UiTheme.GOOD.darkened(0.45))
 		b.pressed.connect(func():
@@ -312,6 +314,10 @@ func _recipe_row(rid: String, near: Array) -> Control:
 	v.add_child(UiTheme.label("%s%s" % [Loc.item_name(r["out"]), (" ×%d" % r["n"]) if int(r["n"]) > 1 else ""], 22, Color.WHITE, 900))
 	if not CraftLogic.recipe_unlocked(st, rid):
 		v.add_child(UiTheme.label(Loc.t("needs_level", [r["lvl"]]), 17, UiTheme.DANGER, 800))
+	elif chk["reason"] == "owned":
+		var ol := UiTheme.label(Loc.t("already_owned", [Loc.item_name(r["out"])]) + "  " + Loc.t("durability", [st.inv.durability_of(r["out"]), Inventory.max_dur(r["out"])]) if Inventory.max_dur(r["out"]) > 0 else Loc.t("already_owned", [Loc.item_name(r["out"])]), 16, UiTheme.GOLD, 800)
+		ol.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		v.add_child(ol)
 	else:
 		v.add_child(Widgets.cost_row(r["in"], st.inv, 16))
 	var b := UiTheme.button(Loc.t("craft"), UiTheme.GOOD.darkened(0.45) if chk["ok"] else UiTheme.BG2, 20, Vector2(120, 58))
@@ -879,7 +885,7 @@ func _tab_pass() -> void:
 		head.add_child(ub)
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 8)
-	var sc := ScrollContainer.new()
+	var sc := DragScroll.new()
 	sc.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	sc.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	sc.add_child(row)
@@ -971,6 +977,13 @@ func _tab_settings() -> void:
 			Game.save_settings()
 			refresh())
 		qh.add_child(b)
+	var ag := CheckButton.new()
+	ag.text = Loc.t("auto_gather")
+	ag.button_pressed = Game.settings.get("auto_gather", true)
+	ag.toggled.connect(func(on):
+		Game.settings["auto_gather"] = on
+		Game.save_settings())
+	list.add_child(ag)
 	var vb := CheckButton.new()
 	vb.text = Loc.t("vibration")
 	vb.button_pressed = Game.settings["vibration"]

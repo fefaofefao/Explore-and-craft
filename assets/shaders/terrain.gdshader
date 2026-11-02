@@ -3,6 +3,9 @@ render_mode diffuse_lambert_wrap, specular_disabled;
 // Terreno estilizado: mistura grama/terra/areia/rocha/topo por altura, inclinação e ruído em espaço de mundo.
 
 uniform sampler2D noise_tex : filter_linear_mipmap, repeat_enable;
+uniform sampler2D height_tex : filter_linear, repeat_disable;
+uniform float map_half = 120.0;
+uniform vec4 deep_tint : source_color = vec4(0.12, 0.32, 0.38, 1.0);
 uniform vec4 grass_a : source_color = vec4(0.31, 0.56, 0.23, 1.0);
 uniform vec4 grass_b : source_color = vec4(0.53, 0.76, 0.35, 1.0);
 uniform vec4 grass_c : source_color = vec4(0.42, 0.67, 0.27, 1.0);
@@ -53,6 +56,20 @@ void fragment() {
 	// micro variação e oclusão nas reentrâncias
 	col *= 0.9 + n3.r * 0.2;
 	col *= mix(0.82, 1.0, clamp(wnorm.y * 1.3, 0.0, 1.0));
+	// oclusão de vales: compara a altura local com a média ao redor (mapa de alturas)
+	vec2 huv = (wpos.xz + vec2(map_half)) / (2.0 * map_half);
+	float px = 3.0 / 129.0;
+	float avg = (texture(height_tex, huv + vec2(px, 0.0)).r + texture(height_tex, huv - vec2(px, 0.0)).r
+		+ texture(height_tex, huv + vec2(0.0, px)).r + texture(height_tex, huv - vec2(0.0, px)).r) * 0.25;
+	float cavity = clamp((avg - texture(height_tex, huv).r) * 16.0 * 0.55, 0.0, 0.38);
+	col *= 1.0 - cavity;
+	// manchas de luz/sombra grandes (pintura) e sombras de nuvens passando
+	col *= 0.94 + n1.b * 0.12;
+	float cloud = smoothstep(0.52, 0.78, texture(noise_tex, wpos.xz * 0.0035 + vec2(TIME * 0.004, TIME * 0.0025)).r);
+	col *= 1.0 - cloud * 0.2;
+	// fundo submerso: escurece e tinge conforme a profundidade (dá volume à água)
+	float under = clamp((water_level - 0.15 - h) / 4.0, 0.0, 1.0);
+	col = mix(col, deep_tint.rgb * (0.6 + n2.r * 0.3), under * 0.85);
 	ALBEDO = col;
 	ROUGHNESS = 1.0;
 }

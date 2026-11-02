@@ -25,6 +25,36 @@ static func stack_of(id: String) -> int:
 	return int(GameData.db().item(id).get("stack", 99))
 
 
+static func max_dur(id: String) -> int:
+	## Durabilidade máxima (usos) de ferramentas e armas; 0 = não se desgasta.
+	return int(GameData.db().item(id).get("dur", 0))
+
+
+func use_durability(id: String, amount: int = 1) -> bool:
+	## Gasta durabilidade do primeiro item com esse id. Devolve true se ele quebrou (e sai da mochila).
+	if infinite or max_dur(id) <= 0:
+		return false
+	for i in slots.size():
+		var sl: Dictionary = slots[i]
+		if sl.is_empty() or sl["id"] != id:
+			continue
+		sl["d"] = int(sl.get("d", max_dur(id))) - amount
+		if int(sl["d"]) <= 0:
+			slots[i] = {}
+			changed.emit()
+			return true
+		changed.emit()
+		return false
+	return false
+
+
+func durability_of(id: String) -> int:
+	for sl in slots:
+		if not sl.is_empty() and sl["id"] == id:
+			return int(sl.get("d", max_dur(id)))
+	return 0
+
+
 func count(id: String) -> int:
 	var c := 0
 	for s in slots:
@@ -75,6 +105,8 @@ func add(id: String, n: int = 1) -> int:
 		if slots[i].is_empty():
 			var put: int = min(st, left)
 			slots[i] = {"id": id, "n": put}
+			if max_dur(id) > 0:
+				slots[i]["d"] = max_dur(id)
 			left -= put
 	if left != n:
 		changed.emit()
@@ -175,6 +207,9 @@ func sort_slots() -> void:
 	# junta pilhas incompletas
 	var merged: Array = []
 	for s in filled:
+		if stack_of(s["id"]) == 1:
+			merged.append(s.duplicate())
+			continue
 		var st := stack_of(s["id"])
 		var n := int(s["n"])
 		for m in merged:
@@ -202,7 +237,10 @@ func from_dict(d: Dictionary) -> void:
 	slots = []
 	for s in d.get("slots", []):
 		if s is Dictionary and not s.is_empty() and GameData.db().items.has(s.get("id", "")):
-			slots.append({"id": s["id"], "n": int(s["n"])})
+			var e := {"id": s["id"], "n": int(s["n"])}
+			if s.has("d"):
+				e["d"] = int(s["d"])
+			slots.append(e)
 		else:
 			slots.append({})
 	changed.emit()

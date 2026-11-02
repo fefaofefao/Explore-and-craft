@@ -52,7 +52,9 @@
     "arbusto": 45,
     "capim": 40,
     "cogumelos": 18,
-    "cristal": 4
+    "cristal": 4,
+    "erva": 16,
+    "flor_reviver": 3
    },
    "spawns": [
     [
@@ -237,7 +239,9 @@
     "cacto": 35,
     "monte_areia": 40,
     "capim": 10,
-    "cristal": 8
+    "cristal": 8,
+    "erva": 16,
+    "flor_reviver": 3
    },
    "spawns": [
     [
@@ -377,7 +381,9 @@
     "bloco_gelo": 30,
     "capim": 12,
     "arbusto": 10,
-    "cristal": 12
+    "cristal": 12,
+    "erva": 16,
+    "flor_reviver": 3
    },
    "spawns": [
     [
@@ -696,7 +702,9 @@
     "lodo_poca": 40,
     "cogumelos": 40,
     "capim": 30,
-    "cristal": 10
+    "cristal": 10,
+    "erva": 16,
+    "flor_reviver": 3
    },
    "spawns": [
     [
@@ -861,7 +869,9 @@
     "minerio": 20,
     "carvao_veio": 24,
     "obsidiana_veio": 22,
-    "cristal": 10
+    "cristal": 10,
+    "erva": 16,
+    "flor_reviver": 3
    },
    "spawns": [
     [
@@ -988,7 +998,9 @@
     "ninho_pena": 30,
     "capim": 30,
     "arbusto": 20,
-    "cristal": 14
+    "cristal": 14,
+    "erva": 16,
+    "flor_reviver": 3
    },
    "spawns": [
     [

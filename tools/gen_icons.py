@@ -181,6 +181,41 @@ def draw_icon(icon, c):
         ell(d, 34, 46, 58, 66, (190, 240, 255, 255), w=3)
         ell(d, 70, 46, 94, 66, (190, 240, 255, 255), w=3)
         ell(d, 50, 76, 78, 104, shade(c, 0.6), w=3)
+    elif icon == "herb":
+        for i, a in enumerate([-0.7, -0.25, 0.2, 0.65]):
+            cx, cy = 64 + math.sin(a) * 30, 70 - math.cos(a) * 30
+            poly(d, [(64, 110), (cx - 14, cy + 6), (cx, cy - 26), (cx + 14, cy + 6)], c if i % 2 else c3, w=3)
+        for (x, y) in [(40, 46), (64, 36), (88, 46)]:
+            ell(d, x - 6, y - 6, x + 6, y + 6, (230, 255, 170, 255), w=2)
+    elif icon == "bloom":
+        line(d, [(64, 116), (64, 64)], hexc("#4a8a3a"), 6)
+        for i in range(7):
+            a = i * math.tau / 7
+            ell(d, 64 + math.cos(a) * 24 - 16, 48 + math.sin(a) * 24 - 16, 64 + math.cos(a) * 24 + 16, 48 + math.sin(a) * 24 + 16, c, w=3)
+        ell(d, 50, 34, 78, 62, (255, 255, 230, 255), w=3)
+    elif icon == "net":
+        # Rede de Vínculo: aro de madeira com malha de corda e contas coloridas nos nós
+        ell(d, 14, 14, 114, 114, c2, w=0)
+        ell(d, 22, 22, 106, 106, (40, 32, 24, 255), w=0)
+        ring = c
+        for i in range(-3, 4):
+            x = 64 + i * 13
+            line(d, [(x - 30, 24), (x + 30, 104)], ring, 3)
+            line(d, [(x + 30, 24), (x - 30, 104)], ring, 3)
+        img2 = Image.new("RGBA", (W, W), (0, 0, 0, 0))
+        m2 = Image.new("L", (W, W), 0)
+        ImageDraw.Draw(m2).ellipse([P(22, 22), P(106, 106)], fill=255)
+        img2.paste(img, (0, 0), m2)
+        img = Image.new("RGBA", (W, W), (0, 0, 0, 0))
+        d = ImageDraw.Draw(img)
+        ell(d, 10, 10, 118, 118, hexc("#8a5a32"))
+        ell(d, 22, 22, 106, 106, (0, 0, 0, 0), w=0)
+        img.alpha_composite(img2)
+        d = ImageDraw.Draw(img)
+        d.ellipse([P(10, 10), P(118, 118)], outline=(20, 16, 28, 255), width=4 * K // 2)
+        d.ellipse([P(20, 20), P(108, 108)], outline=(20, 16, 28, 255), width=3 * K // 2)
+        for (x, y) in [(64, 16), (112, 64), (64, 112), (16, 64)]:
+            ell(d, x - 7, y - 7, x + 7, y + 7, c3, w=2)
     elif icon == "orb":
         # Esfera de Vínculo: orbe de cristal com anel de folhas e núcleo brilhante
         ell(d, 18, 18, 110, 110, shade(c, 0.55))
@@ -251,12 +286,24 @@ def app_icon():
     d.line([(515, 340), (515, 230)], fill=(63, 143, 46, 255), width=26)
     d.ellipse([380, 170, 520, 250], fill=(124, 214, 90, 255), outline=ol, width=14)
     d.ellipse([510, 150, 660, 240], fill=(124, 214, 90, 255), outline=ol, width=14)
-    # esfera
-    d.ellipse([690, 690, 920, 920], fill=(245, 245, 245, 255), outline=ol, width=18)
-    d.pieslice([690, 690, 920, 920], 180, 360, fill=(255, 90, 90, 255))
-    d.ellipse([690, 690, 920, 920], outline=ol, width=18)
-    d.line([(694, 805), (916, 805)], fill=ol, width=18)
-    d.ellipse([770, 770, 840, 840], fill=(255, 255, 255, 255), outline=ol, width=12)
+    # rede de vínculo (aro de madeira com malha)
+    hoop = Image.new("RGBA", (N, N), (0, 0, 0, 0))
+    hd = ImageDraw.Draw(hoop)
+    for i in range(-4, 5):
+        x = 805 + i * 26
+        hd.line([(x - 90, 700), (x + 90, 910)], fill=(240, 200, 120, 255), width=10)
+        hd.line([(x + 90, 700), (x - 90, 910)], fill=(240, 200, 120, 255), width=10)
+    hm = Image.new("L", (N, N), 0)
+    ImageDraw.Draw(hm).ellipse([700, 700, 910, 910], fill=255)
+    cut = Image.new("RGBA", (N, N), (0, 0, 0, 0))
+    cut.paste(hoop, (0, 0), hm)
+    d.ellipse([682, 682, 928, 928], fill=(60, 40, 30, 255))
+    img.alpha_composite(cut)
+    d = ImageDraw.Draw(img)
+    d.ellipse([682, 682, 928, 928], outline=(138, 90, 50, 255), width=26)
+    d.ellipse([668, 668, 942, 942], outline=ol, width=14)
+    for (x, y) in [(805, 682), (928, 805), (805, 928), (682, 805)]:
+        d.ellipse([x - 20, y - 20, x + 20, y + 20], fill=(255, 210, 90, 255), outline=ol, width=8)
     img = img.resize((512, 512), Image.LANCZOS)
     mask = Image.new("L", (512, 512), 0)
     ImageDraw.Draw(mask).rounded_rectangle([0, 0, 511, 511], radius=110, fill=255)

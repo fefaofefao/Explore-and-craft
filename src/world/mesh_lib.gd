@@ -181,6 +181,69 @@ static func _build(mb: MeshBuilder, key: String, v: int, tint: Color) -> void:
 			mb.tube([Vector3(0.05, 1.5, 0), Vector3(0.7, 2.1, 0.2), Vector3(1.2, 2.3, 0.3)], [0.1, 0.06, 0.02], 5, c, c)
 			mb.tube([Vector3(-0.1, 2.1, 0.05), Vector3(-0.7, 2.6, -0.3), Vector3(-1.0, 3.1, -0.4)], [0.08, 0.05, 0.02], 5, c, c)
 			mb.tube([Vector3(0.0, 2.8, 0.05), Vector3(0.3, 3.3, 0.6), Vector3(0.4, 3.6, 0.9)], [0.06, 0.04, 0.02], 5, c, c)
+		"erva":
+			# erva vital: folhas largas com pontinhos brilhantes
+			mb.sway = 0.8
+			for k in 6:
+				var a := TAU * k / 6.0 + 0.4
+				var d := Vector3(cos(a), 0, sin(a))
+				var side := d.cross(Vector3.UP).normalized()
+				var tip := d * 0.42 + Vector3.UP * 0.38
+				var mid := d * 0.2 + Vector3.UP * 0.28
+				mb.quad(Vector3.ZERO + side * 0.03, mid + side * 0.11, tip, mid - side * 0.11, Color("#3fae4a").lerp(Color("#8ae86a"), 0.3 * (k % 2)))
+			mb.sway = 0.4
+			for k in 4:
+				var a := TAU * k / 4.0
+				mb.blob(Vector3(cos(a) * 0.15, 0.42 + (k % 2) * 0.08, sin(a) * 0.15), Vector3(0.05, 0.05, 0.05), Color("#d8ff9a"), Color("#8ae86a"), 2, 5)
+		"flor_reviver":
+			# flor aurora: haste alta e pétalas douradas
+			mb.sway = 0.7
+			mb.cylinder(Vector3.ZERO, 0.03, 0.02, 0.75, 5, Color("#4a8a3a"), false)
+			for k in 2:
+				var a := PI * k + 0.6
+				mb.blob(Vector3(cos(a) * 0.12, 0.3, sin(a) * 0.12), Vector3(0.12, 0.03, 0.06), Color("#6ac85a"), Color("#3a8a3a"), 2, 6)
+			for k in 7:
+				var a := TAU * k / 7.0
+				mb.blob(Vector3(cos(a) * 0.12, 0.78, sin(a) * 0.12), Vector3(0.1, 0.04, 0.1), Color("#fff2a0"), Color("#ffb84a"), 2, 6)
+			mb.blob(Vector3(0, 0.8, 0), Vector3(0.07, 0.07, 0.07), Color("#ffffff"), Color("#ffe080"), 3, 6)
+		"rede_aro":
+			# aro de madeira com malha de corda (vista de frente: plano XY)
+			var wood := Color("#8a5a32")
+			for i in 16:
+				var a0 := TAU * i / 16.0
+				var a1 := TAU * (i + 1) / 16.0
+				mb.tube([Vector3(cos(a0) * 0.45, sin(a0) * 0.45, 0), Vector3(cos(a1) * 0.45, sin(a1) * 0.45, 0)], [0.045, 0.045], 5, wood, wood.lightened(0.1))
+			var rope := tint.lightened(0.2)
+			for k in range(-3, 4):
+				var x := k * 0.12
+				var hh := sqrt(maxf(0.0, 0.45 * 0.45 - x * x))
+				mb.box(Vector3(x, 0, 0), Vector3(0.018, hh * 2.0, 0.018), rope)
+				mb.box(Vector3(0, x, 0), Vector3(hh * 2.0, 0.018, 0.018), rope)
+		"rede_cupula":
+			# cúpula de malha (meridianos e paralelos) com contas nos nós da base
+			var rope := tint.lightened(0.15)
+			var segs := 12
+			for i in segs:
+				var a := TAU * i / segs
+				var pts: Array = []
+				for r in 6:
+					var phi := PI * 0.5 * r / 5.0
+					pts.append(Vector3(cos(a) * sin(phi + 0.0001) * 1.0, cos(phi) * 1.1, sin(a) * sin(phi + 0.0001) * 1.0))
+				pts.reverse()
+				mb.tube(pts, [0.02, 0.02, 0.02, 0.02, 0.02, 0.02], 4, rope, rope.lightened(0.2))
+			for r in [1, 2, 3, 4]:
+				var phi: float = PI * 0.5 * r / 5.0
+				var ring: Array = []
+				for i in segs + 1:
+					var a := TAU * i / segs
+					ring.append(Vector3(cos(a) * sin(phi), cos(phi) * 1.1, sin(a) * sin(phi)))
+				var radii: Array = []
+				for i in ring.size():
+					radii.append(0.02)
+				mb.tube(ring, radii, 4, rope, rope)
+			for i in segs:
+				var a := TAU * i / segs
+				mb.blob(Vector3(cos(a), 0.05, sin(a)), Vector3(0.07, 0.07, 0.07), tint.lightened(0.4), tint.darkened(0.2), 3, 6)
 		"decor_flor", "decor_flor_deserto":
 			var cols := [Color("#ffe14a"), Color("#ff7ab0"), Color("#ffffff"), Color("#9ab0ff"), Color("#ff9a3a")]
 			if key == "decor_flor_deserto":

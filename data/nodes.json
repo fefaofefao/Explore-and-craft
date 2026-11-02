@@ -266,6 +266,34 @@
   "respawn": 300,
   "xp": 2
  },
+ "erva": {
+  "hp": 1,
+  "tool": "any",
+  "min_tier": 0,
+  "drops": {
+   "erva_vital": [
+    1,
+    2
+   ]
+  },
+  "bonus": {},
+  "respawn": 240,
+  "xp": 2
+ },
+ "flor_reviver": {
+  "hp": 1,
+  "tool": "any",
+  "min_tier": 0,
+  "drops": {
+   "flor_aurora": [
+    1,
+    1
+   ]
+  },
+  "bonus": {},
+  "respawn": 1500,
+  "xp": 6
+ },
  "espinhos": {
   "hp": 3,
   "tool": "torch",

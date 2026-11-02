@@ -55,6 +55,9 @@ void fragment() {
 		float fres = pow(1.0 - clamp(dot(NORMAL, VIEW), 0.0, 1.0), 3.0);
 		c = mix(c, sky_color.rgb, fres * 0.5);
 		c = mix(c, foam_color.rgb, foam * 0.9);
+		// cintilação do sol nas ondas
+		float glint = pow(clamp(na.g * nb.r * 1.9, 0.0, 1.0), 14.0) * (0.6 + 0.4 * sin(TIME * 3.0 + wpos.x));
+		EMISSION = vec3(1.0, 0.97, 0.85) * glint * 1.6 * (1.0 - foam);
 		ALBEDO = c;
 		ALPHA = clamp(mix(0.45, 0.92, d01) + foam * 0.5 + fres * 0.2, 0.0, 1.0);
 		ROUGHNESS = 0.06;

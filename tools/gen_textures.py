@@ -171,10 +171,22 @@ def ic_jump(d, S):
 
 
 def ic_sphere(d, S):
-    d.ellipse(p(S, [(0.14, 0.14), (0.86, 0.86)]), outline=W, width=int(0.08 * S))
-    d.polygon(p(S, [(0.5, 0.26), (0.66, 0.5), (0.5, 0.74), (0.34, 0.5)]), fill=W)
-    for (x, y) in [(0.26, 0.28), (0.74, 0.72)]:
-        d.ellipse(p(S, [(x - 0.04, y - 0.04), (x + 0.04, y + 0.04)]), fill=W)
+    # rede de captura: aro + malha
+    d.ellipse(p(S, [(0.12, 0.12), (0.88, 0.88)]), outline=W, width=int(0.09 * S))
+    for i in range(-2, 3):
+        x = 0.5 + i * 0.12
+        d.line(p(S, [(x - 0.22, 0.2), (x + 0.22, 0.8)]), fill=W, width=int(0.045 * S))
+        d.line(p(S, [(x + 0.22, 0.2), (x - 0.22, 0.8)]), fill=W, width=int(0.045 * S))
+    m = Image.new("L", (S, S), 0)
+    ImageDraw.Draw(m).ellipse(p(S, [(0.12, 0.12), (0.88, 0.88)]), fill=255)
+    # recorta a malha no círculo
+    base = d._image
+    cut = Image.new("RGBA", (S, S), (0, 0, 0, 0))
+    cut.paste(base, (0, 0), m)
+    base.paste((0, 0, 0, 0), (0, 0, S, S))
+    base.alpha_composite(cut)
+    d2 = ImageDraw.Draw(base)
+    d2.ellipse(p(S, [(0.12, 0.12), (0.88, 0.88)]), outline=W, width=int(0.09 * S))
 
 
 def ic_hammer(d, S):

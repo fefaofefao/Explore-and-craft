@@ -19,6 +19,11 @@ static func check(state: GameState, rid: String, stations_near: Array, times: in
 	var st: String = r["station"]
 	if st != "mao" and not state.is_sandbox() and not st in stations_near:
 		return {"ok": false, "reason": "station"}
+	if is_unique_gear(r["out"]) and not state.inv.infinite:
+		if state.inv.count(r["out"]) > 0:
+			return {"ok": false, "reason": "owned"}
+		if times > 1:
+			return {"ok": false, "reason": "owned"}
 	var req := scaled(r["in"], times)
 	if not state.inv.has_all(req):
 		return {"ok": false, "reason": "items"}
@@ -40,10 +45,18 @@ static func scaled(req: Dictionary, times: int) -> Dictionary:
 	return out
 
 
+static func is_unique_gear(item_id: String) -> bool:
+	## Ferramentas, armas e equipamentos: um de cada por vez (usa até quebrar).
+	var it: Dictionary = GameData.db().item(item_id)
+	return int(it.get("stack", 99)) == 1 and (it.has("tool") or it.has("weapon") or it.has("gear"))
+
+
 static func max_times(state: GameState, rid: String) -> int:
 	var r: Dictionary = GameData.db().recipes[rid]
 	if state.inv.infinite:
 		return 10
+	if is_unique_gear(r["out"]):
+		return 0 if state.inv.count(r["out"]) > 0 else 1
 	var best := 999
 	for k in r["in"]:
 		best = min(best, state.inv.count(k) / int(r["in"][k]))

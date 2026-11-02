@@ -21,7 +21,7 @@ static func bar(col: Color, h: float = 14.0, w: float = 200.0) -> ProgressBar:
 	return b
 
 
-static func item_slot(id: String, n: int, size: float = 84.0, selected: bool = false) -> PanelContainer:
+static func item_slot(id: String, n: int, size: float = 84.0, selected: bool = false, dur: int = -1) -> PanelContainer:
 	var p := PanelContainer.new()
 	p.custom_minimum_size = Vector2(size, size)
 	var it: Dictionary = GameData.db().item(id) if id != "" else {}
@@ -44,6 +44,17 @@ static func item_slot(id: String, n: int, size: float = 84.0, selected: bool = f
 	tr.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	tr.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	p.add_child(tr)
+	var md := Inventory.max_dur(id)
+	if md > 0:
+		var cur := md if dur < 0 else dur
+		var f := clampf(float(cur) / md, 0.0, 1.0)
+		var bar := ColorRect.new()
+		bar.color = UiTheme.GOOD if f > 0.5 else (UiTheme.GOLD if f > 0.2 else UiTheme.DANGER)
+		bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		bar.custom_minimum_size = Vector2((size - 16) * f, 6)
+		bar.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+		bar.size_flags_vertical = Control.SIZE_SHRINK_END
+		p.add_child(bar)
 	if n > 1 or GameData.db().item(id).get("stack", 99) > 1:
 		var l := UiTheme.outlined(UiTheme.label(str(n), 20, Color.WHITE, 900), 6)
 		l.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
@@ -88,7 +99,7 @@ static func reward_text(r: Dictionary) -> String:
 
 
 static func scroll(child: Control) -> ScrollContainer:
-	var sc := ScrollContainer.new()
+	var sc := DragScroll.new()
 	sc.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	sc.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	sc.size_flags_horizontal = Control.SIZE_EXPAND_FILL

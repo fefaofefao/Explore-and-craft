@@ -64,15 +64,23 @@ func test_player_damage_scales() -> void:
 	check(CombatLogic.player_damage(1, 0) >= 1, "mínimo")
 
 
-func test_damage_to_player_easy_mode() -> void:
-	## Um selvagem do mesmo nível não mata o jogador em menos de ~12 golpes (modo fácil).
+func test_player_is_fragile() -> void:
+	## O treinador cai rápido: 3 a 6 golpes básicos de um Eco do mesmo nível.
 	var r := rng(4)
 	for lvl in [3, 12, 25]:
 		var m := MonsterLogic.create("lupigelo", lvl, r)
-		var d := CombatLogic.damage_to_player(lvl, MonsterLogic.stat(m, "atk"), lvl, 25, r)
 		var st := GameState.new()
 		st.level = lvl
-		check(d * 12 < st.max_hp(), "nível %d dano %d vs pv %d" % [lvl, d, int(st.max_hp())])
+		var hits := 0
+		var hp := st.max_hp()
+		while hp > 0 and hits < 50:
+			hp -= CombatLogic.damage_to_player(lvl, MonsterLogic.stat(m, "atk"), lvl, 25, r)
+			hits += 1
+		check(hits >= 3 and hits <= 6, "nível %d: %d golpes" % [lvl, hits])
+	var strong := CombatLogic.damage_to_player(20, 50, 20, 100, r)
+	var weak := CombatLogic.damage_to_player(20, 50, 20, 25, r)
+	check(strong > weak, "habilidade forte dói mais")
+	check(CombatLogic.damage_to_player(30, 50, 10, 25, r) > CombatLogic.damage_to_player(5, 50, 10, 25, r), "nível alto dói mais")
 
 
 func test_best_skill_prefers_effective() -> void:

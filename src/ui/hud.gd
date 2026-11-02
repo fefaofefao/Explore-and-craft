@@ -19,6 +19,7 @@ var ally_hp: ProgressBar
 var ally_portrait_holder: Control
 var _ally_uid := -999
 var party_dots: HBoxContainer
+var party_bar: PartyBar
 var obj_panel: PanelContainer
 var obj_title: Label
 var obj_desc: Label
@@ -160,6 +161,10 @@ func _build_status() -> void:
 	cur.add_child(_icon_rect("gem", 22, UiTheme.GEM))
 	cur.add_child(gems_label)
 	# cartão do Eco parceiro (toque = trocar)
+	party_bar = PartyBar.new()
+	party_bar.setup(self)
+	party_bar.position = Vector2(16, 196)
+	root.add_child(party_bar)
 	ally_box = PanelContainer.new()
 	ally_box.add_theme_stylebox_override("panel", UiTheme.panel_box(Color(0.06, 0.08, 0.12, 0.72), 20))
 	ally_box.position = Vector2(16, 196)
@@ -442,7 +447,8 @@ func refresh() -> void:
 	# parceiro
 	var m := st.active_monster()
 	var a := world.ally_actor()
-	ally_box.visible = not m.is_empty() or st.party.size() > 0
+	ally_box.visible = false
+	party_bar.refresh()
 	if not m.is_empty():
 		ally_name.text = "%s  %s" % [MonsterLogic.display_name(m), Loc.t("level_short", [m["lvl"]])]
 		var mx := float(a.max_hp) if a != null else float(MonsterLogic.max_hp(m))
@@ -541,6 +547,8 @@ func _process(delta: float) -> void:
 	var a := world.ally_actor()
 	if a != null:
 		ally_hp.value = a.hp_frac() * 100.0
+	if Engine.get_process_frames() % 6 == 0:
+		party_bar.update_bars()
 	if _lume_t > 0.0:
 		_lume_t -= delta
 		if _lume_t <= 0.0:

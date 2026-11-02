@@ -25,6 +25,8 @@ var _swing_kind := "attack"
 var _gliding := false
 var _wave := 0.0
 var eyes: Array = []
+var turn_lean := 0.0
+var _squash := 0.0  # >0 amassado (aterrissagem), <0 esticado (pulo)
 var scarf_tail: Node3D
 var _blink := 2.0
 
@@ -217,6 +219,14 @@ func wave() -> void:
 	_wave = 1.6
 
 
+func land(k: float) -> void:
+	_squash = 0.35 * k
+
+
+func jump_stretch() -> void:
+	_squash = -0.18
+
+
 func set_gliding(v: bool) -> void:
 	_gliding = v
 
@@ -234,16 +244,23 @@ func _process(delta: float) -> void:
 	if scarf_tail != null:
 		scarf_tail.rotation.x = 0.35 + spd * 0.9 + sin(_t * 9.0) * 0.12 * (0.3 + spd)
 		scarf_tail.rotation.z = sin(_t * 5.0) * 0.15
-	var ph := _t * (6.0 + spd * 5.0)
-	var sw := sin(ph) * 0.75 * spd
+	# andar x correr: passada, balanço dos braços, quique e inclinação aumentam com a velocidade
+	var run := clampf((spd - 0.6) / 0.6, 0.0, 1.0)
+	var ph := _t * (6.5 + spd * 6.0)
+	var amp := 0.6 + run * 0.45
+	var sw := sin(ph) * amp * minf(spd, 1.0)
 	leg_l.rotation.x = sw
 	leg_r.rotation.x = -sw
-	arm_l.rotation.x = -sw * 0.8
-	arm_r.rotation.x = sw * 0.8
-	arm_l.rotation.z = -0.08
-	arm_r.rotation.z = 0.08
-	pivot.position.y = absf(sin(ph)) * 0.06 * spd + sin(_t * 2.0) * 0.008
-	torso.rotation.x = 0.08 * spd
+	arm_l.rotation.x = -sw * (0.8 + run * 0.5)
+	arm_r.rotation.x = sw * (0.8 + run * 0.5)
+	arm_l.rotation.z = -0.08 - run * 0.15
+	arm_r.rotation.z = 0.08 + run * 0.15
+	pivot.position.y = absf(sin(ph)) * (0.05 + run * 0.08) * minf(spd, 1.0) + sin(_t * 2.0) * 0.008
+	torso.rotation.x = 0.08 * minf(spd, 1.0) + run * 0.22
+	pivot.rotation.z = -turn_lean
+	# amassa/estica (pulo e aterrissagem)
+	_squash = move_toward(_squash, 0.0, delta * 1.6)
+	pivot.scale = Vector3(1.0 + _squash * 0.6, 1.0 - _squash, 1.0 + _squash * 0.6)
 	head_n.rotation.y = sin(_t * 0.7) * 0.15 * (1.0 - spd)
 	if _gliding:
 		arm_l.rotation.z = -1.4

@@ -26,9 +26,15 @@ static func player_defense(player_lvl: int) -> float:
 
 
 static func damage_to_player(monster_lvl: int, monster_atk: float, player_lvl: int, power: float, rng: RandomNumberGenerator) -> int:
+	## O treinador é frágil de propósito: um Eco do mesmo nível derruba o jogador em ~4 golpes básicos
+	## (habilidades fortes em ~3). Isso incentiva deixar a luta para os Ecos e ter cautela.
 	var c: Dictionary = GameData.db().config["combat"]
-	var base: float = ((2.0 * monster_lvl / 5.0 + 2.0) * power * monster_atk / player_defense(player_lvl)) / 50.0 + 2.0
-	return max(1, int(round(base * float(c["monster_contact_dmg"]) * 2.0 * rng.randf_range(0.85, 1.0))))
+	var p: Dictionary = GameData.db().config["player"]
+	var max_hp := float(p["base_hp"]) + float(p["hp_per_level"]) * (player_lvl - 1)
+	var lvl_ratio := clampf(float(monster_lvl) / maxf(1.0, float(player_lvl)), 0.5, 2.0)
+	var pow_ratio := sqrt(maxf(power, 10.0) / float(c["basic_power"]))
+	var frac := float(c.get("player_hit_frac", 0.25)) * lvl_ratio * pow_ratio
+	return max(1, int(round(max_hp * frac * rng.randf_range(0.9, 1.1))))
 
 
 static func capture_chance(species_id: String, lvl: int, hp_frac: float, orb_mult: float, player_lvl: int, collared: bool = false) -> float:

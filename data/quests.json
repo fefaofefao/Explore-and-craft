@@ -102,12 +102,12 @@
  {
   "id": "q05",
   "title": {
-   "pt": "Esferas de Vínculo",
-   "en": "Bond Spheres"
+   "pt": "Redes de Vínculo",
+   "en": "Bond Nets"
   },
   "desc": {
-   "pt": "Tenha 5 Esferas de Vínculo.",
-   "en": "Have 5 Bond Spheres."
+   "pt": "Tenha 5 Redes de Vínculo.",
+   "en": "Have 5 Bond Nets."
   },
   "type": "collect",
   "target": {
@@ -128,8 +128,8 @@
    "en": "New Friends"
   },
   "desc": {
-   "pt": "Recrute 2 Ecos selvagens (enfraqueça e lance uma Esfera).",
-   "en": "Recruit 2 wild Echoes (weaken them, then throw a Sphere)."
+   "pt": "Recrute 2 Ecos selvagens (enfraqueça e lance uma Rede).",
+   "en": "Recruit 2 wild Echoes (weaken them, then throw a Net)."
   },
   "type": "capture",
   "target": null,

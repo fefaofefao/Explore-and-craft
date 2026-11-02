@@ -16,7 +16,7 @@ var slot: String = "story"
 var session_start: int = 0
 var rng := RandomNumberGenerator.new()
 var settings := {"lang": "", "music": 0.7, "sfx": 0.9, "quality": -1, "cam_sens": 1.0, "vibration": true,
-	"consent": false, "consent_asked": false}
+	"consent": false, "consent_asked": false, "auto_gather": true}
 var rc: Dictionary = {}  # Remote Config efetivo
 var _autosave_t := 0.0
 var _tick_t := 0.0

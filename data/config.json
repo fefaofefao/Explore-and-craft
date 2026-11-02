@@ -50,7 +50,17 @@
   "boss_hp_mult": 3.0,
   "trainer_hp_mult": 1.2,
   "monster_contact_dmg": 0.35,
-  "faint_rest_sec": 120
+  "faint_rest_sec": 120,
+  "player_hit_frac": 0.25,
+  "max_hit_frac": 0.38,
+  "boss_max_hit_frac": 0.5,
+  "wild_skill_chance": 0.3,
+  "boss_skill_chance": 0.45,
+  "horde_chance": 0.25,
+  "horde_size": [
+   3,
+   4
+  ]
  },
  "capture": {
   "min_chance": 0.03,

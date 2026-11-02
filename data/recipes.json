@@ -44,8 +44,8 @@
   "out": "esfera",
   "n": 2,
   "in": {
-   "pedra": 2,
-   "fibra": 1,
+   "fibra": 3,
+   "pedra": 1,
    "baga": 1
   },
   "station": "mao",
@@ -107,9 +107,9 @@
   "out": "esfera_grande",
   "n": 2,
   "in": {
+   "corda": 2,
    "lingote_ferro": 1,
-   "cristal": 1,
-   "pedra": 2
+   "cristal": 1
   },
   "station": "bancada",
   "lvl": 7

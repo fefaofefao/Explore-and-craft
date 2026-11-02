@@ -461,6 +461,7 @@
   },
   "stack": 1,
   "value": 6,
+  "dur": 50,
   "tool": {
    "kind": "axe",
    "tier": 1,
@@ -481,6 +482,7 @@
   },
   "stack": 1,
   "value": 6,
+  "dur": 50,
   "tool": {
    "kind": "pick",
    "tier": 1,
@@ -501,6 +503,7 @@
   },
   "stack": 1,
   "value": 25,
+  "dur": 140,
   "tool": {
    "kind": "axe",
    "tier": 2,
@@ -521,6 +524,7 @@
   },
   "stack": 1,
   "value": 25,
+  "dur": 140,
   "tool": {
    "kind": "pick",
    "tier": 2,
@@ -541,6 +545,7 @@
   },
   "stack": 1,
   "value": 60,
+  "dur": 300,
   "tool": {
    "kind": "pick",
    "tier": 3,
@@ -561,6 +566,7 @@
   },
   "stack": 1,
   "value": 8,
+  "dur": 60,
   "weapon": {
    "dmg": 8
   }
@@ -579,6 +585,7 @@
   },
   "stack": 1,
   "value": 30,
+  "dur": 160,
   "weapon": {
    "dmg": 16
   }
@@ -597,6 +604,7 @@
   },
   "stack": 1,
   "value": 70,
+  "dur": 320,
   "weapon": {
    "dmg": 28
   }
@@ -615,6 +623,7 @@
   },
   "stack": 1,
   "value": 3,
+  "dur": 8,
   "tool": {
    "kind": "torch",
    "tier": 1,
@@ -635,6 +644,7 @@
   },
   "stack": 1,
   "value": 20,
+  "dur": 20,
   "tool": {
    "kind": "crowbar",
    "tier": 1,
@@ -753,12 +763,12 @@
  },
  "esfera": {
   "name": {
-   "pt": "Esfera de Vínculo",
-   "en": "Bond Sphere"
+   "pt": "Rede de Vínculo",
+   "en": "Bond Net"
   },
   "cat": "esfera",
-  "color": "#ff5a5a",
-  "icon": "orb",
+  "color": "#e8b060",
+  "icon": "net",
   "desc": {
    "pt": "Recruta Ecos enfraquecidos.",
    "en": "Recruits weakened Echoes."
@@ -771,12 +781,12 @@
  },
  "esfera_grande": {
   "name": {
-   "pt": "Esfera Grande",
-   "en": "Great Sphere"
+   "pt": "Rede Reforçada",
+   "en": "Reinforced Net"
   },
   "cat": "esfera",
-  "color": "#3a8aff",
-  "icon": "orb",
+  "color": "#5a9aff",
+  "icon": "net",
   "desc": {
    "pt": "Chance de vínculo 1,6x.",
    "en": "Bond chance x1.6."
@@ -789,12 +799,12 @@
  },
  "esfera_aurora": {
   "name": {
-   "pt": "Esfera Aurora",
-   "en": "Aurora Sphere"
+   "pt": "Rede Aurora",
+   "en": "Aurora Net"
   },
   "cat": "esfera",
   "color": "#ffd84a",
-  "icon": "orb",
+  "icon": "net",
   "desc": {
    "pt": "Chance de vínculo 2,5x.",
    "en": "Bond chance x2.5."
@@ -841,6 +851,44 @@
   "heal_monster": {
    "hp": 150,
    "revive": false
+  }
+ },
+ "erva_vital": {
+  "name": {
+   "pt": "Erva Vital",
+   "en": "Vital Herb"
+  },
+  "cat": "cuidado",
+  "color": "#5fd86a",
+  "icon": "herb",
+  "desc": {
+   "pt": "Erva fresca que cura 60 PV de um Eco.",
+   "en": "A fresh herb that heals 60 HP of an Echo."
+  },
+  "stack": 99,
+  "value": 4,
+  "heal_monster": {
+   "hp": 60,
+   "revive": false
+  }
+ },
+ "flor_aurora": {
+  "name": {
+   "pt": "Flor Aurora",
+   "en": "Aurora Bloom"
+  },
+  "cat": "cuidado",
+  "color": "#ffd86a",
+  "icon": "bloom",
+  "desc": {
+   "pt": "Rara. Revive um Eco desmaiado com metade da vida.",
+   "en": "Rare. Revives a fainted Echo with half its health."
+  },
+  "stack": 99,
+  "value": 25,
+  "heal_monster": {
+   "hp": 0.5,
+   "revive": true
   }
  },
  "reviver": {

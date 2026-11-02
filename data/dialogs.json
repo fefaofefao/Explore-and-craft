@@ -170,8 +170,8 @@
    {
     "who": "lume",
     "text": {
-     "pt": "Esferas de Vínculo não aprisionam: elas oferecem um lar. Um Eco só aceita se confiar em você... ou estiver cansado demais para fugir.",
-     "en": "Bond Spheres don't imprison: they offer a home. An Echo only accepts if it trusts you... or is too tired to run."
+     "pt": "Redes de Vínculo não aprisionam: elas oferecem um lar. Um Eco só aceita se confiar em você... ou estiver cansado demais para fugir.",
+     "en": "Bond Nets don't imprison: they offer a home. An Echo only accepts if it trusts you... or is too tired to run."
     }
    }
   ],
@@ -179,8 +179,8 @@
    {
     "who": "lume",
     "text": {
-     "pt": "Enfraqueça um Eco selvagem com seu parceiro e lance a Esfera. Quanto menos vida, maior a chance!",
-     "en": "Weaken a wild Echo with your partner and throw the Sphere. The lower its health, the better the odds!"
+     "pt": "Enfraqueça um Eco selvagem com seu parceiro e lance a Rede. Quanto menos vida, maior a chance!",
+     "en": "Weaken a wild Echo with your partner and throw the Net. The lower its health, the better the odds!"
     }
    }
   ],
@@ -249,8 +249,8 @@
    {
     "who": "lume",
     "text": {
-     "pt": "O Ancião Musgoso. Ele não é mau, só está... assustado. Derrote-o com cuidado. Talvez ele até aceite uma Esfera.",
-     "en": "The Mossy Elder. It isn't evil, just... frightened. Defeat it gently. It might even accept a Sphere."
+     "pt": "O Ancião Musgoso. Ele não é mau, só está... assustado. Derrote-o com cuidado. Talvez ele até aceite uma Rede.",
+     "en": "The Mossy Elder. It isn't evil, just... frightened. Defeat it gently. It might even accept a Net."
     }
    }
   ],

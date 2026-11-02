@@ -31,7 +31,7 @@ func setup(p_key: String, p_kind: String, tint: Color, scl: float, rot: float) -
 	mesh_i.visibility_range_end = 95.0
 	mesh_i.visibility_range_end_margin = 8.0
 	mesh_i.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_SELF
-	if kind in ["capim", "cogumelos", "lodo_poca", "monte_areia", "ninho_pena"]:
+	if kind in ["capim", "cogumelos", "lodo_poca", "monte_areia", "ninho_pena", "erva", "flor_reviver"]:
 		mesh_i.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 		mesh_i.visibility_range_end = 55.0
 	add_child(mesh_i)
@@ -75,6 +75,8 @@ func setup(p_key: String, p_kind: String, tint: Color, scl: float, rot: float) -
 static func material_for(k: String) -> String:
 	if k == "cristal":
 		return "glow"
+	if k == "flor_reviver":
+		return "glow_soft"
 	if k == "palmeira":
 		return "foliage_ds"
 	if k in ["arvore", "pinheiro", "arvore_morta", "arbusto", "capim", "cacto", "cogumelos", "espinhos"]:

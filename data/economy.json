@@ -134,8 +134,8 @@
      "en": "Awakened Pack"
     },
     "desc": {
-     "pt": "300 gemas, 10 Esferas Grandes, 3 Sementes Reviver e Lumeflor Variante Aurora. Só nas primeiras 72 h!",
-     "en": "300 gems, 10 Great Spheres, 3 Revive Seeds and an Aurora Variant Lumeflor. First 72 h only!"
+     "pt": "300 gemas, 10 Redes Reforçadas, 3 Sementes Reviver e Lumeflor Variante Aurora. Só nas primeiras 72 h!",
+     "en": "300 gems, 10 Reinforced Nets, 3 Revive Seeds and an Aurora Variant Lumeflor. First 72 h only!"
     },
     "grants": {
      "gems": 300,
@@ -224,8 +224,8 @@
      "en": "Premium Trail"
     },
     "desc": {
-     "pt": "Libera a trilha premium da temporada: gemas, Esferas Aurora, skins e Ecos raros.",
-     "en": "Unlocks the season's premium trail: gems, Aurora Spheres, skins and rare Echoes."
+     "pt": "Libera a trilha premium da temporada: gemas, Redes Aurora, skins e Ecos raros.",
+     "en": "Unlocks the season's premium trail: gems, Aurora Nets, skins and rare Echoes."
     },
     "grants": {
      "premium_pass": true

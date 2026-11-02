@@ -180,8 +180,8 @@
   "en": "Sprint"
  },
  "throw_sphere": {
-  "pt": "Esfera",
-  "en": "Sphere"
+  "pt": "Rede",
+  "en": "Net"
  },
  "build": {
   "pt": "Construir",
@@ -348,8 +348,8 @@
   "en": "Gear"
  },
  "cat_esfera": {
-  "pt": "Esferas",
-  "en": "Spheres"
+  "pt": "Redes",
+  "en": "Nets"
  },
  "cat_cuidado": {
   "pt": "Cuidados",
@@ -692,7 +692,7 @@
   "en": "{0} accepted the bond!"
  },
  "capture_fail": {
-  "pt": "{0} escapou da esfera!",
+  "pt": "{0} escapou da rede!",
   "en": "{0} broke free!"
  },
  "capture_chance": {
@@ -700,8 +700,8 @@
   "en": "Chance: {0}%"
  },
  "no_spheres": {
-  "pt": "Sem esferas! Crie mais no menu Criar.",
-  "en": "No spheres! Craft more in the Craft menu."
+  "pt": "Sem redes! Crie mais no menu Criar.",
+  "en": "No nets! Craft more in the Craft menu."
  },
  "no_target": {
   "pt": "Nenhum Eco por perto.",
@@ -1104,8 +1104,8 @@
   "en": "Free gems"
  },
  "free_spheres": {
-  "pt": "Esferas grátis",
-  "en": "Free spheres"
+  "pt": "Redes grátis",
+  "en": "Free nets"
  },
  "ad_simulated": {
   "pt": "[Anúncio de teste]",
@@ -1128,8 +1128,8 @@
   "en": "Walk up to trees and rocks and tap Gather."
  },
  "tip_capture": {
-  "pt": "Enfraqueça um Eco e toque em Esfera para recrutá-lo.",
-  "en": "Weaken an Echo and tap Sphere to recruit it."
+  "pt": "Enfraqueça um Eco e toque em Rede para recrutá-lo.",
+  "en": "Weaken an Echo and tap Net to recruit it."
  },
  "tip_build": {
   "pt": "Toque em Construir, escolha uma peça e posicione-a.",
@@ -1238,6 +1238,22 @@
  "open_map": {
   "pt": "Ver mapa grande",
   "en": "Open big map"
+ },
+ "already_owned": {
+  "pt": "Você já tem: {0}. Use até quebrar para criar outro.",
+  "en": "You already have: {0}. Use it until it breaks to craft another."
+ },
+ "tool_broke": {
+  "pt": "{0} quebrou! Crie outro no menu Criar.",
+  "en": "{0} broke! Craft another in the Craft menu."
+ },
+ "durability": {
+  "pt": "Durabilidade {0}/{1}",
+  "en": "Durability {0}/{1}"
+ },
+ "auto_gather": {
+  "pt": "Coleta automática",
+  "en": "Auto gathering"
  },
  "deep_water": {
   "pt": "Águas profundas demais! O mar aberto é perigoso — volte para a ilha.",

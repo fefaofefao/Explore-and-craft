@@ -84,18 +84,28 @@ static func terrain_material(gen: WorldGen) -> ShaderMaterial:
 	sm.set_shader_parameter("high", Color(b["high"]))
 	sm.set_shader_parameter("high_line", 1.5 + float(b["height"]) * 1.15)
 	sm.set_shader_parameter("dirt_amount", float(b.get("dirt_amount", 0.35)))
+	sm.set_shader_parameter("height_tex", height_texture(gen))
+	sm.set_shader_parameter("map_half", gen.half)
+	sm.set_shader_parameter("deep_tint", Color(b["water"]).darkened(0.35))
 	return sm
+
+
+static var _htex_cache: Dictionary = {}
 
 
 static func height_texture(gen: WorldGen) -> ImageTexture:
 	## Altura do terreno em 8 bits para a água calcular profundidade, espuma e transparência.
+	if _htex_cache.has(gen.map_id):
+		return _htex_cache[gen.map_id]
 	var n := WorldGen.CELLS + 1
 	var img := Image.create(n, n, false, Image.FORMAT_L8)
 	for j in n:
 		for i in n:
 			var h := gen.grid_height(i, j)
 			img.set_pixel(i, j, Color(clampf((h + 8.0) / 16.0, 0.0, 1.0), 0, 0))
-	return ImageTexture.create_from_image(img)
+	var tex := ImageTexture.create_from_image(img)
+	_htex_cache[gen.map_id] = tex
+	return tex
 
 
 static func build_water(gen: WorldGen) -> MeshInstance3D:

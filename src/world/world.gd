@@ -799,24 +799,44 @@ func _spawn_wild(initial: bool = false) -> void:
 		if r <= 0.0:
 			pick = e
 			break
-	var lvl := rng.randi_range(int(pick[1]), int(pick[2]))
-	if night:
-		lvl += int(GameData.db().cfg("world", "night_level_bonus", 2))
-	var variant := CombatLogic.roll_variant(rng)
-	var m := MonsterLogic.create(pick[0], lvl, rng, 0, variant)
 	var pos := gen.random_spawn_point(rng, player.global_position if not initial else Vector3.INF, 25.0)
 	if md.get("city") != null and not Game.state.is_sandbox():
 		pos = _city_guard_point()
-	var a := MonsterActor.new()
-	if md.get("city") != null and pick[0] == "ferrugente" and not Game.state.flags.get(md["city"]["liberated_flag"], false):
-		a.collared = true
-	a.setup(m, "wild", self, gen)
-	_actors.add_child(a)
-	a.global_position = pos + Vector3(0, 0.8, 0)
-	a.home = pos
-	a.died.connect(_on_wild_died)
-	wilds.append(a)
-	Game.state.mark_seen(pick[0])
+	# horda: 3–4 Ecos juntos (mais comum à noite); a horda inteira reage se um for atacado
+	var cc: Dictionary = GameData.db().config["combat"]
+	var horde := md.get("city") == null and rng.randf() < float(cc.get("horde_chance", 0.25)) * (1.6 if night else 1.0) and wilds.size() + 3 <= int(md["spawn_count"]) + 2
+	var count := rng.randi_range(int(cc["horde_size"][0]), int(cc["horde_size"][1])) if horde else 1
+	var members: Array = []
+	for i in count:
+		var sp_e: Array = pick if i == 0 or rng.randf() < 0.6 else cands[rng.randi_range(0, cands.size() - 1)]
+		var lvl := rng.randi_range(int(sp_e[1]), int(sp_e[2])) - (1 if horde else 0)
+		if night:
+			lvl += int(GameData.db().cfg("world", "night_level_bonus", 2))
+		var m := MonsterLogic.create(sp_e[0], maxi(1, lvl), rng, 0, CombatLogic.roll_variant(rng))
+		var p := pos
+		if i > 0:
+			var off := Vector3(rng.randf_range(-3.5, 3.5), 0, rng.randf_range(-3.5, 3.5))
+			p = pos + off
+			p.y = gen.height(p.x, p.z)
+		var a := MonsterActor.new()
+		if md.get("city") != null and sp_e[0] == "ferrugente" and not Game.state.flags.get(md["city"]["liberated_flag"], false):
+			a.collared = true
+		if horde:
+			a.aggressive = true
+		a.setup(m, "wild", self, gen)
+		if horde:
+			a.aggressive = true
+		_actors.add_child(a)
+		a.global_position = p + Vector3(0, 0.8, 0)
+		a.home = pos
+		a.died.connect(_on_wild_died)
+		wilds.append(a)
+		members.append(a)
+		Game.state.mark_seen(sp_e[0])
+	if horde:
+		for a in members:
+			a.pack = members
+			a.set_horde_tag()
 
 
 func _city_guard_point() -> Vector3:
@@ -910,7 +930,12 @@ func resolve_hit(attacker: Node, target: Node, power: float, type: String) -> vo
 			if a.role == "ally":
 				bonus = MonsterLogic.harmony_bonus(Game.state.party_types())
 			var r := CombatLogic.damage(int(a.m["lvl"]), power, a.stat("atk"), t.stat("def"), type, a.types(), t.types(), rng, bonus)
-			t.take_hit(r["dmg"], r["mult"], r["crit"], a)
+			# nenhum golpe tira mais que ~38% da vida (lutas mais longas e táticas, sem nocaute de um golpe)
+			var cfgc: Dictionary = GameData.db().config["combat"]
+			var cap := float(cfgc.get("boss_max_hit_frac", 0.5)) if a.role == "boss" else float(cfgc.get("max_hit_frac", 0.38))
+			var dmg: int = mini(int(r["dmg"]), maxi(1, int(t.max_hp * cap)))
+			t.take_hit(dmg, r["mult"], r["crit"], a)
+			t.knockback((t.global_position - a.global_position).normalized() * (2.5 if power > 50.0 else 1.2))
 			if r["mult"] > 1.05 and a.role == "ally":
 				hud.flash_text(Loc.t("super_effective"), UiTheme.GOLD)
 		elif target is Player:
@@ -989,6 +1014,12 @@ func player_attack() -> void:
 	player.face_towards(best.global_position)
 	var dmg := CombatLogic.player_damage(Game.state.level, Game.state.inv.best_weapon_dmg())
 	best.take_hit(dmg, 1.0, false, player)
+	best.knockback((best.global_position - player.global_position).normalized() * 4.0)
+	_hit_stop(0.05)
+	var wid := Game.state.inv.best_weapon_id()
+	if wid != "" and Game.state.inv.use_durability(wid):
+		Game.notify(Loc.t("tool_broke", [Loc.item_name(wid)]), "warn")
+		_update_held()
 	_focus = best
 	Audio.play("hit_soft", 0.15)
 
@@ -1058,50 +1089,72 @@ func throw_sphere() -> void:
 	var chance := CombatLogic.capture_chance(tgt.m["sp"], int(tgt.m["lvl"]), tgt.hp_frac(),
 		float(GameData.db().item(orb)["orb"]["mult"]), st.level, tgt.collared)
 	Firebase.log_event("capture_attempt", {"species": tgt.m["sp"], "chance": snappedf(chance, 0.01), "orb": orb})
-	# esfera em arco
-	var ball := MeshInstance3D.new()
-	ball.mesh = MonsterModel._sph(0.18, 10)
-	ball.material_override = MeshLib.color_mat(Color(GameData.db().item(orb)["color"]), 0.6)
-	add_child(ball)
+	# rede lançada em arco, girando
+	var col := Color(GameData.db().item(orb)["color"])
+	var hoop := Node3D.new()
+	var hm := MeshInstance3D.new()
+	hm.mesh = MeshLib.get_mesh("rede_aro", 0, col)
+	hm.material_override = MeshLib.mat("vc_ds")
+	hoop.add_child(hm)
+	add_child(hoop)
 	var from := player.global_position + Vector3(0, 1.6, 0)
 	var to_pos: Vector3 = tgt.center()
-	ball.global_position = from
+	hoop.global_position = from
 	var tw := create_tween()
 	tw.tween_method(func(t: float):
-		if is_instance_valid(ball):
-			ball.global_position = from.lerp(to_pos, t) + Vector3(0, sin(t * PI) * 2.5, 0), 0.0, 1.0, 0.45)
+		if is_instance_valid(hoop):
+			hoop.global_position = from.lerp(to_pos, t) + Vector3(0, sin(t * PI) * 2.5, 0)
+			hoop.rotation = Vector3(0.6, t * 14.0, 0.3), 0.0, 1.0, 0.45)
 	await tw.finished
+	hoop.queue_free()
 	if not is_instance_valid(tgt) or tgt.dead:
-		ball.queue_free()
 		_capturing = false
 		return
-	tgt.begin_capture()
-	FX.burst(self, to_pos, Color.WHITE, 16, 3.0, false, true)
+	# a rede se abre e cai cobrindo o Eco (que continua visível, se debatendo)
+	tgt.begin_capture(true)
+	var dome := Node3D.new()
+	var dm := MeshInstance3D.new()
+	dm.mesh = MeshLib.get_mesh("rede_cupula", 0, col)
+	dm.material_override = MeshLib.mat("vc_ds")
+	dome.add_child(dm)
+	add_child(dome)
+	var gp := Vector3(tgt.global_position.x, gen.height(tgt.global_position.x, tgt.global_position.z), tgt.global_position.z)
+	var sz := maxf(0.8, tgt.model.height() * 0.75)
+	dome.global_position = gp + Vector3(0, 2.0, 0)
+	dome.scale = Vector3(sz * 0.3, sz * 0.3, sz * 0.3)
+	FX.burst(self, to_pos, col.lightened(0.3), 16, 3.0, false, true)
 	Audio.play("capture_in")
-	var ground_y := gen.height(to_pos.x, to_pos.z) + 0.2
-	var t2 := create_tween()
-	t2.tween_property(ball, "global_position", Vector3(to_pos.x, ground_y, to_pos.z), 0.25)
+	var t2 := create_tween().set_parallel(true)
+	t2.tween_property(dome, "global_position", gp, 0.3).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	t2.tween_property(dome, "scale", Vector3(sz, sz, sz), 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	await t2.finished
 	var success := rng.randf() < chance
 	var shakes := 3 if success else rng.randi_range(1, 3)
 	for i in shakes:
 		await get_tree().create_timer(0.45).timeout
-		if not is_instance_valid(ball):
+		if not is_instance_valid(dome):
 			break
 		var t3 := create_tween()
-		t3.tween_property(ball, "rotation:z", 0.5, 0.08)
-		t3.tween_property(ball, "rotation:z", -0.5, 0.12)
-		t3.tween_property(ball, "rotation:z", 0.0, 0.08)
+		t3.tween_property(dome, "rotation:z", 0.22, 0.08)
+		t3.tween_property(dome, "rotation:z", -0.22, 0.12)
+		t3.tween_property(dome, "rotation:z", 0.0, 0.08)
+		if is_instance_valid(tgt):
+			tgt.model.play_hurt()
 		Audio.play("shake")
 	await get_tree().create_timer(0.4).timeout
-	if is_instance_valid(ball):
-		ball.queue_free()
 	_capturing = false
 	if not is_instance_valid(tgt):
+		if is_instance_valid(dome):
+			dome.queue_free()
 		return
 	if success:
-		_on_captured(tgt, ball.global_position if is_instance_valid(ball) else to_pos)
+		var t4 := create_tween()
+		t4.tween_property(dome, "scale", Vector3.ONE * 0.05, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
+		t4.tween_callback(dome.queue_free)
+		_on_captured(tgt, gp + Vector3(0, 0.5, 0))
 	else:
+		FX.burst(self, gp + Vector3(0, 0.8, 0), col, 20, 5.0, true, false)
+		dome.queue_free()
 		Game.notify(Loc.t("capture_fail", [MonsterLogic.display_name(tgt.m)]), "warn")
 		Audio.play("capture_fail")
 		tgt.end_capture(false)
@@ -1474,9 +1527,18 @@ func _update_sparks() -> void:
 					h = 2.4
 				"muro_gelo", "porta_solar":
 					h = 4.6
+				"flor_reviver":
+					h = 1.5
 				_:
 					h = 1.4
-			cands.append([d, n, h, Color("#ffd95a") if n.is_barrier() else Color("#c8ff9a")])
+			var sc := Color("#c8ff9a")
+			if n.is_barrier():
+				sc = Color("#ffd95a")
+			elif n.kind == "flor_reviver":
+				sc = Color("#fff2a0")
+			elif n.kind == "erva":
+				sc = Color("#7affb0")
+			cands.append([d, n, h, sc])
 	cands.sort_custom(func(a, b): return a[0] < b[0])
 	var t := Time.get_ticks_msec() / 1000.0
 	for i in _sparks.size():
@@ -1775,7 +1837,15 @@ func _gather(n: ResourceNode) -> void:
 	if a != null and a.global_position.distance_to(n.global_position) < 6.0 and tool_need in ["axe", "pick", "any"]:
 		var wk: String = {"axe": "corte", "pick": "mineracao", "any": "coleta"}[tool_need]
 		power += MonsterLogic.work_level(a.m, wk) * 0.5
-	if not n.hit(power):
+	_hit_stop(0.035)
+	if rig:
+		rig.shake = minf(1.0, rig.shake + 0.08)
+	var depleted := n.hit(power)
+	if held != "" and st.inv.use_durability(held):
+		Game.notify(Loc.t("tool_broke", [Loc.item_name(held)]), "warn")
+		Audio.play("error")
+		_update_held()
+	if not depleted:
 		return
 	_on_node_depleted(n)
 
@@ -1785,6 +1855,9 @@ func _on_node_depleted(n: ResourceNode) -> void:
 	var ms := st.map_state(map_id)
 	var nd := n.nd
 	if n.is_barrier():
+		var tool_id := tool_item_for(n)
+		if tool_id != "" and st.inv.max_dur(tool_id) > 0 and st.inv.use_durability(tool_id):
+			Game.notify(Loc.t("tool_broke", [Loc.item_name(tool_id)]), "warn")
 		n.set_harvested(true)
 		ms["barriers"].append(n.key)
 		Game.add_xp(int(nd["xp"]))
@@ -2052,6 +2125,18 @@ func _process(delta: float) -> void:
 			_update_ghost()
 	_update_sparks()
 	_update_tut_arrow()
+	if rig and rig.cam:
+		sky.follow(rig.cam.global_position)
+	if sky.grass_mat != null:
+		sky.grass_mat.set_shader_parameter("player_pos", player.global_position)
+	_auto_gather(delta)
+	if current_target != null and not is_instance_valid(current_target):
+		current_target = null
+		_hl_meshes.clear()
+	if current_target != null and current_target is ResourceNode:
+		_update_held((current_target as ResourceNode).required_tool())
+	else:
+		_update_held()
 	_update_requirements(delta)
 	_spawn_t -= delta
 	if _spawn_t <= 0.0:
@@ -2157,9 +2242,53 @@ func sync_to_state() -> void:
 		Game.state.map_id = map_id
 
 
-func _update_held() -> void:
-	var w := Game.state.inv.best_weapon_id()
-	player.model.set_held(w)
+var _held_now := "~"
+var _auto_t := 0.0
+var _hitstop := 0.0
+
+
+func _update_held(tool_kind: String = "") -> void:
+	## Mostra a ferramenta certa na mão ao chegar perto de um recurso; senão, a arma.
+	var id := ""
+	if tool_kind in ["axe", "pick", "torch", "crowbar"]:
+		var tl := Game.state.inv.best_tool(tool_kind)
+		id = tl.get("id", "")
+	if id == "":
+		id = Game.state.inv.best_weapon_id()
+	if id != _held_now:
+		_held_now = id
+		player.model.set_held(id)
+
+
+func _hit_stop(secs: float) -> void:
+	## Congela o jogo por alguns milissegundos no impacto (sensação de peso).
+	if _hitstop > 0.0:
+		return
+	_hitstop = secs
+	Engine.time_scale = 0.05
+	get_tree().create_timer(secs, true, false, true).timeout.connect(func():
+		Engine.time_scale = 1.0
+		_hitstop = 0.0)
+
+
+func _auto_gather(delta: float) -> void:
+	## Coleta automática: parado perto de um recurso, o personagem usa a ferramenta sozinho.
+	_auto_t -= delta
+	if _auto_t > 0.0 or not Game.settings.get("auto_gather", true) or build_mode or hud.modal_open():
+		return
+	var t := current_target
+	if t == null or not is_instance_valid(t) or not t is ResourceNode:
+		return
+	var n := t as ResourceNode
+	if n.is_barrier() or n.harvested:
+		return
+	if Vector2(player.velocity.x, player.velocity.z).length() > 1.2 or not has_requirement(n):
+		return
+	for w in wilds:
+		if is_instance_valid(w) and not w.dead and w.state == "chase" and w.global_position.distance_to(player.global_position) < 8.0:
+			return
+	_auto_t = 0.65
+	_gather(n)
 
 
 func _unhandled_input(ev: InputEvent) -> void:

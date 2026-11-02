@@ -7,6 +7,7 @@ var main: Node
 var fails: Array = []
 var checks := 0
 var out_dir := "res://docs/screenshots"
+var md_backup_spawn := 0
 
 
 func _ready() -> void:
@@ -488,6 +489,98 @@ func _smoke() -> void:
 			if w.hud.overlay.get_child_count() > 0:
 				w.hud.overlay.get_child(0).queue_free()
 	check(cages == 5 and st.flags.get("cages1_done", false), "5 jaulas abertas")
+	# ===== recursos da versão 1.3
+	await main._load_map("m1")
+	w = main.world
+	for c in w.hud.overlay.get_children():
+		c.free()
+	# um equipamento de cada por vez + durabilidade
+	st.inv.add("madeira", 10)
+	st.inv.add("pedra", 10)
+	st.inv.add("fibra", 10)
+	if st.inv.count("machado_pedra") == 0:
+		CraftLogic.craft(st, "r_machado_pedra", [])
+	check(CraftLogic.check(st, "r_machado_pedra", [])["reason"] == "owned", "não cria segundo machado enquanto tem um")
+	var dur0 := st.inv.durability_of("machado_pedra")
+	st.inv.use_durability("machado_pedra")
+	check(st.inv.durability_of("machado_pedra") == dur0 - 1, "machado gasta durabilidade")
+	st.inv.use_durability("machado_pedra", 999)
+	check(st.inv.count("machado_pedra") == 0, "machado quebra ao zerar")
+	check(CraftLogic.check(st, "r_machado_pedra", [])["ok"], "pode criar outro depois que quebra")
+	# ervas no mapa
+	var herbs := 0
+	var blooms := 0
+	for k in w.nodes:
+		if w.nodes[k].kind == "erva":
+			herbs += 1
+		elif w.nodes[k].kind == "flor_reviver":
+			blooms += 1
+	check(herbs >= 10 and blooms >= 1 and blooms < herbs, "ervas comuns (%d) e flores de reviver raras (%d)" % [herbs, blooms])
+	# barra do grupo: um cartão por Eco e toque troca o companheiro
+	w.hud.refresh()
+	await _frames(2)
+	check(w.hud.party_bar.slots.size() == st.party.size(), "barra mostra todos os Ecos do grupo")
+	var other := -1
+	for uid in st.party:
+		var mm := st.get_monster(uid)
+		if uid != st.active_uid and not mm["fainted"] and int(mm.get("job", -1)) < 0:
+			other = uid
+	if other >= 0:
+		w.hud.party_bar._tap(other)
+		await _frames(2)
+		check(st.active_uid == other and w.ally_actor() != null and int(w.ally_actor().m["uid"]) == other, "toque na barra troca o companheiro")
+	# Ecos miram o parceiro antes do treinador
+	var foe2: MonsterActor = null
+	for a in w.wilds:
+		if is_instance_valid(a) and not a.dead:
+			foe2 = a
+			break
+	if foe2 != null and w.ally_actor() != null:
+		w.ally_actor().global_position = foe2.global_position + Vector3(2, 0.5, 0)
+		w.player.global_position = foe2.global_position + Vector3(-2, 0.5, 0)
+		foe2.take_hit(1, 1.0, false, w.player)
+		check(foe2.target == w.ally_actor(), "atacado pelo treinador, o Eco revida no parceiro")
+	# horda
+	var before_n := w.wilds.size()
+	var old_ch: float = GameData.db().config["combat"]["horde_chance"]
+	GameData.db().config["combat"]["horde_chance"] = 1.0
+	md_backup_spawn = int(w.md["spawn_count"])
+	w.md["spawn_count"] = before_n + 10
+	w._spawn_wild()
+	GameData.db().config["combat"]["horde_chance"] = old_ch
+	w.md["spawn_count"] = md_backup_spawn
+	var newest: MonsterActor = w.wilds.back()
+	check(w.wilds.size() - before_n >= 3 and newest.pack.size() >= 3, "horda de 3–4 Ecos (%d)" % (w.wilds.size() - before_n))
+	# rolagem por arrastar no menu de criar
+	w.hud.open_menu("craft")
+	await _frames(4)
+	var ds: Array = w.hud.menu.find_children("*", "DragScroll", true, false)
+	check(ds.size() > 0, "menu usa rolagem por arrastar")
+	if ds.size() > 0:
+		var sc: DragScroll = ds[0]
+		for cand in ds:
+			if (cand as DragScroll).get_v_scroll_bar().max_value > (cand as DragScroll).size.y + 50:
+				sc = cand
+		var srect := sc.get_global_rect()
+		var tw2 := get_viewport().get_final_transform()
+		var p0 := srect.get_center() + Vector2(0, 100)
+		var ev := InputEventMouseButton.new()
+		ev.button_index = MOUSE_BUTTON_LEFT
+		ev.pressed = true
+		ev.position = tw2 * p0
+		Input.parse_input_event(ev)
+		for k in 8:
+			var mv := InputEventMouseMotion.new()
+			mv.position = tw2 * (p0 - Vector2(0, 30 * (k + 1)))
+			mv.button_mask = MOUSE_BUTTON_MASK_LEFT
+			Input.parse_input_event(mv)
+			await _frames(1)
+		ev.pressed = false
+		ev.position = tw2 * (p0 - Vector2(0, 240))
+		Input.parse_input_event(ev)
+		await _frames(3)
+		check(sc.scroll_vertical > 50, "arrastar rola a lista de criação (%d)" % sc.scroll_vertical)
+	w.hud.menu.close_menu()
 	# salvar e recarregar
 	Game.save_now()
 	var loaded := SaveSystem.load_state("story")

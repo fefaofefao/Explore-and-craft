@@ -185,9 +185,16 @@ func take_hit(dmg: int, mult: float, crit: bool, from: Node3D = null) -> void:
 	elif mult < 0.95:
 		col = Color("#9aa0b0")
 	FX.number(world, center() + Vector3(0, 0.6, 0), str(dmg) + ("!" if crit else ""), col, crit or mult > 1.05)
-	if from != null and (target == null or not is_instance_valid(target)) and role != "ally":
-		target = from
+	if from != null and role != "ally":
+		var al: Node3D = world.ally_actor()
+		if from is Player and al != null and al.global_position.distance_to(global_position) < 20.0:
+			target = al  # o treinador bateu, mas o revide vai no Eco dele
+		elif target == null or not is_instance_valid(target):
+			target = from
 		state = "chase"
+		for mate in pack:
+			if is_instance_valid(mate) and mate != self and not mate.dead:
+				mate.alert(target)
 	if role == "wild" and not aggressive and from != null and hp_frac() < 0.35 and randf() < 0.5:
 		state = "flee"
 	if role == "boss" and not enraged and hp_frac() < 0.5:
@@ -197,6 +204,29 @@ func take_hit(dmg: int, mult: float, crit: bool, from: Node3D = null) -> void:
 		Game.notify(Loc.t("boss_appears", [MonsterLogic.display_name(m)]), "warn")
 	if int(m["hp"]) <= 0:
 		_die()
+
+
+var _kb := Vector3.ZERO
+var pack: Array = []  # horda: companheiros que atacam juntos
+
+
+func set_horde_tag() -> void:
+	## Nome da horda em vermelho para o jogador perceber o perigo.
+	_name_label.text = "⚠ " + _name_label.text
+	_name_label.modulate = Color("#ff8a7a")
+	_bar_root.visible = true
+
+
+func alert(t: Node3D) -> void:
+	if dead or role == "ally" or t == null:
+		return
+	target = t
+	state = "chase"
+
+func knockback(v: Vector3) -> void:
+	## Empurrão ao ser atingido (chefes quase não se movem).
+	_kb = v * (0.25 if role == "boss" else 1.0)
+	_kb.y = 0.0
 
 
 func heal_frac(f: float) -> void:
@@ -284,8 +314,9 @@ func _physics_process(delta: float) -> void:
 	if want.length() > 0.2:
 		hv = want.normalized() * spd
 		_face(global_position + want)
-	velocity.x = lerpf(velocity.x, hv.x, clampf(delta * 8.0, 0.0, 1.0))
-	velocity.z = lerpf(velocity.z, hv.z, clampf(delta * 8.0, 0.0, 1.0))
+	velocity.x = lerpf(velocity.x, hv.x, clampf(delta * 8.0, 0.0, 1.0)) + _kb.x
+	velocity.z = lerpf(velocity.z, hv.z, clampf(delta * 8.0, 0.0, 1.0)) + _kb.z
+	_kb = _kb.lerp(Vector3.ZERO, clampf(delta * 8.0, 0.0, 1.0))
 	if model.flying:
 		velocity.y = 0.0
 		var gy := _gen.height(global_position.x, global_position.z) if _gen else 0.0
@@ -355,6 +386,10 @@ func _decide_wild() -> void:
 	if target != null and (not is_instance_valid(target) or (target is MonsterActor and (target as MonsterActor).dead) or (target is Player and (target as Player).is_dead())):
 		target = null
 		state = "idle"
+	if target is Player:
+		var al2: Node3D = world.ally_actor()
+		if al2 != null and al2.global_position.distance_to(global_position) < 16.0:
+			target = al2
 	if Game.is_peaceful():
 		if state == "chase":
 			state = "idle"
@@ -373,7 +408,8 @@ func _decide_wild() -> void:
 				dp = 999.0
 				da = 999.0
 			if minf(dp, da) < aggro and not (pl as Player).is_dead():
-				target = ally if da < dp else pl
+				# os Ecos sempre miram primeiro o parceiro do treinador; o treinador só depois
+				target = ally if ally != null and da < aggro * 1.8 else pl
 				state = "chase"
 				return
 	if state == "idle" and randf() < 0.25:
@@ -428,7 +464,8 @@ func _try_attack() -> void:
 	if role == "boss" and enraged:
 		_basic_cd *= 0.75
 	# Ecos selvagens usam habilidades de vez em quando
-	if role in ["wild", "boss"] and randf() < (0.35 if role == "boss" else 0.18):
+	var cc: Dictionary = GameData.db().config["combat"]
+	if role in ["wild", "boss", "trainer"] and randf() < float(cc.get("boss_skill_chance", 0.45) if role == "boss" else cc.get("wild_skill_chance", 0.3)):
 		var s := CombatLogic.best_skill_vs(m["skills"], (target as MonsterActor).types() if target is MonsterActor else [], func(x): return skill_ready(x))
 		if s != "":
 			cast(s)
@@ -453,9 +490,9 @@ func cast(s: String) -> bool:
 	return true
 
 
-func begin_capture() -> void:
+func begin_capture(keep_visible: bool = false) -> void:
 	capturing = true
-	model.visible = false
+	model.visible = keep_visible
 	_bar_root.visible = false
 	velocity = Vector3.ZERO
 

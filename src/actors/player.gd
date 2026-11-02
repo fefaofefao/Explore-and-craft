@@ -70,8 +70,14 @@ func _physics_process(delta: float) -> void:
 		speed *= 0.55
 	var hv := dir * speed * minf(input.length() * 1.15, 1.0)
 	hv = _limit_sea(hv, delta)
-	velocity.x = lerpf(velocity.x, hv.x, clampf(delta * 12.0, 0.0, 1.0))
-	velocity.z = lerpf(velocity.z, hv.z, clampf(delta * 12.0, 0.0, 1.0))
+	# aceleração com peso: arranca rápido, freia um pouco mais devagar, controle reduzido no ar
+	var accel := 10.0 if hv.length() > Vector2(velocity.x, velocity.z).length() else 14.0
+	if not is_on_floor() and not swimming:
+		accel = 4.0
+	velocity.x = lerpf(velocity.x, hv.x, clampf(delta * accel, 0.0, 1.0))
+	velocity.z = lerpf(velocity.z, hv.z, clampf(delta * accel, 0.0, 1.0))
+	var was_floor := is_on_floor()
+	var fall_v := velocity.y
 	if swimming:
 		# flutua na superfície
 		velocity.y = lerpf(velocity.y, (water_y - 0.7 - global_position.y) * 4.0, clampf(delta * 6.0, 0.0, 1.0))
@@ -99,16 +105,34 @@ func _physics_process(delta: float) -> void:
 		if _can_jump():
 			_do_jump()
 	move_and_slide()
+	# aterrissagem: amassada, poeira e tremida proporcionais à queda
+	if not was_floor and is_on_floor() and fall_v < -5.0:
+		var k := clampf(-fall_v / 16.0, 0.2, 1.0)
+		model.land(k)
+		_dust(10 + int(k * 12), 2.0 + k * 2.0)
+		Audio.play("step", 0.05)
+		if rig:
+			rig.shake = minf(1.0, rig.shake + 0.25 * k)
 	# animação e orientação
 	var hspeed := Vector2(velocity.x, velocity.z).length()
-	model.move_speed = clampf(hspeed / 7.0, 0.0, 1.0)
+	model.move_speed = clampf(hspeed / 7.0, 0.0, 1.4)
 	if hspeed > 0.3:
 		var target_yaw := atan2(-velocity.x, -velocity.z)
-		model.rotation.y = lerp_angle(model.rotation.y, target_yaw, clampf(delta * 12.0, 0.0, 1.0))
+		var prev_yaw := model.rotation.y
+		model.rotation.y = lerp_angle(model.rotation.y, target_yaw, clampf(delta * 14.0, 0.0, 1.0))
+		# inclina o corpo para dentro da curva
+		model.turn_lean = lerpf(model.turn_lean, clampf(angle_difference(prev_yaw, model.rotation.y) / maxf(delta, 0.001) * 0.04, -0.3, 0.3), 0.2)
 		_step_t += delta * hspeed
-		if _step_t > 2.2 and is_on_floor():
+		if _step_t > 1.9 and is_on_floor():
 			_step_t = 0.0
 			Audio.play("step", 0.15)
+			if hspeed > 6.0:
+				_dust(4, 1.2)
+	else:
+		model.turn_lean = lerpf(model.turn_lean, 0.0, 0.2)
+	# câmera abre o campo de visão ao correr
+	if rig and rig.cam:
+		rig.cam.fov = lerpf(rig.cam.fov, 62.0 + clampf((hspeed - 6.5) * 1.6, 0.0, 7.0), clampf(delta * 4.0, 0.0, 1.0))
 	# segurança: caiu para fora do mundo
 	if global_position.y < -25.0:
 		global_position = _last_safe + Vector3(0, 2, 0)
@@ -167,9 +191,18 @@ func _do_jump() -> void:
 	_jump_buffer = 0.0
 	_coyote = 1.0
 	velocity.y = float(GameData.db().cfg("player", "jump", 7.0))
+	model.jump_stretch()
+	_dust(6, 1.5)
 	floor_snap_length = 0.0
 	get_tree().create_timer(0.2).timeout.connect(func(): floor_snap_length = 0.6)
 	Audio.play("jump")
+
+
+func _dust(n: int, spd: float) -> void:
+	var col := Color(gen.biome.get("dirt", "#9a7a58")).lightened(0.25)
+	if global_position.y < 1.5:
+		col = Color(gen.biome["sand"])
+	FX.burst(get_parent(), global_position + Vector3(0, 0.1, 0), col, n, spd, false, false, 0.5)
 
 
 func jump() -> void:

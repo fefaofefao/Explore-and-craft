@@ -10,6 +10,8 @@ var biome: Dictionary
 var quality: int = 1
 var grass_mat: ShaderMaterial
 var grass_light := 1.0
+var clouds: MeshInstance3D
+var cloud_mat: ShaderMaterial
 
 var _sky_top: Color
 var _sky_hor: Color
@@ -69,10 +71,27 @@ func setup(p_biome: Dictionary, p_quality: int) -> void:
 	sun.shadow_enabled = quality >= 1
 	sun.shadow_bias = 0.04
 	sun.shadow_normal_bias = 1.2
-	sun.directional_shadow_mode = DirectionalLight3D.SHADOW_ORTHOGONAL if quality < 2 else DirectionalLight3D.SHADOW_PARALLEL_2_SPLITS
-	sun.directional_shadow_max_distance = 45.0 if quality < 2 else 70.0
+	sun.directional_shadow_mode = DirectionalLight3D.SHADOW_PARALLEL_2_SPLITS
+	sun.directional_shadow_max_distance = 50.0 if quality < 2 else 75.0
+	sun.directional_shadow_blend_splits = true
+	sun.shadow_blur = 1.5
 	sun.light_angular_distance = 0.6
 	add_child(sun)
+	# nuvens
+	clouds = MeshInstance3D.new()
+	var sph := SphereMesh.new()
+	sph.radius = 220.0
+	sph.height = 440.0
+	sph.radial_segments = 24
+	sph.rings = 12
+	clouds.mesh = sph
+	cloud_mat = ShaderMaterial.new()
+	cloud_mat.shader = load("res://assets/shaders/clouds.gdshader")
+	cloud_mat.set_shader_parameter("noise_tex", load("res://assets/textures/noise.png"))
+	cloud_mat.set_shader_parameter("coverage", 0.55 if biome.get("particles", "") != "rain" else 0.38)
+	clouds.material_override = cloud_mat
+	clouds.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	add_child(clouds)
 	moon = DirectionalLight3D.new()
 	moon.light_color = Color("#8aa8ff")
 	moon.light_energy = 0.0
@@ -102,5 +121,13 @@ func update_time(day_time: float) -> void:
 	env.ambient_light_energy = lerpf(0.45, 0.55, sf)
 	sun.light_color = _sun_col.lerp(Color("#ffb070"), dusk)
 	grass_light = lerpf(0.3, 1.32, sf)
+	if cloud_mat != null:
+		cloud_mat.set_shader_parameter("light", lerpf(0.18, 1.0, sf))
+		cloud_mat.set_shader_parameter("cloud_color", Color.WHITE.lerp(Color("#ffc890"), dusk))
 	if grass_mat != null:
 		grass_mat.set_shader_parameter("light_mult", grass_light)
+
+
+func follow(cam_pos: Vector3) -> void:
+	if clouds != null:
+		clouds.global_position = cam_pos
